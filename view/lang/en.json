@@ -1,0 +1,29 @@
+{
+"strings": {
+    "Cambiar idioma:": "Change language:",
+    "Español": "Spanish",
+    "Inglés": "English",
+    "Valenciano": "Valencian",
+    "Inicio": "Home",
+    "Joyas":"Jewelry",
+    "Servicios":"Services",
+    "Nosotros":"Meet us",
+    "Contacto":"Contact",
+    "Numero de contacto":"Number contact",
+    "Direccion":"Address",
+    "LISTA DE JOYAS":"JEWERLY LIST",
+    "Codigo de referencia":"Reference code",
+    "Codigo de referencia:":"Reference code:",
+    "Tipo":"Type",
+    "Tipo:":"Type:",
+    "Nombre":"Name",
+    "Nombre:":"Name:",
+    "Accion":"Action",
+    "Borrar todo":"Delete all",
+    "Leer":"Reed",
+    "Cambiar":"Update",
+    "Borrar":"Delete",
+    "Galeria":"Gallery"
+    
+        }
+  }
