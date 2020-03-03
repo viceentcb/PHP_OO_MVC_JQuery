@@ -31,6 +31,7 @@ function initMap() {
     url: "module/contact/controller/controller_contact.php?op=maps"
 
   }).done(function (data) {
+    // console.log("caca")
     console.log(data);
     
     for (row in data) {
@@ -55,7 +56,9 @@ function initMap() {
 
       ray.push(newMarker);
     }
-  })
+  })    .fail(function () {
+    console.log("FAIL");
+})
 }
 
   // function initMap() {

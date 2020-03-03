@@ -40,7 +40,7 @@ class DAOshop
 		return $res;
 	}
 	function select_maps(){
-		$sql = "SELECT * FROM maps";
+		$sql = "SELECT * FROM tiendas";
 		$connection = connect::con();
 		$res = mysqli_query($connection, $sql);
 		connect::close($connection);
