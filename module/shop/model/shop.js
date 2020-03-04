@@ -13,7 +13,7 @@ $(document).ready(function () {
         script.async;
         script.defer;
         document.getElementsByTagName('script')[0].parentNode.appendChild(script);
-      }
+    }
 });
 
 
@@ -114,18 +114,58 @@ function local() {
         console.log("type= " + type);
         var car = localStorage.getItem('sli');
         console.log("car= " + car);
+        var type_search = localStorage.getItem('typ');
+        console.log("type_search= " + type_search);
+        var brand_search = localStorage.getItem('bra');
+        console.log("brand_search= " + brand_search);
+        var name_search = localStorage.getItem('pro');
+        console.log("name_search= " + name_search);
 
-
-        if ((((!valoration) || (valoration === 'null')) && ((!type) || (type === 'null'))) || (car)) {
-            // console.log("shop")
-            ajaxForSearch("module/shop/controller/controller_shop.php?op=all")
-        } else if (type) {
+        if (type) {
             console.log("categoria")
             ajaxForSearch("module/shop/controller/controller_shop.php?op=categoria&type=" + type)
+
 
         } else if (valoration) {
             console.log("PRODUCTOOOOOOOO");
             ajaxForSearch("module/shop/controller/controller_shop.php?op=detail&cod_ref=" + valoration)
+
+
+            ////NO HACEMOS MAS COMBINACIONES PORQUE SI COMBINAMOS CUALQUIER "FILTRO" CON EL NOMBRE
+            ///ENTRARIA DIRECTAMENTE AQUI TANTO SI ES UNA COMBINACION DE 2 COMO SI ESTA SOLO EL NOMBRE
+            ///O COMO SI JUNTAMOS LOS 3 "FILTROS"
+        } else if (name_search) {
+            console.log("Todos campos rellenos del search o al menos el nombre")
+            var search = 'where nombre ="' + name_search + '"'
+            console.log(search);
+            ajaxForSearch("module/shop/controller/controller_shop.php?op=search&all=" + search)
+
+
+            ///INTRODUCIMOS 0 YA QUE AL SER 0 Y NO NULL DETECTA QUE DICHAS VARIABLES EXISTEN
+        } else if ((brand_search) && (type_search) && (brand_search != 0) && (type_search != 0)) {
+            console.log("marca y tipo rellenos en el search ")
+            var search = 'where marca ="' + brand_search + '" and tipo="' + type_search + '"'
+            console.log(search);
+            ajaxForSearch("module/shop/controller/controller_shop.php?op=search&all=" + search)
+
+
+            ///INTRODUCIMOS 0 YA QUE AL SER 0 Y NO NULL DETECTA QUE DICHAS VARIABLES EXISTEN
+        } else if (brand_search && (brand_search != 0)) {
+            console.log("solo marca rellena en el search ")
+            var search = 'where marca ="' + brand_search + '"'
+            console.log(search);
+            ajaxForSearch("module/shop/controller/controller_shop.php?op=search&all=" + search)
+
+
+            ///INTRODUCIMOS 0 YA QUE AL SER 0 Y NO NULL DETECTA QUE DICHAS VARIABLES EXISTEN
+        } else if (type_search && (type_search != 0)) {
+            console.log("solo tipo relleno en el search ")
+            var search = 'where tipo ="' + type_search + '"'
+            console.log(search);
+            ajaxForSearch("module/shop/controller/controller_shop.php?op=search&all=" + search)
+        } else {
+            console.log("shop")
+            ajaxForSearch("module/shop/controller/controller_shop.php?op=all")
         }
     }//End if document
     console.log("Borrar datos");
@@ -135,19 +175,32 @@ function local() {
     console.log("valoration= " + valoration);
     var type = localStorage.removeItem('tipo');
     console.log("type= " + type);
-    var car = localStorage.removeItem('sli');
-    console.log("car= " + car)
+    // var car = localStorage.removeItem('sli');
+    // console.log("car= " + car)
+    var type_search = localStorage.removeItem('typ');
+    console.log("type_search= " + type_search);
+    var brand_search = localStorage.removeItem('bra');
+    console.log("brand_search= " + brand_search);
+    var name_search = localStorage.removeItem('pro');
+    console.log("name_search= " + name_search);
 
 }
 
 ////AQUI OBSERVAREMOS LOS DATOS QUE ENTRAN QUE ENTRAN
 function entra() {
+    console.log("AQUI ESTAN LOS QUE ENTRAN")
     var valoration = localStorage.getItem('val');
     console.log("valoration= " + valoration);
     var type = localStorage.getItem('tipo');
     console.log("type= " + type);
     var car = localStorage.getItem('sli');
     console.log("car= " + car);
+    var type_search = localStorage.getItem('typ');
+    console.log("type_search= " + type_search);
+    var brand_search = localStorage.getItem('bra');
+    console.log("brand_search= " + brand_search);
+    var name_search = localStorage.getItem('pro');
+    console.log("name_search= " + name_search);
 
 
 }
@@ -241,7 +294,7 @@ function click() {
         var tipo = this.getAttribute('type');
         console.log(cod_ref);
         console.log(tipo);
-        
+
         $.ajax({
             type: "GET",
             dataType: 'json',
@@ -255,9 +308,9 @@ function click() {
             $("#fil").empty();
             $("#maps").empty();
 
-            for (i=0;i<1;i++) {
+            for (i = 0; i < 1; i++) {
                 $("#detail_products").append(
-                    
+
                     '<table>' +
 
                     '<tr>' +
@@ -286,16 +339,16 @@ function click() {
 
                 )
             }
-            for (i=1;i<4;i++) {
-                if(data[i]!==undefined){
-                //Cuando solo quede un producto avisara al cliente de que este producto es el ultimo
-                //Ademas avisara y mostrara que el articulo esta en oferta
-                $("#detail_products").append(
-                    '<img src= ' + data[i].route + ' class="detail" id=' + data[i].cod_ref + ' type='+ data[row].tipo + '>' 
+            for (i = 1; i < 4; i++) {
+                if (data[i] !== undefined) {
+                    //Cuando solo quede un producto avisara al cliente de que este producto es el ultimo
+                    //Ademas avisara y mostrara que el articulo esta en oferta
+                    $("#detail_products").append(
+                        '<img src= ' + data[i].route + ' class="detail" id=' + data[i].cod_ref + ' type=' + data[row].tipo + '>'
 
-                )
-                }else{
-                    i=4;
+                    )
+                } else {
+                    i = 4;
                 }
             }
 
@@ -690,17 +743,18 @@ function filter() {
     //     console.log("prec_asc= ")
     //     order = "ORDER BY"
     // });
-    $('body').on("change", "#order", function () {
+    $("#order").on("change", function () {
+        console.log("order")
         var option = document.getElementById('order').value;
         console.log("options= " + option)
-         if(option=="val_desc"){
-            order="ORDER BY val DESC";
-        }else if(option=="stock_asc"){
-            order="ORDER BY unidades ASC";
-        }else if(option=="stock_desc"){
-            order="ORDER BY unidades DESC";
-        }else{
-            order="";
+        if (option == "val_desc") {
+            order = "ORDER BY val DESC";
+        } else if (option == "stock_asc") {
+            order = "ORDER BY unidades ASC";
+        } else if (option == "stock_desc") {
+            order = "ORDER BY unidades DESC";
+        } else {
+            order = "";
         }
 
     });
@@ -800,68 +854,70 @@ function filter() {
     });
 }
 
-  function initMap() {
+////FUNCTION PARA ENSEÑAR EL MAPA
+function initMap() {
     var ray = [];
-  
+
     // var
-      // jewelry_stores = [
-      //   [estacio],
-      //   ['Cartier-Madrid'],
-      //   ['Vintage Watches Valencia'],
-      // ];
-      // console.log(jewelry_stores)
+    // jewelry_stores = [
+    //   [estacio],
+    //   ['Cartier-Madrid'],
+    //   ['Vintage Watches Valencia'],
+    // ];
+    // console.log(jewelry_stores)
     var map = new google.maps.Map(document.getElementById('maps'), {
-      zoom: 6,
-      center: new google.maps.LatLng(40.05, -3.695447),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+        zoom: 6,
+        center: new google.maps.LatLng(40.05, -3.695447),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
     });
-  
+
     var infowindow = new google.maps.InfoWindow();
     $.ajax({
-      type: "GET",
-      dataType: 'json',
-      url: "module/contact/controller/controller_contact.php?op=maps"
-  
+        type: "GET",
+        dataType: 'json',
+        url: "module/contact/controller/controller_contact.php?op=maps"
+
     }).done(function (data) {
-      console.log(data);
-      
-      for (row in data) {
-  
-  
-        var newMarker = new google.maps.Marker({
-          position: new google.maps.LatLng(
-            data[row].lat,
-            data[row].lng),
-          map: map,
-          title:
-          data[row].tienda
-        });
-  
-        google.maps.event.addListener(newMarker, 'click', (function (newMarker, row) {
-          return function () {
-            infowindow.setContent(
-              data[row].descripcion);
-            infowindow.open(map, newMarker);
-          }
-        })(newMarker, row));
-  
-        ray.push(newMarker);
-      }
+        console.log(data);
+
+        for (row in data) {
+
+
+            var newMarker = new google.maps.Marker({
+                position: new google.maps.LatLng(
+                    data[row].lat,
+                    data[row].lng),
+                map: map,
+                title:
+                    data[row].tienda
+            });
+
+            google.maps.event.addListener(newMarker, 'click', (function (newMarker, row) {
+                return function () {
+                    infowindow.setContent(
+                        data[row].descripcion);
+                    infowindow.open(map, newMarker);
+                }
+            })(newMarker, row));
+
+            ray.push(newMarker);
+        }
     })
-  }
+}
 
-  function click_map(){
-  $(document).on('click', '#maps', function () {
-      console.log("mapa");
-      $("#container").empty();
-      $("#container1").empty();
-      $("#fil").empty();
+////FUNCTION PARA CUANDO CLICQUES EN EL MAPA ESTE SE VUELVA GRANDE
+function click_map() {
+    $(document).on('click', '#maps', function () {
+        console.log("mapa");
+        $("#container").empty();
+        $("#container1").empty();
+        $("#fil").empty();
 
-      $("#maps").append(
-        '<a id="fle" href=index.php?page=controller_shop&op=list><img id="flecha" src=view/images/flecha.png></a>' 
-    )
-        $("#maps").css({"width": "80%", "height":"40%"})
+        $("#maps").append(
+            '<a id="fle" href=index.php?page=controller_shop&op=list><img id="flecha" src=view/images/flecha.png></a>'
+        )
+        $("#maps").css({ "width": "80%", "height": "40%" })
 
 
-  })
-  }
+    })
+}

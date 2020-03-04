@@ -1,19 +1,3 @@
-<!-- <div id="menu">
-    <a href="index.php?page=menu" data-tr="Inicio"></a>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;
-	<a href="index.php?page=controller_joyas&op=list" data-tr="Joyas"></a>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;
-	<a class="order" href="index.php?page=controller_order&op=list">Order</a>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;
-	<a href="index.php?page=services" data-tr="Servicios"></a>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;
-	<a href="index.php?page=aboutus" data-tr="Nosotros"></a>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;
-	<a href="index.php?page=contactus" data-tr="Contacto"></a>
-</div> -->
-<html lang="zxx">
-
-<head>
-
-
-</head>
-
-<body>
    <div id="menu">
       <div class="header-outs" id="header">
          <div class="header-w3layouts">
@@ -51,12 +35,7 @@
                            <a href="index.php?page=controller_contact&op=list" data-tr="Contacto" class="nav-link"></a>
                         </div>
                      </li>
-                     <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                     <!-- <select class="nav-item" id="language">
-                     <option data-tr="Español" value="es" id="es"></option>
-                     <option data-tr="Inglés" value="en" id="en"></option>
-                     <option data-tr="Valenciano" value="va" id="va"></option>
-                  </select> -->
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                            Lenguages
@@ -79,65 +58,38 @@
                </div>
 
             </nav>
+            </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+            <form class="search">
+               <select id="type">
+                  <option value="0">Type of Jewerly</option>
+
+               </select>
+
+               <select id="brand">
+                  <option value="0">Brand</option>
+               </select>
+
+               <section class="autocomplete">
+                  <input list="products" id="autocomplete" name="autocomplete">
+                  <datalist id="products">
+                  </datalist>
+               </section>
+               <a class="a">BUSCAR</a>
+               
+            </form>
             <div class="clearfix"> </div>
          </div>
-         <!-- //Navigation -->
-         <!-- Slideshow 4 -->
-         <!-- <div class="slider">
-            <div class="callbacks_container">
-               <ul class="rslides callbacks callbacks1" id="slider4">
-                  <li>
-                     <div class="slider-img one-img">
-                        <div background="no-repeat center">
-                        </div>
-                           <div class="container">
-                              <div class="slider-info ">
-                                 <h5>Jewelry Collection</h5>
-                                 <div class="bottom-info">
-                                    <h4 class="text-right">Turn Your Dream</h4>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                  </li>
-                  <li>
-                     <div class="slider-img two-img">
-                        <div class="container">
-                           <div class="slider-info ">
-                              <h5>Beautiful Jewelry</h5>
-                              <div class="bottom-info">
-                                 <h4 class="text-right">New Classic Items</h4>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </li>
-                  <li>
-                     <div class="slider-img three-img">
-                        <div class="container">
-                           <div class="slider-info">
-                              <h5>Unique Jewelry</h5>
-                              <div class="bottom-info">
-                                 <h4 class="text-right">
-                                    Shine With Luxury
-                                 </h4>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </li>
-               </ul>
-            </div> -->
+
          <div class="slider">
-         <div class="callbacks_container">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-               <ol class="carousel-indicators">
-                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-               </ol>
-               <div class="carousel-inner">
-                  <!-- <div class="carousel-item active">
+            <div class="callbacks_container">
+               <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                  </ol>
+                  <div class="carousel-inner">
+                     <!-- <div class="carousel-item active">
                      <img src="view/images/b1.jpg" alt="...">
                   </div>
                   <div class="carousel-item">
@@ -146,18 +98,18 @@
                   <div class="carousel-item">
                      <img src="view/images/b3.jpg" alt="...">
                   </div> -->
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                     <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                     <span class="sr-only">Next</span>
+                  </a>
                </div>
-               <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-               </a>
-               <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-               </a>
             </div>
          </div>
-         </div>   
          <!-- This is here just to demonstrate the callbacks -->
          <!-- <ul class="events">
                <li>Example 4 callback events</li>
@@ -234,74 +186,3 @@
          </div>
       </div>
    </div>
-   <!-- //Modal2 -->
-   <!-- //Footer -->
-   <!--js working-->
-   <!-- <script src='view/js/jquery-2.2.3.min.js'></script> -->
-   <!--//js working-->
-   <!--responsiveslides banner-->
-   <!-- <script src="view/js/responsiveslides.min.js"></script>
-      <script>
-         // You can also use "$(window).load(function() {"
-         $(function () {
-         	// Slideshow 4
-         	$("#slider4").responsiveSlides({
-         		auto: true,
-         		pager:false,
-         		nav:true ,
-         		speed: 900,
-         		namespace: "callbacks",
-         		before: function () {
-         			$('.events').append("<li>before event fired.</li>");
-         		},
-         		after: function () {
-         			$('.events').append("<li>after event fired.</li>");
-         		}
-         	});
-         
-         });
-      </script> -->
-   <!--// responsiveslides banner-->
-   <!--responsive tabs-->
-   <!-- <script src="view/js/easy-responsive-tabs.js"></script>
-      <script>
-         $(document).ready(function () {
-         $('#horizontalTab').easyResponsiveTabs({
-         type: 'default', //Types: default, vertical, accordion           
-         width: 'auto', //auto or any width like 600px
-         fit: true,   // 100% fit in a container
-         closed: 'accordion', // Start closed if in accordion view
-         activate: function(event) { // Callback function if tab is switched
-         var $tab = $(this);
-         var $info = $('#tabInfo');
-         var $name = $('span', $info);
-         $name.text($tab.text());
-         $info.show();
-         }
-         });
-         });
-          
-      </script> -->
-   <!--// responsive tabs-->
-   <!-- password-script -->
-   <!-- <script>
-         var password = document.getElementById("password")
-          , confirm_password = document.getElementById("confirm_password");
-         
-         function validatePassword(){
-          if(password.value != confirm_password.value) {
-            confirm_password.setCustomValidity("Passwords Don't Match");
-          } else {
-            confirm_password.setCustomValidity('');
-          }
-         }
-         
-         password.onchange = validatePassword;
-         confirm_password.onkeyup = validatePassword;
-      </script> -->
-   <!--//password-script -->
-
-
-</body>
-
-</html>

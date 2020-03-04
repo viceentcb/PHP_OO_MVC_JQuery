@@ -46,6 +46,13 @@ class DAOshop
 		connect::close($connection);
 		return $res;
 	}
+	function select_search($all){
+		$sql = "SELECT * FROM joya $all";
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
 
 
 	// function select_product($cref){

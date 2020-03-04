@@ -30,13 +30,9 @@ switch ($_GET['op']) {
         }
         break;
     case 'detail':
-        // echo($_GET['cod_ref'])
-        // echo($_GET['type'])
         try {
-            // echo($_GET['cod_ref'])
-        // echo($_GET['type'])
             $daoshop = new DAOshop();
-            $rlt = $daoshop->select_datail($_GET['cod_ref'],$_GET['type']);
+            $rlt = $daoshop->select_datail($_GET['cod_ref'], $_GET['type']);
         } catch (Exception $e) {
             echo json_encode("error");
         }
@@ -74,7 +70,7 @@ switch ($_GET['op']) {
     case 'filter':
         try {
             $daoshop = new DAOshop();
-            $rlt = $daoshop->select_filter($_GET['checks'],$_GET['order']);
+            $rlt = $daoshop->select_filter($_GET['checks'], $_GET['order']);
         } catch (Exception $e) {
             echo json_encode("error");
         }
@@ -93,6 +89,24 @@ switch ($_GET['op']) {
         try {
             $daoshop = new DAOshop();
             $rlt = $daoshop->select_maps();
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+
+        if (!$rlt) {
+            echo json_encode("error");
+        } else {
+            $dinfo = array();
+            foreach ($rlt as $row) {
+                array_push($dinfo, $row);
+            }
+            echo json_encode($dinfo);
+        }
+        break;
+    case 'search':
+        try {
+            $daoshop = new DAOshop();
+            $rlt = $daoshop->select_search($_GET['all']);
         } catch (Exception $e) {
             echo json_encode("error");
         }

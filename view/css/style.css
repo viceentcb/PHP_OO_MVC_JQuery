@@ -79,7 +79,6 @@ color: greenyellow;
     margin:auto;
 }
 #fle{
-
     margin:auto;
     position:absolute;
     left: 15px;
@@ -90,6 +89,9 @@ color: greenyellow;
     width: 40%;
 }
 #fil{
+    margin:auto;
+}
+#ser{
     margin:auto;
 }
 .slider{

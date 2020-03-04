@@ -40,6 +40,8 @@
     <script type="text/javascript" src="view/lang/translate.js"></script>
 
     <script src="module/joyas/model/validate_joyas.js"></script>
+    <!-- <script src="module/menu/model/menu.js"></script> -->
+
     <!-- <script src="module/order/model/order_list.js"></script> -->
 
 
