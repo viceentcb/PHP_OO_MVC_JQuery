@@ -6,16 +6,20 @@ $(document).ready(function () {
     photo();
     click_cat();
     click_prod();
-
+    // click_more();
 
 });
-
+function click_more() {
+}
 function photo() {
+    var limit = 4
+
     $.ajax({
         type: "GET",
         dataType: 'json',
-        url: "module/home/controller/controller_home.php?op=val"
+        url: "module/home/controller/controller_home.php?op=val&limit=" + limit
     })
+
         .done(function (data) {
             // console.log(data);
 
@@ -34,26 +38,88 @@ function photo() {
                     "<h4> " + data[row].marca + " </h4>" +
                     "</figcaption>" +
                     "</figure>"
+
                     // "</div>"+
                     // "</div>"
                 );
+
             }
+            $("#val").append(
+                "<img src= 'view/images/view_more.png' class='view_more'>"
+            );
+
         }).fail(function () {
             console.log("fail")
         })
+    $(document).on('click', '.view_more', function () {
+        limit=limit+2
+        $("#val").empty();
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: "module/home/controller/controller_home.php?op=val&limit=" + limit
+    })
+
+        .done(function (data) {
+            // console.log(data);
+
+            for (row in data) {
+                // console.log("for");
+                // console.log(row);
+                $("#val").append(
+                    // "<div class='row mt-lg-5 mt-md-3 mt-3'>" +
+                    // "<div class='col-lg-4 col-md-4 col-sm-4 latest-jewel-grid'>" +
+                    "<figure id='" + data[row].cod_ref + "' class='snip1321'>" +
+                    "<img src= '" + data[row].route + "' class='img-thumbnail' alt=''>" +
+                    "<figcaption>" +
+                    "<i class='ion-upload'>" +
+                    "</i>" +
+                    "<h2> " + data[row].nombre + " </h2>" +
+                    "<h4> " + data[row].marca + " </h4>" +
+                    "</figcaption>" +
+                    "</figure>"
+
+                    // "</div>"+
+                    // "</div>"
+                );
+
+            }
+            $("#val").append(
+                "<img src= 'view/images/view_more.png' class='view_more'>"
+            );
+
+        }).fail(function () {
+            console.log("fail")
+        })
+    })
+
 };
+
 function click_prod() {
     $(document).on('click', '.snip1321', function () {
         console.log("click");
-        var valoration = this.getAttribute('id');
+
+        ///CADA VEZ QUE CLICAMOS SE SUMAN LAS VISITAS DE ESE PRODUCTO A LA BASE DE DATOS 
+        var cod_ref = this.getAttribute('id');
+        console.log("cod_ref= " + cod_ref)
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "module/home/controller/controller_home.php?op=views&cod_ref=" + cod_ref
+        }).fail(function () {
+            console.log("fail")
+        })
 
 
-        localStorage.setItem('val', valoration);
+        ///AQUI LO GUARDAMOS EN LOCALSTORAGE PARA IR AL DETAILS
+
+        localStorage.setItem('val', cod_ref);
 
         $(window).attr('location', 'index.php?page=controller_shop&op=list')
 
     })
 }
+
 function name() {
     $.ajax({
         type: "GET",
@@ -84,6 +150,7 @@ function name() {
             console.log("fail")
         })
 }
+
 function brand() {
     $.ajax({
         type: "GET",
@@ -114,6 +181,7 @@ function brand() {
             console.log("fail")
         })
 }
+
 function gif() {
     $.ajax({
         type: "GET",
@@ -138,6 +206,7 @@ function gif() {
             console.log("fail")
         })
 }
+
 function click_cat() {
     $(document).on('click', '.img-thumbnail', function () {
         // console.log("click");
@@ -147,4 +216,5 @@ function click_cat() {
         $(window).attr('location', 'index.php?page=controller_shop&op=list')
     })
 }
+
 

@@ -1,6 +1,5 @@
 $(document).ready(function () {
     // console.log("shop");
-    // photo();
     click();
     // entra();
     local();
@@ -121,15 +120,14 @@ function local() {
         var name_search = localStorage.getItem('pro');
         console.log("name_search= " + name_search);
 
+
         if (type) {
             console.log("categoria")
             ajaxForSearch("module/shop/controller/controller_shop.php?op=categoria&type=" + type)
 
-
         } else if (valoration) {
             console.log("PRODUCTOOOOOOOO");
             ajaxForSearch("module/shop/controller/controller_shop.php?op=detail&cod_ref=" + valoration)
-
 
             ////NO HACEMOS MAS COMBINACIONES PORQUE SI COMBINAMOS CUALQUIER "FILTRO" CON EL NOMBRE
             ///ENTRARIA DIRECTAMENTE AQUI TANTO SI ES UNA COMBINACION DE 2 COMO SI ESTA SOLO EL NOMBRE
@@ -163,6 +161,7 @@ function local() {
             var search = 'where tipo ="' + type_search + '"'
             console.log(search);
             ajaxForSearch("module/shop/controller/controller_shop.php?op=search&all=" + search)
+
         } else {
             console.log("shop")
             ajaxForSearch("module/shop/controller/controller_shop.php?op=all")
@@ -205,87 +204,6 @@ function entra() {
 
 }
 
-//////FUNCION DEL LISTADO DE SHOP
-function photo() {
-    $.ajax({
-        type: "GET",
-        dataType: 'json',
-        url: "module/shop/controller/controller_shop.php?op=all"
-    })
-        .done(function (data) {
-            // console.log(data);
-            for (row in data) {
-                //Cuando solo quede un producto avisara al cliente de que este producto es el ultimo
-                //Ademas avisara y mostrara que el articulo esta en oferta
-
-                if ((data[row].unidades) == 1) {
-                    $("#list_products").append(
-                        // "<div class='row grid gallery-info'>" +
-                        "<figure class='effect-steve' >" +
-                        "<img src= '" + data[row].route + "' alt='img15'>" +
-                        "<figcaption class='detail' id='" + data[row].cod_ref + "'$>" +
-                        "<h2>" + data[row].marca + "<span> " + data[row].nombre + " </span></h2>" +
-                        // "<p style='text-decoration: line-through;'>  "+ (data[row].precio) + "$</p>" +
-                        // "<p style='color:red'; >"+ ((data[row].precio)*0.5) + "$</p>"+
-                        "<p><a style='text-decoration: line-through;font-size: 15px;'>" + (data[row].precio) + "$</a><a style='color:red; font-size: 15px;'> &nbsp;&nbsp;&nbsp;&nbsp;" + ((data[row].precio) * 0.5) + "$</a></p>" +
-                        "</br></br></br></br></br>" +
-                        // "<p><a style='color:red;font-size: 16px;'>Ultima unidad &nbsp</a><a style='color:red;font-size: 15px;'>Articulo al 50%</a></p>" +
-                        "<p style='color:red;font-size: 15px;'>Ultima unidad</p>" +
-                        "<p style='color:red;font-size: 15px;'>Articulo al 50%</p>" +
-                        "</figcaption>" +
-                        "</figure>" +
-                        "</div>");
-
-                }
-                //Cuando queden menos de 3 unidades avisara al cliente de que quedan pocas unidades
-                else if (((data[row].unidades) < 3) && ((data[row].unidades) != 0)) {
-                    $("#list_products").append(
-                        // "<div style='row grid gallery-info'>" +
-                        "<figure class='effect-steve' >" +
-                        "<img src= '" + data[row].route + "'>" +
-                        "<figcaption alt='img15' class='detail' id='" + data[row].cod_ref + "'>" +
-                        "<h2>" + data[row].marca + "<span> " + data[row].nombre + " </span></h2>" +
-                        "<p style='font-size: 15px';>" + data[row].precio + "$</p>" +
-                        "</br></br></br></br></br></br>" +
-                        "<p style='color:red; font-size: 15px;'>Quedan pocas unidades</p>" +
-                        "</figcaption>" +
-                        "</figure>" +
-                        "</div>");
-
-                    //Cuando queden 0 unidades avisara al cliente de que no queda stock de dicho porducto
-
-                } else if ((data[row].unidades) == 0) {
-                    $("#list_products").append(
-                        // "<div style='row grid gallery-info'>" +
-                        "<figure class='effect-steve' >" +
-                        "<img style=' opacity:0.5 ;' src= '" + data[row].route + "' alt='img15'  >" +
-                        "<figcaption class='detail' id='" + data[row].cod_ref + "'>" +
-                        "<h2>" + data[row].marca + "<span> " + data[row].nombre + " </span></h2>" +
-                        "<p style='font-size: 15px';>" + data[row].precio + "$</p>" +
-                        "</br></br></br></br></br></br>" +
-                        "<p style=color:red;font-size: 15px;'>No queda stock</p>" +
-                        "</figcaption>" +
-                        "</figure>" +
-                        "</div>");
-                } else {
-                    $("#list_products").append(
-                        // "<div style='row grid gallery-info'>" +
-                        "<figure class='effect-steve' >" +
-                        "<img src= '" + data[row].route + "' alt='img15' >" +
-                        "<figcaption class='detail' id='" + data[row].cod_ref + "' >" +
-                        "<h2>" + data[row].marca + "<span> " + data[row].nombre + " </span></h2>" +
-                        "<p style='font-size: 15px';>" + data[row].precio + "$</p>" +
-                        "</figcaption>" +
-                        "</figure>" +
-                        "</div>");
-                }
-
-            }
-        }).fail(function () {
-            console.log("fail")
-        })
-}
-
 /////FUNCION PARA IR DEL SHOP AL DETALIS
 function click() {
     $(document).on('click', '.detail', function () {
@@ -294,6 +212,15 @@ function click() {
         var tipo = this.getAttribute('type');
         console.log(cod_ref);
         console.log(tipo);
+
+        ///CADA VEZ QUE CLICAMOS SE SUMAN LAS VISITAS DE ESE PRODUCTO A LA BASE DE DATOS 
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "module/shop/controller/controller_shop.php?op=views&cod_ref=" + cod_ref
+        }).fail(function () {
+            console.log("fail")
+        })
 
         $.ajax({
             type: "GET",
@@ -305,7 +232,7 @@ function click() {
             console.log(data);
             $("#container").empty();
             $("#container1").empty();
-            $("#fil").empty();
+            $("#fil_empty").empty();
             $("#maps").empty();
 
             for (i = 0; i < 1; i++) {
@@ -344,8 +271,7 @@ function click() {
                     //Cuando solo quede un producto avisara al cliente de que este producto es el ultimo
                     //Ademas avisara y mostrara que el articulo esta en oferta
                     $("#detail_products").append(
-                        '<img src= ' + data[i].route + ' class="detail" id=' + data[i].cod_ref + ' type=' + data[row].tipo + '>'
-
+                        '<img src= ' + data[i].route + ' class="detail" id=' + data[i].cod_ref + ' type=' + data[i].tipo + '>'
                     )
                 } else {
                     i = 4;
@@ -907,17 +833,23 @@ function initMap() {
 
 ////FUNCTION PARA CUANDO CLICQUES EN EL MAPA ESTE SE VUELVA GRANDE
 function click_map() {
-    $(document).on('click', '#maps', function () {
-        console.log("mapa");
-        $("#container").empty();
-        $("#container1").empty();
-        $("#fil").empty();
+    do {
+        var count = 0
+        $(document).on('click', '#maps', function () {
+            $(document).on('click', '.detail', function () {
+                count = 1
+            })
+            console.log("mapa");
+            $("#container").empty();
+            $("#container1").empty();
+            $("#fil").empty();
 
-        $("#maps").append(
-            '<a id="fle" href=index.php?page=controller_shop&op=list><img id="flecha" src=view/images/flecha.png></a>'
-        )
-        $("#maps").css({ "width": "80%", "height": "40%" })
+            $("#maps").append(
+                '<a id="fle" href=index.php?page=controller_shop&op=list><img id="flecha" src=view/images/flecha.png></a>'
+            )
+            $("#maps").css({ "width": "80%", "height": "40%" })
+            count = 1
 
-
-    })
+        })
+    } while (count == 1);
 }

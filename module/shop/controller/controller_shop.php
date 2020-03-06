@@ -121,7 +121,24 @@ switch ($_GET['op']) {
             echo json_encode($dinfo);
         }
         break;
+    case 'views':
+        try {
+            $daoshop = new DAOshop();
+            $rlt = $daoshop->views($_GET['cod_ref']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
 
+        if (!$rlt) {
+            echo json_encode("error");
+        } else {
+            $dinfo = array();
+            foreach ($rlt as $row) {
+                array_push($dinfo, $row);
+            }
+            echo json_encode($dinfo);
+        }
+        break;
     default:
         include("view/inc/error404.php");
         break;

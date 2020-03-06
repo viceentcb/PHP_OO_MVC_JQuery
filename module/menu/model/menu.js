@@ -242,6 +242,18 @@ function enter() {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             alert('You pressed a "enter" key in textbox');
+            var type = $("#type").val();
+            console.log("type="+type)
+            var brand = $("#brand").val();
+            console.log("brand=" + brand)
+            var product = $("#autocomplete").val();
+            console.log("product=" + product)
+    
+     
+                localStorage.setItem('typ', type);
+                localStorage.setItem('bra', brand);
+                localStorage.setItem('pro', product);
+                $(window).attr('location', 'index.php?page=controller_shop&op=list')
         }
     });
 }

@@ -6,7 +6,7 @@ class DAOshop
 {
 	function select_all_products()
 	{
-		$sql = "SELECT * FROM joya";
+		$sql = "SELECT * FROM joya ORDER BY views DESC";
 		$connection = connect::con();
 
 		$res = mysqli_query($connection, $sql);
@@ -24,7 +24,7 @@ class DAOshop
 	}
 	function select_categoria($type)
 	{
-		$sql = "SELECT * FROM joya WHERE tipo='$type'";
+		$sql = "SELECT * FROM joya WHERE tipo='$type' ORDER BY views DESC";
 		$connection = connect::con();
 
 		$res = mysqli_query($connection, $sql);
@@ -33,7 +33,7 @@ class DAOshop
 	}
 	function select_filter($checks,$order)
 	{
-		$sql = "SELECT * FROM joya $checks $order";
+		$sql = "SELECT * FROM joya $checks $order ORDER BY views DESC";
 		$conexion = connect::con();
 		$res = mysqli_query($conexion, $sql);
 		connect::close($conexion);
@@ -47,20 +47,20 @@ class DAOshop
 		return $res;
 	}
 	function select_search($all){
-		$sql = "SELECT * FROM joya $all";
+		$sql = "SELECT * FROM joya $all ORDER BY views DESC";
 		$connection = connect::con();
 		$res = mysqli_query($connection, $sql);
 		connect::close($connection);
 		return $res;
 	}
 
+	function views($cod_ref)
+	{
+		$sql = "UPDATE joya set views=(views+1) WHERE cod_ref= '$cod_ref'";
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
 
-	// function select_product($cref){
-	// 	$sql = "SELECT cref,brand,model,price,size,img,description FROM shoes WHERE cref='$cref'";
-	// 	$connection = connect::con();
-
-	// 	$res = mysqli_query($connection, $sql)->fetch_object();
-	// 	connect::close($connection);
-	// 	return $res;
-	// }
 }

@@ -64,7 +64,14 @@ color: greenyellow;
     flex: 0 0 50%;
     max-width: 200%;
 } */
-
+.img_maps{
+    width: 100px; 
+    height: 170px;
+}
+.view_more{
+    width: 280px; 
+    height: 100px;
+}
 #map {
     height: 100%;
 }
