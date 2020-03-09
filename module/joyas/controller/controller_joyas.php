@@ -125,30 +125,6 @@ switch ($_GET['op']) {
         }
         break;
 
-        // case 'read';
-        //     // print_r("entra read");
-        //     try {
-        //         // print_r("entra try");
-
-        //         $daojoyas = new DAOjoyas();
-        //         // print_r("luego dao");
-
-        //         $rdo = $daojoyas->select_joyas($_GET['cod_ref']);
-        //         // print_r("rdo");
-
-        //         $joyas = get_object_vars($rdo);
-        //     } catch (Exception $e) {
-        //         $callback = 'index.php?page=503';
-        //         die('<script>window.location.href="' . $callback . '";</script>');
-        //     }
-        //     if (!$rdo) {
-        //         $callback = 'index.php?page=503';
-        //         die('<script>window.location.href="' . $callback . '";</script>');
-        //     } else {
-        //         include("module/joyas/view/read_joyas.php");
-        //     }
-        //     break;
-
     case 'read';
         // print_r("entra");
         // echo ($_GET['modal']);

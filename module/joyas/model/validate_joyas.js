@@ -5,88 +5,6 @@ function validate_cod_ref(cod_ref) {
     }
     return false;
 }
-// function validate_diametro(diametro){
-//     if (cod_ref.length > 0) {
-//         var regexp = /^[0-9]{3}$/;
-//         return regexp.test(cod_ref);
-//     }
-//     return false;
-// }
-// function validate_nombre(nombre){
-//     if (nombre.length > 0){
-//         var reg=/^[a-zA-Z]*$/;
-//         return reg.test(nombre);
-//     }
-//     return false;
-// }
-
-// function validate_tipo(texto){
-//   var i;
-//   var key=0;
-//   for(i=0; i<texto.length;i++){
-//       if(texto[i].checked){
-//           key=1
-//       }
-//   }
-
-//   if(key==1){
-//       return true;
-//   }
-//   if(key==0){
-//       return false;
-//   }
-// }
-
-// function validate_forma(texto){
-//   var i;
-//   var key=0;
-//   for(i=0; i<texto.length;i++){
-//       if(texto[i].checked){
-//           key=1
-//       }
-//   }
-
-//   if(key==1){
-//       return true;
-//   }
-//   if(key==0){
-//       return false;
-//   }
-// }
-
-// function validate_oro(texto){
-//   var i;
-//   var key=0;
-//   for(i=0; i<texto.length;i++){
-//       if(texto[i].checked){
-//           key=1
-//       }
-//   }
-
-//   if(key==1){
-//       return true;
-//   }
-//   if(key==0){
-//       return false;
-//   }
-// }
-// function validate_gema(texto){
-//   var i;
-//   var key=0;
-//   for(i=0; i<texto.length;i++){
-//       if(texto[i].checked){
-//           key=1
-//       }
-//   }
-
-//   if(key==1){
-//       return true;
-//   }
-//   if(key==0){
-//       return false;
-//   }
-// }
-
 function validate_array(texto){
   var i;
   var key=0;
@@ -104,16 +22,6 @@ function validate_array(texto){
   }
 }
 
-// function validate_oro(array){
-//   var check=false;
-//   for ( var i = 0, l = array.options.length, o; i < l; i++ ){
-//       o = array.options[i];
-//       if ( o.selected ){
-//           check= true;
-//       }
-//   }
-//   return check;
-// }
 
 
 function validate_joyas(op){
@@ -229,58 +137,3 @@ function validate_joyas(op){
 
   }
 }
-
-// function validate_joyas_update(){
-//   var check=true
-    
-//     var v_cod_ref=document.getElementById('cod_ref').value;
-//     var v_nombre=document.getElementById('nombre').value;
-//     var v_diametro=document.getElementById('diametro').value;
-
-// //  console.log(v_tipo);
-
-
-//     var r_cod_ref=validate_cod_ref(v_cod_ref);
-
-//     // var r_nombre=validate_nombre(v_nombre);
-
-//     console.log("Entra");
-//     console.log("v_cod_ref=" + v_cod_ref);
-//     if (v_cod_ref==="") {
-//         console.log("Entra if campo vacio")
-//         document.getElementById('e_cod_ref').innerHTML = "Este campo no puede quedar vacío";
-//           check=false;
-//         return check;
-//     }else if (!r_cod_ref) {
-//         document.getElementById('e_cod_ref').innerHTML = "El Codigo de referencia introducido no es valido";
-//           check=false;
-//         return check;
-//     } else {
-// 		document.getElementById('e_cod_ref').innerHTML = "";
-//   }
-  
-//   console.log("v_nombre" + v_nombre);
-//     if (v_nombre==="") {
-//         document.getElementById('e_nombre').innerHTML = "Este campo no puede quedar vacío";
-//           check=false;
-//         return check;
-//     } else {
-//         document.getElementById('e_nombre').innerHTML = "";
-//     }
-
-//     console.log("v_diametro" + v_diametro);
-//     if (v_diametro==="") {
-//       document.getElementById('e_diametro').innerHTML = "Este campo no puede quedar vacío";
-//         check=false;
-//       return check;
-//     }else if(15>v_diametro>26){
-//       document.getElementById('e_diametro').innerHTML = "El diametro tiene que ser mayor de 15 y menor que 25";
-//       check=false;
-//     return check
-//     } else {
-//       document.getElementById('e_diametro').innerHTML = "";
-//   }
-//     document.form_joyas_up.submit();
-// 	document.form_joyas_up.action="index.php?page=controller_joyas&op=update";
-
-// }
