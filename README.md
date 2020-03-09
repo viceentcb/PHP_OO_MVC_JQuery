@@ -65,3 +65,4 @@
 * Languages
 * Check visited, Order by Visited
 * All combinations search 
+* All pages with controller and top pages
