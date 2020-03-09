@@ -9,8 +9,7 @@ $(document).ready(function () {
     // click_more();
 
 });
-function click_more() {
-}
+
 function photo() {
     var limit = 4
 

@@ -51,7 +51,6 @@ switch ($_GET['op']) {
         try {
             $daoshop = new DAOshop();
             $rlt = $daoshop->select_categoria($_GET['type']);
-            // $rlt = $daoshop->select_datail($_GET['cod_ref'],$_GET['cod_ref']);
 
         } catch (Exception $e) {
             echo json_encode("error");
@@ -103,6 +102,24 @@ switch ($_GET['op']) {
             echo json_encode($dinfo);
         }
         break;
+        case 'desc_maps':
+            try {
+                $daoshop = new DAOshop();
+                $rlt = $daoshop->desc_maps($_GET['lat'], $_GET['lng']);
+            } catch (Exception $e) {
+                echo json_encode("error");
+            }
+    
+            if (!$rlt) {
+                echo json_encode("error");
+            } else {
+                $dinfo = array();
+                foreach ($rlt as $row) {
+                    array_push($dinfo, $row);
+                }
+                echo json_encode($dinfo);
+            }
+            break;
     case 'search':
         try {
             $daoshop = new DAOshop();

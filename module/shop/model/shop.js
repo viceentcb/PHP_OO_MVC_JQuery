@@ -5,7 +5,7 @@ $(document).ready(function () {
     local();
     ajaxForSearch();
     filter();
-    click_map();
+    // click_map();
     if (document.getElementById("maps") != null) {
         var script = document.createElement('script');
         script.src = "https://maps.googleapis.com/maps/api/js?key=" + "AIzaSyAtHMkPSlbaZdqjz5BZzCuhKV8jpOQvJnw" + "&callback=initMap";
@@ -782,6 +782,7 @@ function filter() {
 
 ////FUNCTION PARA ENSEÑAR EL MAPA
 function initMap() {
+
     var ray = [];
 
     // var
@@ -801,7 +802,7 @@ function initMap() {
     $.ajax({
         type: "GET",
         dataType: 'json',
-        url: "module/contact/controller/controller_contact.php?op=maps"
+        url: "module/shop/controller/controller_shop.php?op=maps"
 
     }).done(function (data) {
         console.log(data);
@@ -820,15 +821,108 @@ function initMap() {
 
             google.maps.event.addListener(newMarker, 'click', (function (newMarker, row) {
                 return function () {
-                    infowindow.setContent(
-                        data[row].descripcion);
-                    infowindow.open(map, newMarker);
-                }
+                    var lat = data[row].lat
+                    var lng = data[row].lng
+                    $.ajax({
+                        type: "GET",
+                        dataType: 'json',
+                        url: "module/shop/controller/controller_shop.php?op=desc_maps&lat=" + lat +"&lng=" + lng
+                    }).done(function (data) {
+                        console.log(data);
+                        var name=""
+                        for (row in data){
+                            name= name+ data[row].descripcion
+                        }
+                        console.log(name)
+                        infowindow.setContent(
+                            name);
+                        infowindow.open(map, newMarker);
+                    })
+                    }
             })(newMarker, row));
-
-            ray.push(newMarker);
-        }
+    ray.push(newMarker);
+}
     })
+    // var ray = [];
+    // var map = new google.maps.Map(document.getElementById('maps'), {
+    //     zoom: 6,
+    //     center: new google.maps.LatLng(40.05, -3.695447),
+    //     mapTypeId: google.maps.MapTypeId.ROADMAP
+    // });
+
+    // var infowindow = new google.maps.InfoWindow();
+    // $.ajax({
+    //     type: "GET",
+    //     dataType: 'json',
+    //     url: "module/shop/controller/controller_shop.php?op=maps"
+
+    // }).done(function (data) {
+    //     console.log(data);
+
+    //     for (i = 0; i < data.length; i++) {
+
+    //         if (i == 0) {
+    //             var newMarker = new google.maps.Marker({
+    //                 position: new google.maps.LatLng(
+    //                     data[i].lat,
+    //                     data[i].lng),
+    //                 map: map,
+    //                 title:
+    //                     data[i].tienda
+    //             });
+
+    //             var name0 = ""
+    //             name0 = name0 + data[i].nombre
+    //         } else {
+    //             if (data[i].lat == (data[i - 1].lat)) {
+    //                 console.log("if")
+    //                 console.log(data[i])
+
+    //                 name0 = name0 + data[i].nombre
+
+
+    //                 google.maps.event.addListener(newMarker, 'click', (function (newMarker) {
+    //                     return function () {
+    //                         infowindow.setContent(
+    //                             name0);
+    //                         infowindow.open(map, newMarker);
+
+    //                     }
+    //                 })(newMarker, row));
+
+    //                 ray.push(newMarker);
+
+    //             } else if (data[i].lat != (data[i - 1].lat)) {
+    //                 console.log("else")
+    //                 console.log(data[i])
+
+
+    //                 newMarker = new google.maps.Marker({
+    //                     position: new google.maps.LatLng(
+    //                         data[i].lat,
+    //                         data[i].lng),
+    //                     map: map,
+    //                     title:
+    //                         data[i].tienda
+    //                 });
+
+    //                 google.maps.event.addListener(newMarker, 'click', (function (newMarker, i) {
+    //                     return function () {
+    //                         infowindow.setContent(
+    //                             data[i].nombre);
+    //                         infowindow.open(map, newMarker);
+    //                     }
+    //                 })(newMarker, i));
+    //                 ray.push(newMarker);
+
+
+    //             }
+
+    //         }
+
+    //     }
+
+    // })
 }
 
 ////FUNCTION PARA CUANDO CLICQUES EN EL MAPA ESTE SE VUELVA GRANDE

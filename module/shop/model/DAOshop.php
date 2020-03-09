@@ -40,7 +40,18 @@ class DAOshop
 		return $res;
 	}
 	function select_maps(){
-		$sql = "SELECT * FROM tiendas";
+		$sql = "SELECT distinct t.tienda, t.lat, t.lng
+		FROM tiendas t, joya j, prod_tienda p
+		WHERE t.cod_tienda=p.cod_tienda AND j.cod_ref=p.cod_ref";
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
+	function desc_maps($lat,$lng){
+		$sql = "SELECT j.descripcion
+				FROM tiendas t, joya j, prod_tienda p
+				WHERE t.cod_tienda=p.cod_tienda AND j.cod_ref=p.cod_ref AND t.lat='$lat' and t.lng='$lng' ";
 		$connection = connect::con();
 		$res = mysqli_query($connection, $sql);
 		connect::close($connection);
