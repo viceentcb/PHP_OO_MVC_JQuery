@@ -52,7 +52,7 @@
 | Page | Features |
 |---------|-------------|
 | Home | Porduct-Detail, Type-Shop, View more|
-| Shop | List, Details, Details-Related, Filters,Filter-Order By, Maps, Products in map (M-M), Maps-Details |
+| Shop | List, Details, Details-Related, Filters,Filter-Order By, Maps, Products in map (Relationship M:M), Maps-Details |
 | Products list |  Modal, Delete All, CRUD, JS/PHP validation|
 | Products view | Datatable, Product information |
 | Contact | Maps-Stores, InfoWindow, Marker, |
@@ -66,3 +66,8 @@
 * Check visited, Order by Visited
 * All combinations search 
 * All pages with controller and top pages
+
+
+<h1 align="center" ##>License</h1>
+
+<p align="center" >Creative Commons Attribution 3.0 Unported</p

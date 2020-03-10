@@ -832,13 +832,13 @@ function initMap() {
                         url: "module/shop/controller/controller_shop.php?op=desc_maps&lat=" + lat +"&lng=" + lng
                     }).done(function (data) {
                         console.log(data);
-                        var name=""
+                        var descripcion=""
                         for (row in data){
-                            name= name+ data[row].descripcion
+                            descripcion= descripcion+ data[row].descripcion
                         }
-                        console.log(name)
+                        console.log(descripcion)
                         infowindow.setContent(
-                            name);
+                            descripcion);
                         infowindow.open(map, newMarker);
                     })
                     }
