@@ -5,6 +5,8 @@ $(document).ready(function () {
     local();
     ajaxForSearch();
     filter();
+    pagination();
+
     // click_map();
     if (document.getElementById("maps") != null) {
         var script = document.createElement('script');
@@ -164,7 +166,8 @@ function local() {
 
         } else {
             console.log("shop")
-            ajaxForSearch("module/shop/controller/controller_shop.php?op=all")
+            number=0
+            ajaxForSearch("module/shop/controller/controller_shop.php?op=all&number=" + number)
         }
     }//End if document
     console.log("Borrar datos");
@@ -867,3 +870,42 @@ function click_map() {
         })
     } while (count == 1);
 }
+
+function pagination(){
+
+
+        $.ajax({
+          type: 'GET',
+          dataType: "json",
+          url: "module/shop/controller/controller_shop.php?op=count_pords"
+        })
+          .done(function (data) {
+              console.log(data)
+           console.log( data[0].total)
+           var number_products= data[0].total
+           pages=number_products/3
+           console.log(pages)
+            $('#pagination').bootpag({
+              total: pages,
+              page: 1,
+              maxVisible: 3
+            }).on("page", function ( event, num) {
+              console.log(num);
+              number= 3 *(num-1)
+              $.ajax({
+                type: 'GET',
+                dataType: "json",
+                url: "module/shop/controller/controller_shop.php?op=all&number=" + number,
+            })
+              
+              .done(function (data) {
+                console.log(data);
+      
+              $('#list_products').empty();
+           
+              ajaxForSearch("module/shop/controller/controller_shop.php?op=all&number=" + number)
+
+            });
+          });//end on
+          });//enddone
+      }

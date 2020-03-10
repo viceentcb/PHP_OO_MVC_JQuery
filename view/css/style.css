@@ -75,6 +75,10 @@ color: greenyellow;
 #map {
     height: 100%;
 }
+#pagination {
+  
+    margin:auto;
+}
 #maps {
     height: 12%;
     width: 50%;

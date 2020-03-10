@@ -14,7 +14,7 @@ switch ($_GET['op']) {
     case 'all':
         try {
             $daoshop = new DAOshop();
-            $rlt = $daoshop->select_all_products();
+            $rlt = $daoshop->select_all_products($_GET['number']);
         } catch (Exception $e) {
             echo json_encode("error");
         }
@@ -29,6 +29,24 @@ switch ($_GET['op']) {
             echo json_encode($dinfo);
         }
         break;
+        case 'count_pords':
+            try {
+                $daoshop = new DAOshop();
+                $rlt = $daoshop->count_pords();
+            } catch (Exception $e) {
+                echo json_encode("error");
+            }
+    
+            if (!$rlt) {
+                echo json_encode("error");
+            } else {
+                $dinfo = array();
+                foreach ($rlt as $row) {
+                    array_push($dinfo, $row);
+                }
+                echo json_encode($dinfo);
+            }
+            break;
     case 'detail':
         try {
             $daoshop = new DAOshop();
