@@ -58,8 +58,6 @@ switch ($_GET['op']) {
                     $callback = 'index.php?page=controller_joyas&op=list';
                     die('<script>window.location.href="' . $callback . '";</script>');
                 } else {
-                    print_r("else");
-                    die();
                     $callback = 'index.php?page=503';
                     die('<script>window.location.href="' . $callback . '";</script>');
                 }

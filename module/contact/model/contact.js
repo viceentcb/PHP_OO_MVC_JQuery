@@ -1,7 +1,7 @@
 $(document).ready(function () {
   if (document.getElementById("map") != null) {
     var script = document.createElement('script');
-    script.src = "https://maps.googleapis.com/maps/api/js?key=" + "AIzaSyAtHMkPSlbaZdqjz5BZzCuhKV8jpOQvJnw" + "&callback=initMap";
+    script.src = "https://maps.googleapis.com/maps/api/js?key=" + api + "&callback=initMap";
     script.async;
     script.defer;
     document.getElementsByTagName('script')[0].parentNode.appendChild(script);

@@ -95,6 +95,9 @@
 
       <script src="module/menu/model/menu.js"></script>
 
+      <!-- Archivos para no subir al github -->
+      <script src="model/gitignore.js"></script>
+
 </body>
 
 </html>
