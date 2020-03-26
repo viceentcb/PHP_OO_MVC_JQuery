@@ -7,7 +7,6 @@ switch ($_GET['op']) {
         break;
     case 'register':
         try {
-
             $daologin = new DAOlogin();
             $rlt = $daologin->insert_user($_POST['user_name_reg'], $_POST['passw_reg'], $_POST['mail']);
         } catch (Exception $e) {
