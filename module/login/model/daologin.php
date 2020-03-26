@@ -4,13 +4,14 @@ $path = $_SERVER['DOCUMENT_ROOT'] . '/PROJECT_JOYAS/';
 
 
     class DAOlogin{
-        function insert_user($user_name_reg, $passw_reg, $mail){
+        function insert_user(){
 
-            $password = password_hash($passw_reg, PASSWORD_DEFAULT);
-            $hashavatar= md5( strtolower( trim( $user_name_reg ) ) );
-            $avatar="https://www.gravatar.com/avatar/$hashavatar?s=40&d=identicon";
+            // $password = password_hash($passw_reg, PASSWORD_DEFAULT);
+            // $hashavatar= md5( strtolower( trim( $user_name_reg ) ) );
+            // $avatar="https://www.gravatar.com/avatar/$hashavatar?s=40&d=identicon";
 
-            $sql = "INSERT INTO users VALUES('$user_name_reg', '$password', $mail','$avatar')";
+
+            $sql = "INSERT INTO users(user_name,password,mail,avatar) VALUES('fwrf', 'ferfe', 'fregf','fref')";
             $connection = connect::con();
             $res = mysqli_query($connection, $sql);
             connect::close($connection);

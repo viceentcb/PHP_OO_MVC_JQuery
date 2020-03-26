@@ -7,16 +7,16 @@ switch ($_GET['op']) {
         include("module/login/view/login.html");
         break;
     case 'register':
- 
         try {
             $daologin = new DAOlogin();
-            $rlt = $daologin->insert_user($_POST['user_name_reg'], $_POST['passw_reg'], $_POST['mail']);
-        } catch (Exception $e) {
+            $rlt = $daologin->insert_user();
+        }
+        catch (Exception $e) {
             echo json_encode("error");
         }
-        if (!$rst) {
-            echo json_encode("ya existe este usuario");
-        } else {
+        if(!$rlt){
+            echo json_encode("No se ha insertado correctamente");
+        }else{
             echo json_encode("ok");
         }
         break;
