@@ -1,11 +1,13 @@
 <?php
 $path = $_SERVER['DOCUMENT_ROOT'] . '/PROJECT_JOYAS/';
+include($path . "module/login/model/DAOlogin.php");
 
 switch ($_GET['op']) {
     case 'list':
         include("module/login/view/login.html");
         break;
     case 'register':
+ 
         try {
             $daologin = new DAOlogin();
             $rlt = $daologin->insert_user($_POST['user_name_reg'], $_POST['passw_reg'], $_POST['mail']);

@@ -99,12 +99,11 @@ function register() {
 			console.log("diferente a false")
 			var userinfo = $('#form_register').serialize();
 			console.log('userinfo=' +  userinfo)
-
 			$.ajax({
-                type: 'POST',
-                url: 'module/login/controller/controller_login.php?op=register',	
-                data: userinfo,
-            })   .done(function (data) {
+				type: 'POST',
+				url: 'module/login/controller/controller_login.php?op=register&' + userinfo,
+				data: userinfo,
+			})   .done(function (data) {
 				console.log(data);
 				if (data == '"ok"') {
 					alert("Usuario registrado corerectamente")
