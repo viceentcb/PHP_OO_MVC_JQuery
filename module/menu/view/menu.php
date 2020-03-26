@@ -23,7 +23,9 @@
                      <li class="nav-item">
                         <a href="index.php?page=controller_shop&op=list" class="nav-link">Shop</a>
                      </li>
-
+                     <li class="nav-item">
+                        <a href="index.php?page=controller_login&op=list" class="nav-link">Login</a>
+                     </li>
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                            Pages
@@ -54,6 +56,7 @@
                         </button>
                      </div>
                   </ul>
+
 
                </div>
 

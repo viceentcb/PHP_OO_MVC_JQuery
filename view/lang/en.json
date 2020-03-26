@@ -23,7 +23,12 @@
     "Leer":"Reed",
     "Cambiar":"Update",
     "Borrar":"Delete",
-    "Galeria":"Gallery"
+    "Galeria":"Gallery",
+    "Nombre de usuario:": "User name",
+    "Nombre de usuario": "User name",
+    "Contraseña:": "Password:",
+    "Confirme contraseña:":"Confirm Password:"
+
     
         }
   }

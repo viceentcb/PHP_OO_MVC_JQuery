@@ -30,7 +30,11 @@ if ((isset($_GET['page'])) && ($_GET['page'] === "controller_joyas")) {
 	include("view/inc/top_page_shop.php");
 	include("view/inc/top_page_menu.php");
 	include("view/inc/top_page.php");
-} else {
+}else if ((isset($_GET['page'])) && ($_GET['page'] === "controller_login")) {
+	include("view/inc/top_page_login.php");
+	include("view/inc/top_page_menu.php");
+	include("view/inc/top_page.php");
+}else {
 	include("view/inc/top_page_menu.php");
 	include("view/inc/top_page.php");
 }

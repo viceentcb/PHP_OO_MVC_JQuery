@@ -41,7 +41,7 @@ function click_car() {
 
 ///FUNCION PARA QUE AYUDE CON LOS TIPOS
 function offer_type() {
-    console.log("offer_type")
+    // console.log("offer_type")
     br = ""
     $.ajax({
         type: "GET",
@@ -49,7 +49,7 @@ function offer_type() {
         url: "module/menu/controller/controller_menu.php?op=type&brand=" + br
     })
         .done(function (data) {
-            console.log(data);
+            // console.log(data);
             $("#type").empty();
 
             $("#type").append(
@@ -113,7 +113,7 @@ function offer_brand() {
         url: "module/menu/controller/controller_menu.php?op=brand&type=" + ty
     })
         .done(function (data) {
-            console.log(data);
+            // console.log(data);
             $("#brand").empty();
 
             $("#brand").append(

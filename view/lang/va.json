@@ -23,6 +23,13 @@
     "Borrar todo": "Borrar tot",
     "Leer": "Llegir",
     "Cambiar": "Camviar",
-    "Borrar": "Borrar"
+    "Borrar": "Borrar",
+    "Nombre de usuario:": "Nom de usuari",
+    "Nombre de usuario": "Nom de usuari",
+    "Contraseña:": "Contrasenya:",
+    "Confirme contraseña:":"Confirme contrasenya:"
+
+
+
   }
 }
