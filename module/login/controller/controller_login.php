@@ -8,16 +8,8 @@ switch ($_GET['op']) {
     case 'register':
         try {
 
-            $daohome = new DAOhome();
-            $rlt = $daohome->select_val($_GET['user_name'], $_GET['password'], $_GET['type'], $_GET['mail'], $_GET['avatar']);
-            // $opciones = [
-            //     'cost' => 12,
-            // ];
-            // $password =  password_hash($_POST['password'], PASSWORD_BCRYPT, $opciones);
-            // $has_avatar=$_POST['email'];
-            // $avatar = "https://api.adorable.io/avatars/80/$has_avatar";
-            // $daoreg = new DAOLogin();
-            // $rst = $daoreg->insert_user($_POST['email'],$_POST['nickname'],$password,$avatar);
+            $daologin = new DAOlogin();
+            $rlt = $daologin->insert_user($_POST['user_name_reg'], $_POST['passw_reg'], $_POST['mail']);
         } catch (Exception $e) {
             echo json_encode("error");
         }
