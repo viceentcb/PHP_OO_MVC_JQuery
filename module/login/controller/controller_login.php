@@ -19,6 +19,7 @@ switch ($_GET['op']) {
         if (!$rlt) {
             echo json_encode('not correct');
         } else {
+
             echo json_encode('correct');
         }
         break;
@@ -46,17 +47,14 @@ switch ($_GET['op']) {
                 echo json_encode('existe');
             }
         }
+
         break;
 
     case 'logout':
 
-
-        session_unset($_SESSION['tipo']);
-
-        if (session_destroy()) {
-            $url = 'index.php?page=controller_home&op=list';
-            die('<script>window.location.href="' . $url . '";</script>');
-        }
+        session_unset();
+        session_destroy();
+          
         break;
 
     case 'activity':

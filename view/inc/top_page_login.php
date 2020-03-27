@@ -16,7 +16,7 @@
    <script type="text/javascript" src="view/lang/translate.js"></script>
 
    <link href="view/css/style.css" rel="stylesheet" type="text/css" />
-   <script src="module/login/model/login.js"></script>
+   <!-- <script src="module/login/model/login.js"></script> -->
 
 </body>
 

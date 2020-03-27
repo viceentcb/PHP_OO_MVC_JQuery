@@ -2,6 +2,7 @@ $(document).ready(function () {
 	// console.log("READY")
 	register();
 	login();
+	logout();
 });
 
 function validate_register() {
@@ -222,5 +223,20 @@ function login() {
 
 		}
 
+	})
+}
+
+function logout() {
+	$('#logout').on("click", function () {
+
+		$.ajax({
+			type: 'POST',
+			url: 'module/login/controller/controller_login.php?op=register'
+		}).done(function () {
+			redirect_home();
+
+		}).fail(function () {
+			console.log("fail");
+		})
 	})
 }

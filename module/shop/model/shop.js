@@ -6,6 +6,9 @@ $(document).ready(function () {
     ajaxForSearch();
     filter();
     pagination();
+    like();
+
+
 
     // click_map();
     if (document.getElementById("maps") != null) {
@@ -16,6 +19,8 @@ $(document).ready(function () {
         document.getElementsByTagName('script')[0].parentNode.appendChild(script);
     }
 });
+
+
 
 
 /////FUNCION PARA IR DEL HOME AL LISTADO DE SHOP
@@ -32,10 +37,11 @@ function ajaxForSearch(durl) {
             for (row in data) {
                 //Cuando solo quede un producto avisara al cliente de que este producto es el ultimo
                 //Ademas avisara y mostrara que el articulo esta en oferta
-
                 if ((data[row].unidades) == 1) {
                     $("#list_products").append(
                         // "<div class='row grid gallery-info'>" +
+                        "<table>" +
+                        "<td>" +
                         "<figure class='effect-steve' >" +
                         "<img src= '" + data[row].route + "' alt='img15'>" +
                         "<figcaption class='detail' id='" + data[row].cod_ref + "' type='" + data[row].tipo + "'>" +
@@ -49,13 +55,19 @@ function ajaxForSearch(durl) {
                         "<p style='color:red;font-size: 15px;'>Articulo al 50%</p>" +
                         "</figcaption>" +
                         "</figure>" +
-                        "</div>");
+                        "</div>" +
+                        "</button>" +
+                        "<img id='mi-boton' class='btn btn-default' src='view/images/like.png'>" +
+                        "</td>" +
+                        "</table>");
 
                 }
                 //Cuando queden menos de 3 unidades avisara al cliente de que quedan pocas unidades
                 else if (((data[row].unidades) < 3) && ((data[row].unidades) != 0)) {
                     $("#list_products").append(
                         // "<div style='row grid gallery-info'>" +
+                        "<table>" +
+                        "<td>" +
                         "<figure class='effect-steve' >" +
                         "<img src= '" + data[row].route + "'>" +
                         "<figcaption alt='img15' class='detail' id='" + data[row].cod_ref + "' type='" + data[row].tipo + "'>" +
@@ -65,13 +77,20 @@ function ajaxForSearch(durl) {
                         "<p style='color:red; font-size: 15px;'>Quedan pocas unidades</p>" +
                         "</figcaption>" +
                         "</figure>" +
-                        "</div>");
+                        "</div>" +
+                        "</button>" +
+                        "<img id='mi-boton' class='btn btn-default' src='view/images/like.png'>" +
+
+                        "</td>" +
+                        "</table>");
 
                     //Cuando queden 0 unidades avisara al cliente de que no queda stock de dicho porducto
 
                 } else if ((data[row].unidades) == 0) {
                     $("#list_products").append(
                         // "<div style='row grid gallery-info'>" +
+                        "<table>" +
+                        "<td>" +
                         "<figure class='effect-steve' >" +
                         "<img style=' opacity:0.5 ;' src= '" + data[row].route + "' alt='img15'  >" +
                         "<figcaption class='detail' id='" + data[row].cod_ref + "' type='" + data[row].tipo + "'>" +
@@ -81,10 +100,16 @@ function ajaxForSearch(durl) {
                         "<p style=color:red;font-size: 15px;'>No queda stock</p>" +
                         "</figcaption>" +
                         "</figure>" +
-                        "</div>");
+                        "</div>" +
+                        "</button>" +
+                        "<img id='mi-boton' class='btn btn-default' src='view/images/like.png'>" +
+                        "</td>" +
+                        "</table>");
                 } else {
                     $("#list_products").append(
                         // "<div style='row grid gallery-info'>" +
+                        "<table>" +
+                        "<td>" +
                         "<figure class='effect-steve' >" +
                         "<img src= '" + data[row].route + "' alt='img15' >" +
                         "<figcaption class='detail' id='" + data[row].cod_ref + "' type='" + data[row].tipo + "' >" +
@@ -92,7 +117,10 @@ function ajaxForSearch(durl) {
                         "<p style='font-size: 15px';>" + data[row].precio + "$</p>" +
                         "</figcaption>" +
                         "</figure>" +
-                        "</div>");
+                        "</div>" +
+                        "<img id='mi-boton' class='btn btn-default' src='view/images/like.png'>" +
+                        "</td>" +
+                        "</table>")
                 }
 
             }
@@ -166,7 +194,7 @@ function local() {
 
         } else {
             console.log("shop")
-            number=0
+            number = 0
             ajaxForSearch("module/shop/controller/controller_shop.php?op=all&number=" + number)
         }
     }//End if document
@@ -829,22 +857,22 @@ function initMap() {
                     $.ajax({
                         type: "GET",
                         dataType: 'json',
-                        url: "module/shop/controller/controller_shop.php?op=desc_maps&lat=" + lat +"&lng=" + lng
+                        url: "module/shop/controller/controller_shop.php?op=desc_maps&lat=" + lat + "&lng=" + lng
                     }).done(function (data) {
                         console.log(data);
-                        var descripcion=""
-                        for (row in data){
-                            descripcion= descripcion+ data[row].descripcion
+                        var descripcion = ""
+                        for (row in data) {
+                            descripcion = descripcion + data[row].descripcion
                         }
                         console.log(descripcion)
                         infowindow.setContent(
                             descripcion);
                         infowindow.open(map, newMarker);
                     })
-                    }
+                }
             })(newMarker, row));
-    ray.push(newMarker);
-}
+            ray.push(newMarker);
+        }
     })
 }
 
@@ -871,41 +899,47 @@ function click_map() {
     } while (count == 1);
 }
 
-function pagination(){
+function pagination() {
 
 
-        $.ajax({
-          type: 'GET',
-          dataType: "json",
-          url: "module/shop/controller/controller_shop.php?op=count_pords"
-        })
-          .done(function (data) {
-              console.log(data)
-           console.log( data[0].total)
-           var number_products= data[0].total
-           pages=number_products/3
-           console.log(pages)
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        url: "module/shop/controller/controller_shop.php?op=count_pords"
+    })
+        .done(function (data) {
+            console.log(data)
+            console.log(data[0].total)
+            var number_products = data[0].total
+            pages = number_products / 3
+            console.log(pages)
             $('#pagination').bootpag({
-              total: pages,
-              page: 1,
-              maxVisible: 3
-            }).on("page", function ( event, num) {
-              console.log(num);
-              number= 3 *(num-1)
-              $.ajax({
-                type: 'GET',
-                dataType: "json",
-                url: "module/shop/controller/controller_shop.php?op=all&number=" + number,
-            })
-              
-              .done(function (data) {
-                console.log(data);
-      
-              $('#list_products').empty();
-           
-              ajaxForSearch("module/shop/controller/controller_shop.php?op=all&number=" + number)
+                total: pages,
+                page: 1,
+                maxVisible: 3
+            }).on("page", function (event, num) {
+                console.log(num);
+                number = 3 * (num - 1)
+                $.ajax({
+                    type: 'GET',
+                    dataType: "json",
+                    url: "module/shop/controller/controller_shop.php?op=all&number=" + number,
+                })
 
-            });
-          });//end on
-          });//enddone
-      }
+                    .done(function (data) {
+                        console.log(data);
+
+                        $('#list_products').empty();
+
+                        ajaxForSearch("module/shop/controller/controller_shop.php?op=all&number=" + number)
+
+                    });
+            });//end on
+        });//enddone
+}
+
+function like() {
+    $(document).on('click', '#mi-boton', function () {
+        console.log('like');
+    })
+}
