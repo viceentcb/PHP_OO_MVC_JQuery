@@ -19,5 +19,26 @@
 
 			return $res;
 		}
+
+		function login($user){
+
+			$sql = "SELECT * FROM users WHERE user_name LIKE '$user'"; 
+
+			$connection = connect::con();
+			$res = mysqli_query($connection, $sql)->fetch_object();
+			connect::close($connection);
+
+			return $res;
+		}
+
+		function search_session($user_name){
+			$sql= "SELECT user_name,mail,avatar from user where user_name like '$user_name'";
+	
+			$connection = connect::con();
+			$res = mysqli_query($connection, $sql);
+			connect::close($connection);
+
+			return $res;
+		}
 	
 	}

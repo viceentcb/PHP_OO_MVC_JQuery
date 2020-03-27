@@ -30,18 +30,43 @@ if ((isset($_GET['page'])) && ($_GET['page'] === "controller_joyas")) {
 	include("view/inc/top_page_shop.php");
 	include("view/inc/top_page_menu.php");
 	include("view/inc/top_page.php");
-}else if ((isset($_GET['page'])) && ($_GET['page'] === "controller_login")) {
+} else if ((isset($_GET['page'])) && ($_GET['page'] === "controller_login")) {
 	include("view/inc/top_page_login.php");
 	include("view/inc/top_page_menu.php");
 	include("view/inc/top_page.php");
-}else {
+} else {
 	include("view/inc/top_page_menu.php");
 	include("view/inc/top_page.php");
 }
-session_start();
+
+
+@session_start();
 ?>
+
 <?php
-include("module/menu/view/menu.php");
+
+if (!$_SESSION) {
+	print_r('no session');
+
+	include("module/menu/view/menu.php");
+} else {
+	print_r('hola');
+	// switch ($_SESSION['type']) {
+
+	// 	case 'admin':
+	// 		include("view/inc/menu_admin.html");
+	// 		break;
+
+	// 	case 'Client':
+	// 		include("view/inc/menu_user.html");
+	// 		break;
+
+	// 	default:
+
+	// 		include("view/inc/menu.html");
+	// 		break;
+	// }
+}
 ?>
 <?php
 include("view/inc/pages.php");

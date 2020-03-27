@@ -1,59 +1,6 @@
-/*--
-Author: W3layouts
-Author URL: http://w3layouts.com
---*/
-html,
-/* .error { 
-    color: red;
-    font-family: arial;
-    font-size: 10pt;
-    font-style:italic;
-} */
-/* body{
-background-color:#F0F0FF;
-background-image: url(../img/black2.jpg);
-background-attachment: fixed;
-background-repeat:repeat;
-} */
-/* h1{
-font-size: 32pt;
-} */
-/* #wrapper {
-width:800px;
-margin:auto;
-background-color:#FFFFFF;	
-} */
-/* #menu {
-background-image:url(../img/menu.png);
-height:25px;
-padding-top:5px;
-text-align:center;
-} */
-/* #menu a, #footer a{
-color:rgb(0, 0, 0);
-text-decoration:none;
-font-weight:bold;
-} */
-/* #menu a:hover, #footer a:hover{
-text-decoration:underline;
-} */
-/* #contenido {
-padding:20px;
-} */
-/* #footer {
-background-image:url(../img/menu.png);
-height:25px;
-padding-top:5px;
-text-align:center;
-} */
-/* #prod{
-    padding: 2%;
-    display: flex;
-    flex-wrap: wrap;
-} */
-/* #ey h5{
-color: greenyellow;
-} */
+.nick_user{
+    padding-left: 50px;
+  }
 #list_products {
     display: flex;
     flex-wrap: wrap;

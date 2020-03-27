@@ -18,10 +18,14 @@
                         <a href="index.php?page=controller_shop&op=list" class="nav-link">Shop</a>
                      </li>
                      <li class="nav-item">
-                        <a href="index.php?page=controller_login&op=list" class="nav-link">Login</a>
+                        <a href="index.php?page=controller_login&op=logout" class="nav-link">Logout</a>
                      </li>
                      <li class="nav-item">
-                     <a href="index.php?page=controller_login&op=logout" class="nav-link">Logout</a>
+                        <a href="index.php?page=controller_login&op=logout" class="nav-link">Logout</a>
+                     </li>
+                     <li>
+                        <div id="nick" class="nick_user"></div>
+                        <div id="container"></div>
                      </li>
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,7 +79,7 @@
                   </datalist>
                </section>
                <a class="a">BUSCAR</a>
-               
+
             </form>
             <div class="clearfix"> </div>
          </div>

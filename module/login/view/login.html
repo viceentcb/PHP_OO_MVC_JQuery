@@ -1,9 +1,11 @@
-
 <div id="login">
     <form autocomplete="on" method="post" name="form_login" id="form_login">
 
+        <h1>Login</h1>
+    </br>
+
         <strong> <label for="user_name_log" data-tr="Nombre de usuario:"></label> </strong>
-        <input name="user_name_log" id="user_name_log" type="text"  placeholder='User name' value="" />
+        <input name="user_name_log" id="user_name_log" type="text" placeholder='User name' value="" />
         <p>
             <font color="red">
                 <span id="e_user_name_log" class="styerror"></span>
@@ -11,25 +13,27 @@
         </p>
 
         <strong> <label for="passw_log" data-tr="Contraseña:">:</label> </strong>
-        <input name="passw_log" id="passw_log" type="password" placeholder="Password" value="" />
+        <input name="password" id="passw_log" type="password" placeholder="Password" value="" />
         <p>
             <font color="red">
                 <span id="e_passw_log" class="styerror"></span>
             </font>
         </p>
 
-        <input name="Login" type="button" value="login"  />
+        <input id="login-submit" name="login" type="button" value="login" />
         </br></br>
-        <a href="index.php?page=controller_joyas&op=list"><img src="view/img/volver.png"></a>
-        <a href="index.php?page=menu"><img src="view/img/salir.png"></a>
+
     </form>
 </div>
 
 <div id="register">
     <form autocomplete="on" method="post" name="form_register" id="form_register">
 
-    <strong> <label for="user_name_reg" data-tr="Nombre de usuario:"></label> </strong>
-        <input name="user_name_reg" id="user_name_reg" type="text"  placeholder='User Name' value="" />
+        <h1>Register</h1>
+    </br>
+
+        <strong> <label for="user_name_reg" data-tr="Nombre de usuario:"></label> </strong>
+        <input name="user_name_reg" id="user_name_reg" type="text" placeholder='User Name' value="" />
         <p>
             <font color="red">
                 <span id="e_user_name_reg" class="styerror"></span>
@@ -45,7 +49,7 @@
             </font>
         </p>
 
-        <strong> <label for="conf_passw"  data-tr="Confirme contraseña:" > </label> </strong>
+        <strong> <label for="conf_passw" data-tr="Confirme contraseña:"> </label> </strong>
         <input name="conf_passw" id="conf_passw" type="password" placeholder="Confirm Password" value="" />
         <p>
             <font color="red">
@@ -62,7 +66,7 @@
         </p>
 
 
-        <input id="register-submit" name="register" type="button" value="register"/>
+        <input id="register-submit" name="register" type="button" value="register" />
         </br></br>
         <a href="index.php?page=controller_joyas&op=list"><img src="view/img/volver.png"></a>
         <a href="index.php?page=menu"><img src="view/img/salir.png"></a>

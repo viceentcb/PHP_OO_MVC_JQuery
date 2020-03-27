@@ -94,6 +94,8 @@
       <!-- //here ends scrolling icon -->
 
       <script src="module/menu/model/menu.js"></script>
+      <script src="view/activity/activity.js"></script>
+
 
       <!-- Archivos para no subir al github -->
       <script src="model/gitignore.js"></script>
