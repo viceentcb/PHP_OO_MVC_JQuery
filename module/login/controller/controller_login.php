@@ -1,6 +1,6 @@
 <?php
 $path = $_SERVER['DOCUMENT_ROOT'] . '/PROJECT_JOYAS/';
-include($path . "module/login/model/DAOlogin.php");
+include($path . "module/login/model/daologin.php");
 
 switch ($_GET['op']) {
     case 'list':
@@ -9,15 +9,14 @@ switch ($_GET['op']) {
     case 'register':
         try {
             $daologin = new DAOlogin();
-            $rlt = $daologin->insert_user();
-        }
-        catch (Exception $e) {
+            $rlt = $daologin->register($_POST['user_name_reg'], $_POST['passw_reg'], $_POST['mail']);
+        } catch (Exception $e) {
             echo json_encode("error");
         }
-        if(!$rlt){
-            echo json_encode("No se ha insertado correctamente");
-        }else{
-            echo json_encode("ok");
+        if (!$rlt) {
+            echo json_encode('not correct');
+        } else {
+            echo json_encode('correct');
         }
         break;
     default:

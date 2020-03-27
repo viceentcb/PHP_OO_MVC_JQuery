@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	console.log("READY")
+	// console.log("READY")
 	register();
 });
 
@@ -53,6 +53,7 @@ function validate_register() {
 		//todo correcto
 	} else {
 		document.getElementById('e_passw_reg').innerHTML = "";
+		document.getElementById('e_conf_passw').innerHTML = "";
 		passw = 'true'
 	}
 	///// END PASSWORD
@@ -81,7 +82,7 @@ function validate_register() {
 	///END MAIL
 
 	var check = 'false'
-	
+
 	if (user != 'false' && passw != 'false' && mail_ != 'false') {
 		check = 'true'
 	}
@@ -92,25 +93,25 @@ function validate_register() {
 
 
 function register() {
-	console.log("Click register");
+	// console.log("Click register");
 	$('#register-submit').on("click", function () {
-		console.log("entra");
+		// console.log("entra");
 		if (validate_register() != 'false') {
-			console.log("diferente a false")
+			// console.log("diferente a false")
 			var userinfo = $('#form_register').serialize();
-			console.log('userinfo=' +  userinfo)
-
+			console.log('userinfo=' + userinfo)
 			$.ajax({
 				type: 'POST',
 				url: 'module/login/controller/controller_login.php?op=register',
 				data: userinfo,
-			})   .done(function (data) {
+			}).done(function (data) {
 				console.log(data);
-				if (data == 'ok') {
-					alert("Usuario registrado corerectamente")
-				}else{
-					alert("Usuario ya existente")
-
+				if (data == '"correct"') {
+					alert('You have successfully registered')
+				} else if (data == '"not correct"	') {
+					document.getElementById('e_user_name_reg').innerHTML = "This name is already in use";
+				} else {
+					alert('ERROR')
 				}
 
 			}).fail(function () {
