@@ -9,7 +9,6 @@ $(document).ready(function () {
     like();
 
 
-
     // click_map();
     if (document.getElementById("maps") != null) {
         var script = document.createElement('script');
@@ -26,7 +25,8 @@ $(document).ready(function () {
 /////FUNCION PARA IR DEL HOME AL LISTADO DE SHOP
 function ajaxForSearch(durl) {
     var url = durl;
-    // console.log(url);
+    console.log(url);
+    console.log("AJSOWOIQDOIWQJOIDCJEWNDSVUINEWHNVIUEWIUDHNVIUUIHVNIUBVRDB")
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -57,7 +57,7 @@ function ajaxForSearch(durl) {
                         "</figure>" +
                         "</div>" +
                         "</button>" +
-                        "<img id='mi-boton' class='btn btn-default' src='view/images/like.png'>" +
+                        "<button class='btn btn-default btn-lg like " + data[row].cod_ref + "' id='" + data[row].cod_ref + "'>❤</button>" +
                         "</td>" +
                         "</table>");
 
@@ -79,7 +79,7 @@ function ajaxForSearch(durl) {
                         "</figure>" +
                         "</div>" +
                         "</button>" +
-                        "<img id='mi-boton' class='btn btn-default' src='view/images/like.png'>" +
+                        "<button class='btn btn-default btn-lg like " + data[row].cod_ref + "' id='" + data[row].cod_ref + "'>❤</button>" +
 
                         "</td>" +
                         "</table>");
@@ -102,7 +102,7 @@ function ajaxForSearch(durl) {
                         "</figure>" +
                         "</div>" +
                         "</button>" +
-                        "<img id='mi-boton' class='btn btn-default' src='view/images/like.png'>" +
+                        "<button class='btn btn-default btn-lg like  " + data[row].cod_ref + "' id='" + data[row].cod_ref + "'>❤</button>" +
                         "</td>" +
                         "</table>");
                 } else {
@@ -118,16 +118,21 @@ function ajaxForSearch(durl) {
                         "</figcaption>" +
                         "</figure>" +
                         "</div>" +
-                        "<img id='mi-boton' class='btn btn-default' src='view/images/like.png'>" +
+                        "<button class='btn btn-default btn-lg like " + data[row].cod_ref + "' id='" + data[row].cod_ref + "'>❤</button>" +
                         "</td>" +
                         "</table>")
                 }
+                //como siempre utilizamos el ajaxforsearch para pintar
+                //cuando acabe de pintar los productos comprobara si es favorito o no y cambiara el color
+                paint_likes() 
 
             }
         })// end done
         .fail(function () {
             console.log("HELLOOOOO FAIL");
         })
+
+
 }
 
 ////AQUI VEREMOS DE DONDE VIENE E IREMOS A UNA CATEGORIA O A OTRA
@@ -936,10 +941,103 @@ function pagination() {
                     });
             });//end on
         });//enddone
+
+
 }
 
-function like() {
-    $(document).on('click', '#mi-boton', function () {
-        console.log('like');
+//FUNCION QUE REDIRECCIONA AL LOGIN
+function redirect_login() {
+    var url = "index.php?page=controller_login&op=list"
+    $(window).attr('location', url);
+
+}
+
+var likes = function (url, data) { //function/promise GENERAL 
+
+    // console.log(data)
+
+    return new Promise(function (resolve) {
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data
+        })
+            .done(function (data) {
+                resolve(data);
+            })
     })
+};
+
+////FUNCION QUE HACE TODAS LAS ACCIONES DEL LIKE
+function like() {
+    //Entra cuando le das a un like
+    $(document).on('click', '.btn', function () {
+        // console.log('like');
+
+        //cogemos el id del profucto al que le ha dado favorito
+        var cod_ref = $(this).attr('id');
+        // console.log(cod_ref)
+
+        //nos devuelve el nombre del usuario en este momento
+        likes('module/shop/controller/controller_shop.php?op=user')
+            .then(function (name) {
+                // console.log(name)
+                
+                //si hay algun usuario conectado entra
+                if (name !== "") {
+                    // console.log('entra if')
+
+                    // console.log(cod_ref)
+
+
+                    //cambiamos de color el corazon
+                    $('.' + cod_ref + '').toggleClass('btn-danger');
+
+                    //le decimos que lo inserte en la tabla de favoritos
+                    likes('module/shop/controller/controller_shop.php?op=favorite', cod_ref)
+                        .then(function (data) {
+                            // console.log(data)
+
+                            //si ya esta en latabla entrará
+                            if (data == "ya es favorito") {
+                                // console.log("entra if")
+
+                                ///lo borrará
+                                likes('module/shop/controller/controller_shop.php?op=del_favorite', cod_ref)
+                                    .then(function (data) {
+                                        // console.log(data)
+
+                                    })
+                            }
+                        })
+
+                } else {
+                    redirect_login();
+                }
+            })
+
+    })
+
+}
+
+function paint_likes() {
+
+    ///observa cuales son los favoritos del usuario conectado ahora mismo
+    likes('module/shop/controller/controller_shop.php?op=show_likes')
+        .then(function (cod_fav) {
+            // console.log(cod_fav)
+
+            //convierte los datos en array
+            var data_all = JSON.parse(cod_fav);
+            console.log(data_all)
+
+            ///para cada uno cambia el color (a rojo ya que en el ajaxforsearch esta puesto blanco)
+            for(row in data_all){
+                $('.' + data_all[row].cod_ref + '').toggleClass('btn-danger');
+
+            }
+
+
+        })
+
 }

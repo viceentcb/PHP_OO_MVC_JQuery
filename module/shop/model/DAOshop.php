@@ -85,4 +85,32 @@ class DAOshop
 		connect::close($connection);
 		return $res;
 	}
+
+	function insert_favorite($cod_ref, $user_name)
+	{
+		$sql = "INSERT INTO likes VALUES('$cod_ref', '$user_name')";
+		$connection = connect::con();
+
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
+	function delete_favorite($cod_ref, $user_name)
+	{
+		$sql = "DELETE FROM likes where cod_ref='$cod_ref' and user_name= '$user_name'";
+		$connection = connect::con();
+
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
+	function show_likes($user_name)
+	{
+		$sql = "SELECT * FROM likes where user_name= '$user_name'";
+		$connection = connect::con();
+
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
 }
