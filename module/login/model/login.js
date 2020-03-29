@@ -1,8 +1,8 @@
 $(document).ready(function () {
 	// console.log("READY")
-	register();
-	login();
 	logout();
+	in_login()
+	in_register();
 });
 
 function validate_register() {
@@ -158,72 +158,108 @@ function validate_login() {
 
 	return check
 }
+
 function redirect_home() {
 	var url = "index.php?page=controller_home&op=list"
 	$(window).attr('location', url);
 
 }
 
+///promesa general para el login
+var login_in = function (url, data) { //function/promise GENERAL 
+
+	console.log(data)
+
+	return new Promise(function (resolve) {
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: data
+		})
+			.done(function (data) {
+				resolve(data);
+			})
+	})
+};
+
+///funcion para registrarse
 function register() {
 	// console.log("Click register");
-	$('#register-submit').on("click", function () {
-		// console.log("entra");
-		if (validate_register() != 'false') {
-			// console.log("diferente a false")
-			var userinfo = $('#form_register').serialize();
-			console.log('userinfo=' + userinfo)
-			$.ajax({
-				type: 'POST',
-				url: 'module/login/controller/controller_login.php?op=register',
-				data: userinfo,
-			}).done(function (data) {
+	// console.log("entra");
+
+	//si todo en el formulario esta correcto
+	if (validate_register() != 'false') {
+		// console.log("diferente a false")
+
+		//cogemos la informacion del formulario
+		var userinfo = $('#form_register').serialize();
+		console.log('userinfo=' + userinfo)
+
+		//le indicamos a la promesa/funcion general que registre al usuario
+		login_in("module/login/controller/controller_login.php?op=register", userinfo)
+			.then(function (data) {
 				console.log(data);
+
+				///si se registra correctamente
 				if (data == '"correct"') {
-					alert('You have successfully registered')
-					redirect_home();
+
+					//le indicamos a la promesa/funcion general que loguee al usuario
+					login_in("module/login/controller/controller_login.php?op=reg_login", userinfo)
+						.then(function (data) {
+							console.log(data);
+							if (data == '"existe"') {
+								////y si todo va correcto lo redireccionara al home logueado
+								alert("Sesion iniciada correctamente");
+								redirect_home();
+							}
+						})
+
+					///como el nombre del usuario es un id en la tabla no se puede repetir
+					//por lo tanto entrara aqui
 				} else if (data == '"not correct"') {
 					document.getElementById('e_user_name_reg').innerHTML = "This name is already in use";
 				} else {
 					alert('ERROR')
 				}
 
-			}).fail(function () {
-				console.log("fail");
 			})
 
-		}
+	}
 
-	})
 }
 
+
+
 function login() {
-	$('#login-submit').on("click", function () {
-		// console.log("entra");
-		if (validate_login() != 'false') {
-			// console.log("diferente a false")
-			var userinfo = $('#form_login').serialize();
-			console.log('userinfo=' + userinfo)
-			$.ajax({
-				type: 'POST',
-				url: 'module/login/controller/controller_login.php?op=login',
-				data: userinfo,
-			}).done(function (data) {
+	// console.log("entra");
+	//si todo esta corrrecto en el formulario
+	if (validate_login() != 'false') {
+
+		// console.log("diferente a false")
+		//cogemos los datos del usuario
+		var userinfo = $('#form_login').serialize();
+		console.log('userinfo=' + userinfo)
+
+		//le indicamos a la promesa/funcion general que loguee al usuario
+		login_in("module/login/controller/controller_login.php?op=login", userinfo)
+			.then(function (data) {
 				console.log(data);
+
+				////y si todo va correcto lo redireccionara al home logueado
 				if (data == '"existe"') {
 					alert("Sesion iniciada correctamente");
 					redirect_home();
+
+					////si tiene el usuario o la contraseña mal
 				} else {
 					document.getElementById('e_user_name_log').innerHTML = "There is a problem in the login, invalid email or password";
 					document.getElementById('e_passw_log').innerHTML = "There is a problem in the login, invalid email or password";
 				}
 
-			}).fail(function () {
-				console.log("fail");
 			})
 
-		}
+	}
 
-	})
 }
 
 function logout() {
@@ -239,4 +275,42 @@ function logout() {
 			console.log("fail");
 		})
 	})
+}
+
+//FUNCION QUE ENTRE AL LOGIN TANTO SI LE DAS A SUBMIT COMO A ENTER EN EL TECLADO
+function in_login() {
+	$('#login-submit').on("click", function () {
+		// console.log("entra LOGIN");
+		login();
+
+	})
+
+
+	$('#form_login').on("keydown", function (e) {
+		// console.log("clickpass")
+		if (e.which == 13) {
+			// console.log("entra  LOGIN");
+
+			login();
+		}
+	});
+}
+
+//FUNCION QUE ENTRE AL LOGIN TANTO SI LE DAS A SUBMIT COMO A ENTER EN EL TECLADO
+function in_register() {
+	$('#register-submit').on("click", function () {
+		console.log("entra register");
+		register();
+
+	})
+
+
+	$('#form_register').on("keydown", function (e) {
+		console.log("clickpass")
+		if (e.which == 13) {
+			console.log("entra register");
+
+			register();
+		}
+	});
 }

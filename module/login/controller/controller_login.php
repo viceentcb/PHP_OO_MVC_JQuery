@@ -49,12 +49,39 @@ switch ($_GET['op']) {
         }
 
         break;
+    case 'reg_login':
+        try {
+            $daologin = new DAOlogin();
+            $rlt = $daologin->login($_POST['user_name_reg']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+        if (!$rlt) {
+            echo json_encode('no existe');
+        } else {
+            $value = get_object_vars($rlt);
+    
+
+
+            if (password_verify($_POST['passw_reg'], $value['password'])) {
+
+                $_SESSION['user_name'] = $value['user_name'];
+                $_SESSION['type'] = $value['type'];
+                $_SESSION['avatar'] = $value['avatar'];
+                $_SESSION['tiempo'] = time();
+                // print_r($_SESSION);
+
+                echo json_encode('existe');
+            }
+        }
+
+        break;
 
     case 'logout':
 
         session_unset();
         session_destroy();
-          
+
         break;
 
     case 'activity':

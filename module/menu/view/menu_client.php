@@ -21,8 +21,7 @@
                         <a id="logout" href="index.php?page=controller_login&op=logout" class="nav-link">Logout</a>
                      </li>
                      <li>
-                        <div id="nick" class="nick_user"></div>
-                        <div id="container"></div>
+                        <div id="info_user" ></div>
                      </li>
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -54,6 +53,7 @@
                         </button>
                      </div>
                   </ul>
+                  
 
 
                </div>

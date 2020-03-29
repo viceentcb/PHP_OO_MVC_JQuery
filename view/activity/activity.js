@@ -23,23 +23,27 @@ function activity() {
 
 function session() {
 
-    if (document.getElementById('nick')) {
+    if (document.getElementById('info_user')) {
         $.ajax({
             type: 'POST',
             url: 'module/login/controller/controller_login.php?op=session',
             dataType: 'json',
         })
             .done(function (data) {
-                console.log("entra session done");
                 // var json = JSON.parse(data);
                 console.log(data);
-                // var ElementDiv = document.createElement('div');
-                // ElementDiv.id = "container_session";
-                // ElementDiv.innerHTML = "<div id='content'>" + data.nickname + "</div>"
-                //     + "<img  style='width:50px; height50px;' src=" + data.avatar + ".jpg></img>";
-                // document.getElementById("container").appendChild(ElementDiv);
+                $("#info_user").append(
+                    // "<div class='row grid gallery-info'>" +
+                    "<table>" +
+                    "<td>" +
+                    "<tr>"+
+                    "<img  style='width:50px; height50px;' src="+data.avatar+"></img>"+
+                    "<a>"+data.user_name +"</a>"+
+                    "</tr>"+
+                    "</td>" +
+                    "</table>");
+
             })
 
-    }
-
+    }  
 }

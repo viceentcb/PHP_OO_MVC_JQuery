@@ -122,11 +122,13 @@ function ajaxForSearch(durl) {
                         "</td>" +
                         "</table>")
                 }
-                //como siempre utilizamos el ajaxforsearch para pintar
-                //cuando acabe de pintar los productos comprobara si es favorito o no y cambiara el color
-                paint_likes() 
+
 
             }
+            //como siempre utilizamos el ajaxforsearch para pintar
+            //cuando acabe de pintar los productos comprobara si es favorito o no y cambiara el color
+            paint_likes()
+
         })// end done
         .fail(function () {
             console.log("HELLOOOOO FAIL");
@@ -275,6 +277,7 @@ function click() {
                 $("#detail_products").append(
 
                     '<table>' +
+                    "<button class='btn btn-default btn-lg like " + data[i].cod_ref + "' id='" + data[i].cod_ref + "'>❤</button>" +
 
                     '<tr>' +
                     '<td rowspan="5"><img src= ' + data[i].route + '></td>' +
@@ -314,6 +317,8 @@ function click() {
                 }
             }
 
+            paint_likes()
+
         }).fail(function () {
             console.log("fail")
         })
@@ -339,27 +344,8 @@ function filter() {
     var click_ros = 0;
     var click_blan = 0;
     var click_pur = 0;
+    var click_like=0;
 
-    // var lol="";
-    // var lolp="";
-    // var hola="";
-
-    // $('#anillo').prop('checked', function () { 
-    //     console.log('Seleccionado');
-    // });
-
-    //  $('#anillo').attr('checked', function () {
-    //     alert('Seleccionado');
-    // })
-
-    // var checkbox = document.getElementById('reloj');
-    // checkbox.addEventListener("change", validaCheckbox, false);
-    // function validaCheckbox() {
-    //     var checked = checkbox.checked;
-    //     if (checked) {
-    //         checks = "WHERE tipo = 'reloj'";
-    //     }
-    // }
     $('#anillo').click(function () {
         console.log("click_an= " + click_an)
 
@@ -697,14 +683,33 @@ function filter() {
 
     });
 
-    // $('#prec_asc').change(function () {
-    //     console.log("prec_asc= ")
-    //     order = "ORDER BY"
+    // $('#puro').click(function () {
+    //     console.log("click_pur= " + click_pur)
+
+    //     if ((click_pur % 2) == 0) {
+    //         console.log("click_pur para filtrar")
+    //         click_pur = click_pur + 1
+    //         if (checks === "") {
+    //             console.log("cadena vacia")
+    //             checks = "where oro like '%puro%'" + checks;
+    //             ""
+    //         } else {
+    //             console.log("cadena escrita")
+    //             checks = checks + " OR oro like '%puro%'";
+
+    //         }
+    //     } else {
+    //         console.log("click_pur para desfiltrar")
+    //         click_pur = click_pur + 1
+    //         checks = checks.replace("oro like '%puro%' OR ", "");
+    //         checks = checks.replace(" OR oro like '%puro%'", "");
+    //         checks = checks.replace("where oro like '%puro%'", "");
+    //     }
+    //     console.log("click_pur= " + click_pur)
+
     // });
-    // $('#prec_asc').click(function () {
-    //     console.log("prec_asc= ")
-    //     order = "ORDER BY"
-    // });
+
+
     $("#order").on("change", function () {
         console.log("order")
         var option = document.getElementById('order').value;
@@ -720,9 +725,7 @@ function filter() {
         }
 
     });
-    // $( "#prec_asc" ).select(function() {
-    //     alert( "Handler for .select() called." );
-    //   });
+
     $(document).on('click', '.lal', function () {
         console.log("filter");
         // validaCheckbox();
@@ -732,87 +735,6 @@ function filter() {
 
         ajaxForSearch("module/shop/controller/controller_shop.php?op=filter&checks=" + checks + "&order=" + order)
 
-
-        //     $.ajax({
-        //         type: "GET",
-        //         dataType: 'json',
-        //         url: "module/shop/controller/controller_shop.php?op=filter&checks=" + checks
-
-        //     })
-        //         .done(function (data) {
-        //             console.log(data);
-        //             $("#list_products").empty();
-
-        //             for (row in data) {
-        //                 //Cuando solo quede un producto avisara al cliente de que este producto es el ultimo
-        //                 //Ademas avisara y mostrara que el articulo esta en oferta
-
-        //                 if ((data[row].unidades) == 1) {
-        //                     $("#list_products").append(
-        //                         // "<div class='row grid gallery-info'>" +
-        //                         "<figure class='effect-steve' >" +
-        //                         "<img src= '" + data[row].route + "' alt='img15'>" +
-        //                         "<figcaption class='detail' id='" + data[row].cod_ref + "'$>" +
-        //                         "<h2>" + data[row].marca + "<span> " + data[row].nombre + " </span></h2>" +
-        //                         // "<p style='text-decoration: line-through;'>  "+ (data[row].precio) + "$</p>" +
-        //                         // "<p style='color:red'; >"+ ((data[row].precio)*0.5) + "$</p>"+
-        //                         "<p><a style='text-decoration: line-through;font-size: 15px;'>" + (data[row].precio) + "$</a><a style='color:red; font-size: 15px;'> &nbsp;&nbsp;&nbsp;&nbsp;" + ((data[row].precio) * 0.5) + "$</a></p>" +
-        //                         "</br></br></br></br></br>" +
-        //                         // "<p><a style='color:red;font-size: 16px;'>Ultima unidad &nbsp</a><a style='color:red;font-size: 15px;'>Articulo al 50%</a></p>" +
-        //                         "<p style='color:red;font-size: 15px;'>Ultima unidad</p>" +
-        //                         "<p style='color:red;font-size: 15px;'>Articulo al 50%</p>" +
-        //                         "</figcaption>" +
-        //                         "</figure>" +
-        //                         "</div>");
-
-        //                 }
-        //                 //Cuando queden menos de 3 unidades avisara al cliente de que quedan pocas unidades
-        //                 else if (((data[row].unidades) < 3) && ((data[row].unidades) != 0)) {
-        //                     $("#list_products").append(
-        //                         // "<div style='row grid gallery-info'>" +
-        //                         "<figure class='effect-steve' >" +
-        //                         "<img src= '" + data[row].route + "'>" +
-        //                         "<figcaption alt='img15' class='detail' id='" + data[row].cod_ref + "'>" +
-        //                         "<h2>" + data[row].marca + "<span> " + data[row].nombre + " </span></h2>" +
-        //                         "<p style='font-size: 15px';>" + data[row].precio + "$</p>" +
-        //                         "</br></br></br></br></br></br>" +
-        //                         "<p style='color:red; font-size: 15px;'>Quedan pocas unidades</p>" +
-        //                         "</figcaption>" +
-        //                         "</figure>" +
-        //                         "</div>");
-
-        //                     //Cuando queden 0 unidades avisara al cliente de que no queda stock de dicho porducto
-
-        //                 } else if ((data[row].unidades) == 0) {
-        //                     $("#list_products").append(
-        //                         // "<div style='row grid gallery-info'>" +
-        //                         "<figure class='effect-steve' >" +
-        //                         "<img style=' opacity:0.5 ;' src= '" + data[row].route + "' alt='img15'  >" +
-        //                         "<figcaption class='detail' id='" + data[row].cod_ref + "'>" +
-        //                         "<h2>" + data[row].marca + "<span> " + data[row].nombre + " </span></h2>" +
-        //                         "<p style='font-size: 15px';>" + data[row].precio + "$</p>" +
-        //                         "</br></br></br></br></br></br>" +
-        //                         "<p style=color:red;font-size: 15px;'>No queda stock</p>" +
-        //                         "</figcaption>" +
-        //                         "</figure>" +
-        //                         "</div>");
-        //                 } else {
-        //                     $("#list_products").append(
-        //                         // "<div style='row grid gallery-info'>" +
-        //                         "<figure class='effect-steve' >" +
-        //                         "<img src= '" + data[row].route + "' alt='img15' >" +
-        //                         "<figcaption class='detail' id='" + data[row].cod_ref + "' >" +
-        //                         "<h2>" + data[row].marca + "<span> " + data[row].nombre + " </span></h2>" +
-        //                         "<p style='font-size: 15px';>" + data[row].precio + "$</p>" +
-        //                         "</figcaption>" +
-        //                         "</figure>" +
-        //                         "</div>");
-        //                 }
-
-        //             }
-        //         }).fail(function () {
-        //             console.log("fail")
-        //         })
     });
 }
 
@@ -982,7 +904,7 @@ function like() {
         likes('module/shop/controller/controller_shop.php?op=user')
             .then(function (name) {
                 // console.log(name)
-                
+
                 //si hay algun usuario conectado entra
                 if (name !== "") {
                     // console.log('entra if')
@@ -1032,9 +954,8 @@ function paint_likes() {
             console.log(data_all)
 
             ///para cada uno cambia el color (a rojo ya que en el ajaxforsearch esta puesto blanco)
-            for(row in data_all){
+            for (row in data_all) {
                 $('.' + data_all[row].cod_ref + '').toggleClass('btn-danger');
-
             }
 
 
