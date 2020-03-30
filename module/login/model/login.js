@@ -168,7 +168,7 @@ function redirect_home() {
 ///promesa general para el login
 var login_in = function (url, data) { //function/promise GENERAL 
 
-	console.log(data)
+	// console.log(data)
 
 	return new Promise(function (resolve) {
 		$.ajax({
@@ -267,7 +267,7 @@ function logout() {
 
 		$.ajax({
 			type: 'POST',
-			url: 'module/login/controller/controller_login.php?op=register'
+			url: 'module/login/controller/controller_login.php?op=logout'
 		}).done(function () {
 			redirect_home();
 
@@ -299,7 +299,7 @@ function in_login() {
 //FUNCION QUE ENTRE AL LOGIN TANTO SI LE DAS A SUBMIT COMO A ENTER EN EL TECLADO
 function in_register() {
 	$('#register-submit').on("click", function () {
-		console.log("entra register");
+		console.log("entra register click");
 		register();
 
 	})

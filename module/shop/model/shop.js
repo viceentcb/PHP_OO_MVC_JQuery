@@ -369,8 +369,6 @@ function filter() {
             checks = checks.replace(" OR tipo = 'anillo'", "");
             checks = checks.replace("where tipo = 'anillo'", "");
             click_filter(checks, order);
-
-
         }
         console.log("click_an= " + click_an)
     });
@@ -728,7 +726,7 @@ function filter() {
     ///entrara cuando hagamos click en un filtro para ver los favoritos
     $('#favorite').click(function () {
         console.log("click_like= " + click_like)
-    
+
         //le decimos a la promesa general que obtenga el nombre del usuario logueado
         likes('module/shop/controller/controller_shop.php?op=user')
             .then(function (name) {
@@ -807,9 +805,9 @@ function click_filter(checks, order) {
     console.log(checks)
     console.log(order)
 
-        $("#list_products").empty();
+    $("#list_products").empty();
 
-        ajaxForSearch("module/shop/controller/controller_shop.php?op=filter&checks=" + checks + "&order=" + order)
+    ajaxForSearch("module/shop/controller/controller_shop.php?op=filter&checks=" + checks + "&order=" + order)
 
 }
 

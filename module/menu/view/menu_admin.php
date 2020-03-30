@@ -24,6 +24,9 @@
                         <a href="index.php?page=controller_shop&op=list" class="nav-link">Shop</a>
                      </li>
                      <li class="nav-item">
+                        <a href="index.php?page=controller_users&op=list" class="nav-link">Users</a>
+                     </li>
+                     <li class="nav-item">
                         <a id="logout" href="index.php?page=controller_login&op=logout" class="nav-link">Logout</a>
                      </li>
                      <li>

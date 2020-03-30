@@ -35,6 +35,9 @@ if ((isset($_GET['page'])) && ($_GET['page'] === "controller_joyas")) {
 	include("view/inc/top_page_login.php");
 	include("view/inc/top_page_menu.php");
 	include("view/inc/top_page.php");
+} else if ((isset($_GET['page'])) && ($_GET['page'] === "controller_users")) {
+	include("view/inc/top_page_joyas.php");
+	include("view/inc/top_page_menu.php");
 } else {
 	include("view/inc/top_page_menu.php");
 	include("view/inc/top_page.php");
