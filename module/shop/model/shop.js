@@ -26,7 +26,6 @@ $(document).ready(function () {
 function ajaxForSearch(durl) {
     var url = durl;
     console.log(url);
-    console.log("AJSOWOIQDOIWQJOIDCJEWNDSVUINEWHNVIUEWIUDHNVIUUIHVNIUBVRDB")
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -344,7 +343,7 @@ function filter() {
     var click_ros = 0;
     var click_blan = 0;
     var click_pur = 0;
-    var click_like=0;
+    var click_like = 0;
 
     $('#anillo').click(function () {
         console.log("click_an= " + click_an)
@@ -360,6 +359,8 @@ function filter() {
                 checks = checks + " OR tipo = 'anillo'";
                 console.log(anillo);
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_an para desfiltrar")
             click_an = click_an + 1
@@ -367,6 +368,7 @@ function filter() {
             checks = checks.replace("tipo = 'anillo' OR ", "");
             checks = checks.replace(" OR tipo = 'anillo'", "");
             checks = checks.replace("where tipo = 'anillo'", "");
+            click_filter(checks, order);
 
 
         }
@@ -388,12 +390,15 @@ function filter() {
                 checks = checks + " OR tipo = 'pulsera'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_pul para desfiltrar")
             click_pul = click_pul + 1
             checks = checks.replace("tipo = 'pulsera' OR ", "");
             checks = checks.replace(" OR tipo = 'pulsera'", "");
             checks = checks.replace("where tipo = 'pulsera'", "");
+            click_filter(checks, order);
 
         }
         console.log("click_pul= " + click_pul)
@@ -414,12 +419,15 @@ function filter() {
                 checks = checks + " OR tipo = 'reloj'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_rel para desfiltrar")
             click_rel = click_rel + 1
             checks = checks.replace("tipo = 'reloj' OR ", "");
             checks = checks.replace(" OR tipo = 'reloj'", "");
             checks = checks.replace("where tipo = 'reloj'", "");
+            click_filter(checks, order);
 
         }
         console.log("click_rel= " + click_rel)
@@ -441,12 +449,15 @@ function filter() {
                 checks = checks + " OR forma = 'circular'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_circ para desfiltrar")
             click_circ = click_circ + 1
             checks = checks.replace("forma = 'circular' OR ", "");
             checks = checks.replace(" OR forma = 'circular'", "");
             checks = checks.replace("where forma = 'circular'", "");
+            click_filter(checks, order);
 
         }
         console.log("click_circ= " + click_circ)
@@ -467,12 +478,15 @@ function filter() {
                 checks = checks + " OR forma = 'cuadrada'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_cuad para desfiltrar")
             click_cuad = click_cuad + 1
             checks = checks.replace("forma = 'cuadrada' OR ", "");
             checks = checks.replace(" OR forma = 'cuadrada'", "");
             checks = checks.replace("where forma = 'cuadrada'", "");
+            click_filter(checks, order);
 
         }
         console.log("click_cuad= " + click_cuad)
@@ -493,12 +507,15 @@ function filter() {
                 checks = checks + " OR forma = 'sport'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_sport para desfiltrar")
             click_sport = click_sport + 1
             checks = checks.replace("forma = 'sport' OR ", "");
             checks = checks.replace(" OR forma = 'sport'", "");
             checks = checks.replace("where forma = 'sport'", "");
+            click_filter(checks, order);
 
         }
         console.log("click_sport= " + click_sport)
@@ -519,12 +536,15 @@ function filter() {
                 checks = checks + " OR forma = 'abierta'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_abi para desfiltrar")
             click_abi = click_abi + 1
             checks = checks.replace("forma = 'abierta' OR ", "");
             checks = checks.replace(" OR forma = 'abierta'", "");
             checks = checks.replace("where forma = 'abierta'", "");
+            click_filter(checks, order);
 
         }
         console.log("click_abi= " + click_abi)
@@ -546,12 +566,16 @@ function filter() {
                 checks = checks + " OR gema like '%diamante%'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_di para desfiltrar")
             click_di = click_di + 1
             checks = checks.replace("gema like '%diamante%' OR ", "");
             checks = checks.replace(" OR gema like '%diamante%'", "");
             checks = checks.replace("where gema like '%diamante%'", "");
+            click_filter(checks, order);
+
         }
         console.log("click_di= " + click_di)
 
@@ -571,12 +595,16 @@ function filter() {
                 checks = checks + " OR gema like '%zafiro%'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_za para desfiltrar")
             click_za = click_za + 1
             checks = checks.replace("gema like '%zafiro%' OR ", "");
             checks = checks.replace(" OR gema like '%zafiro%'", "");
             checks = checks.replace("where gema like '%zafiro%'", "");
+            click_filter(checks, order);
+
         }
         console.log("click_za= " + click_za)
 
@@ -596,12 +624,16 @@ function filter() {
                 checks = checks + " OR gema like '%rubi%'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_ru para desfiltrar")
             click_ru = click_ru + 1
             checks = checks.replace("gema like '%rubi%' OR ", "");
             checks = checks.replace(" OR gema like '%rubi%'", "");
             checks = checks.replace("where gema like '%rubi%'", "");
+            click_filter(checks, order);
+
         }
         console.log("click_ru= " + click_ru)
 
@@ -622,12 +654,16 @@ function filter() {
                 checks = checks + " OR oro like '%rosado%'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_ros para desfiltrar")
             click_ros = click_ros + 1
             checks = checks.replace("oro like '%rosado%' OR ", "");
             checks = checks.replace(" OR oro like '%rosado%'", "");
             checks = checks.replace("where oro like '%rosado%'", "");
+            click_filter(checks, order);
+
         }
         console.log("click_ros= " + click_ros)
 
@@ -647,15 +683,18 @@ function filter() {
                 checks = checks + " OR oro like '%blanco%'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_blan para desfiltrar")
             click_blan = click_blan + 1
             checks = checks.replace("oro like '%blanco%' OR ", "");
             checks = checks.replace(" OR oro like '%blanco%'", "");
             checks = checks.replace("where oro like '%blanco%'", "");
+            click_filter(checks, order);
+
         }
         console.log("click_blan= " + click_blan)
-
     });
     $('#puro').click(function () {
         console.log("click_pur= " + click_pur)
@@ -666,48 +705,75 @@ function filter() {
             if (checks === "") {
                 console.log("cadena vacia")
                 checks = "where oro like '%puro%'" + checks;
-                ""
             } else {
                 console.log("cadena escrita")
                 checks = checks + " OR oro like '%puro%'";
 
             }
+            click_filter(checks, order);
+
         } else {
             console.log("click_pur para desfiltrar")
             click_pur = click_pur + 1
             checks = checks.replace("oro like '%puro%' OR ", "");
             checks = checks.replace(" OR oro like '%puro%'", "");
             checks = checks.replace("where oro like '%puro%'", "");
+            click_filter(checks, order);
+
         }
         console.log("click_pur= " + click_pur)
 
     });
 
-    // $('#puro').click(function () {
-    //     console.log("click_pur= " + click_pur)
+    ///entrara cuando hagamos click en un filtro para ver los favoritos
+    $('#favorite').click(function () {
+        console.log("click_like= " + click_like)
+    
+        //le decimos a la promesa general que obtenga el nombre del usuario logueado
+        likes('module/shop/controller/controller_shop.php?op=user')
+            .then(function (name) {
+                // console.log(name)
 
-    //     if ((click_pur % 2) == 0) {
-    //         console.log("click_pur para filtrar")
-    //         click_pur = click_pur + 1
-    //         if (checks === "") {
-    //             console.log("cadena vacia")
-    //             checks = "where oro like '%puro%'" + checks;
-    //             ""
-    //         } else {
-    //             console.log("cadena escrita")
-    //             checks = checks + " OR oro like '%puro%'";
+                //si hay algun usuario conectado entra
+                if (name !== "") {
+                    console.log('entra if')
+                    console.log(name)
 
-    //         }
-    //     } else {
-    //         console.log("click_pur para desfiltrar")
-    //         click_pur = click_pur + 1
-    //         checks = checks.replace("oro like '%puro%' OR ", "");
-    //         checks = checks.replace(" OR oro like '%puro%'", "");
-    //         checks = checks.replace("where oro like '%puro%'", "");
-    //     }
-    //     console.log("click_pur= " + click_pur)
+                    ///si es la primera vez o alguna  vez par ya que el contador empieza en 0 fitrara
+                    if ((click_like % 2) == 0) {
+                        console.log("click_like para filtrar")
+                        click_like = click_like + 1
 
-    // });
+                        ///comprobara si la cadena esta vacia o llena
+                        if (checks === "") {
+                            console.log("cadena vacia")
+                            checks = "Where cod_ref in (SELECT cod_ref from likes where user_name='" + name + "')";
+                        } else {
+                            console.log("cadena escrita")
+                            checks = checks + " AND cod_ref in (SELECT cod_ref from likes where user_name='" + name + "')";
+
+                        }
+                        click_filter(checks, order);
+
+                        ///entrara si esta clickando para desfiltrar y borrara la cadena
+                    } else {
+                        console.log("click_like para desfiltrar")
+                        click_like = click_like + 1
+                        checks = checks.replace(" AND cod_ref in (SELECT cod_ref from likes where user_name='" + name + "')", "");
+                        checks = checks.replace("Where cod_ref in (SELECT cod_ref from likes where user_name='" + name + "')", "");
+                        click_filter(checks, order);
+
+                    }
+
+                    console.log("click_like= " + click_like)
+
+                    //si no esta logueado lo mandara a loguearse
+                } else {
+                    redirect_login();
+                }
+            })
+
+    })
 
 
     $("#order").on("change", function () {
@@ -723,19 +789,28 @@ function filter() {
         } else {
             order = "";
         }
+        click_filter(checks, order);
 
     });
+    // console.log(checks)
+    // console.log(order)
 
-    $(document).on('click', '.lal', function () {
-        console.log("filter");
-        // validaCheckbox();
-        console.log(checks);
-        console.log(order);
+
+
+
+
+}
+///funcion para activar los filtros
+function click_filter(checks, order) {
+
+    console.log("entra click_filter")
+    console.log(checks)
+    console.log(order)
+
         $("#list_products").empty();
 
         ajaxForSearch("module/shop/controller/controller_shop.php?op=filter&checks=" + checks + "&order=" + order)
 
-    });
 }
 
 ////FUNCTION PARA ENSEÑAR EL MAPA
@@ -802,6 +877,7 @@ function initMap() {
         }
     })
 }
+
 
 ////FUNCTION PARA CUANDO CLICQUES EN EL MAPA ESTE SE VUELVA GRANDE
 function click_map() {
