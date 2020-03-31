@@ -32,6 +32,7 @@
 	<script src="module/joyas/model/reed_modal.js"></script>
 	<script src="module/users/model/users.js"></script>
 
+	<script src="view/activity/activity.js"></script>
 
 </head>
 

@@ -94,7 +94,6 @@
       <!-- //here ends scrolling icon -->
 
       <script src="module/menu/model/menu.js"></script>
-      <script src="view/activity/activity.js"></script>
       <script src="module/login/model/login.js"></script>
 
 

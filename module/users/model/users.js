@@ -2,9 +2,11 @@ $(document).ready(function () {
 
     console.log("READY");
     list_users();
-    reed();
+    create()
+    reed()
     update()
-    delet();
+    delet()
+    delete_all()
 
 });
 
@@ -12,6 +14,8 @@ var crud = function (url, data, data1) { //function/promise GENERAL
     // console.log(url)
 
     console.log(data)
+    console.log(data1)
+
 
     return new Promise(function (resolve) {
         $.ajax({
@@ -25,6 +29,38 @@ var crud = function (url, data, data1) { //function/promise GENERAL
     })
 };
 
+function modal() {
+
+    // $("#users").show();
+    // $("#users").dialog({
+
+    $("#users").show().dialog({
+
+        width: 850, //<!-- ------------- ancho de la ventana -->
+        height: 500, //<!--  ------------- altura de la ventana -->
+        //show: "scale", <!-- ----------- animación de la ventana al aparecer -->
+        //hide: "scale", <!-- ----------- animación al cerrar la ventana -->
+        resizable: "false", //<!-- ------ fija o redimensionable si ponemos este valor a "true" -->
+        //position: "down",<!--  ------ posicion de la ventana en la pantalla (left, top, right...) -->
+        modal: "true", //<!-- ------------ si esta en true bloquea el contenido de la web mientras la ventana esta activa (muy elegante) -->
+        buttons: {
+            Ok: function valor() {
+                $(this).dialog("close");
+            }
+        },
+        show: {
+            effect: "blind",
+            duration: 1000
+        },
+        hide: {
+            effect: "explode",
+            duration: 1000
+        }
+
+    });
+
+
+}
 
 function list_users() {
 
@@ -56,6 +92,67 @@ function list_users() {
 
 }
 
+function create() {
+    $(document).on('click', '#create', function () {
+
+        $("#users").html(
+
+            '<div id="register">' +
+            '<form autocomplete="on" method="post" name="form_register" id="form_register">' +
+
+            '<h1>Register</h1>' +
+            '</br>' +
+
+            '<strong> <label for="user_name_reg"> User name</label> </strong>' +
+            '<input name="user_name_reg" id="user_name_reg" type="text" placeholder="User Name" value="" />' +
+            '<p>' +
+            '<font color="red">' +
+            '<span id="e_user_name_reg" class="styerror"></span>' +
+            '</font>' +
+            '</p>' +
+
+
+            '<strong> <label for="passw_reg"> Password</label> </strong>' +
+            '<input name="passw_reg" id="passw_reg" type="password" placeholder="Password" value="" />' +
+            '<p>' +
+            '<font color="red">' +
+            '<span id="e_passw_reg" class="styerror"></span>' +
+            '</font>' +
+            '</p>' +
+
+            '<strong> <label for="conf_passw"> Confirm Password </label> </strong>' +
+            '<input name="conf_passw" id="conf_passw" type="password" placeholder="Confirm Password" value="" />' +
+            '<p>' +
+            '<font color="red">' +
+            '<span id="e_conf_passw" class="styerror"></span>' +
+            '</font>' +
+            '</p>' +
+
+            '<strong> <label for="mail"> Mail</label> </strong>' +
+            '<input name="mail" id="mail" type="text" placeholder="Mail" value="" />' +
+            '<p>' +
+            '<font color="red">' +
+            '<span id="e_mail" class="styerror"></span>' +
+            '</font>' +
+            '</p>' +
+
+
+            '</form >' +
+            '</div >'
+        )
+
+        modal()
+
+        $(document).on('click', '.ui-dialog-buttonset', function () {
+
+
+            var userinfo = $('#form_register').serialize();
+            console.log(userinfo)
+            
+        });
+    })
+}
+
 function reed() {
     $(document).on('click', '#reed', function () {
         var user_name = $(this).attr('us');
@@ -67,10 +164,7 @@ function reed() {
                 var data_us = JSON.parse(data);
                 console.log(data_us)
 
-                // $('#modalcontent').empty();
-                // $('#cod_ref').html(data.cod_ref);
-                // $('<div></div>').attr('id','details_joyas').appendTo('#modalcontent');
-                $("#details_joyas").html(
+                $("#users").html(
 
                     '<br><strong>User name:</strong>' + data_us.user_name + '</span></br>' +
                     '<br><strong>Mail:</strong>' + data_us.mail + '</span></br>' +
@@ -85,44 +179,10 @@ function reed() {
 
 }
 
-function modal() {
-
-    // $("#details_joyas").show();
-    // $("#details_joyas").dialog({
-
-    $("#details_joyas").show().dialog({
-
-        width: 850, //<!-- ------------- ancho de la ventana -->
-        height: 500, //<!--  ------------- altura de la ventana -->
-        //show: "scale", <!-- ----------- animación de la ventana al aparecer -->
-        //hide: "scale", <!-- ----------- animación al cerrar la ventana -->
-        resizable: "false", //<!-- ------ fija o redimensionable si ponemos este valor a "true" -->
-        //position: "down",<!--  ------ posicion de la ventana en la pantalla (left, top, right...) -->
-        modal: "true", //<!-- ------------ si esta en true bloquea el contenido de la web mientras la ventana esta activa (muy elegante) -->
-        buttons: {
-            Ok: function valor() {
-                var valor = $("input[name='type']:checked").val();
-                // alert(valor)
-                $(this).dialog("close");
-                return valor
-            }
-        },
-        show: {
-            effect: "blind",
-            duration: 1000
-        },
-        hide: {
-            effect: "explode",
-            duration: 1000
-        }
-
-    });
-
-
-}
-
 function update() {
     $(document).on('click', '#update', function () {
+
+        console.log("update")
         var user_name = $(this).attr('us');
         console.log(user_name);
 
@@ -136,7 +196,7 @@ function update() {
 
 
                 if (data_us.type == 'client') {
-                    $("#details_joyas").html(
+                    $("#users").html(
 
                         '<label for="client">Client</label>' +
                         '<input type="radio" id="client" name="type" value="client" checked>' +
@@ -145,7 +205,7 @@ function update() {
 
                     )
                 } else if (data_us.type == 'admin') {
-                    $("#details_joyas").html(
+                    $("#users").html(
 
                         '<label for="client">Client</label>' +
                         '<input type="radio" id="client" name="type" value="client" >' +
@@ -188,11 +248,36 @@ function delet() {
 
             crud('module/users/controller/controller_users.php?op=delete', user_name)
                 .then(function (data) {
-                    location.reload()
                     console.log(data)
+
+                    location.reload()
                 })
         } else {
-            // alert("false")
+
+        }
+
+
+
+
+
+    })
+
+
+}
+
+function delete_all() {
+    $(document).on('click', '#delete_all', function () {
+        var conf = confirm("Do you want delete user?");
+
+        if (conf == true) {
+
+            crud('module/users/controller/controller_users.php?op=delete_all')
+                .then(function (data) {
+                    console.log(data)
+
+                    location.reload()
+                })
+        } else {
 
         }
 

@@ -30,8 +30,8 @@ switch ($_GET['op']) {
         break;
 
     case 'reed':
-        
-      
+
+
         try {
             $daousers = new DAOusers();
             $rlt = $daousers->reed($_POST['valor1']);
@@ -49,7 +49,6 @@ switch ($_GET['op']) {
         break;
 
     case 'update':
-    
         try {
             $daousers = new DAOusers();
             $rlt = $daousers->update($_POST['valor1'], $_POST['valor2']);
@@ -63,11 +62,24 @@ switch ($_GET['op']) {
             echo ("UPDA");
         }
         break;
-        case 'delete':
-    
+    case 'delete':
+        try {
+            $daousers = new DAOusers();
+            $rlt = $daousers->delete($_POST['valor1']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+        if (!$rlt) {
+            echo ("error_rlt");
+        } else {
+
+            echo ("DEL");
+        }
+        break;
+        case 'delete_all':
             try {
                 $daousers = new DAOusers();
-                $rlt = $daousers->delete($_POST['valor1']);
+                $rlt = $daousers->delete_all();
             } catch (Exception $e) {
                 echo json_encode("error");
             }
