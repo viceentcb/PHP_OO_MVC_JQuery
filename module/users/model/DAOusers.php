@@ -14,6 +14,22 @@ class DAOusers
 		return $res;
 	}
 
+	function create($user_name, $pass, $mail, $type){
+
+
+		$password = password_hash($pass, PASSWORD_DEFAULT);
+		$hashavatar= md5( strtolower( trim( $user_name ) ) );
+		$avatar="https://www.gravatar.com/avatar/$hashavatar?s=40&d=identicon";
+
+
+		$sql = "INSERT INTO users VALUES('$user_name', '$password', '$mail','$avatar', '$type')";
+
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+
+		return $res;
+	}
 	function reed($user_name)
 	{
 		$sql = "SELECT * FROM users where user_name like '$user_name'";

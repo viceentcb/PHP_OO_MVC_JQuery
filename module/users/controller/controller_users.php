@@ -28,7 +28,20 @@ switch ($_GET['op']) {
             echo json_encode($dinfo);
         }
         break;
+    case 'create':
+        try {
+            $daousers = new DAOusers();
+            $rlt = $daousers->create($_POST['user_name_reg'], $_POST['passw_reg'], $_POST['mail'], $_POST['type']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+        if (!$rlt) {
+            echo ('not correct');
+        } else {
+            echo('correct');
 
+        }
+        break;
     case 'reed':
 
 
@@ -76,20 +89,20 @@ switch ($_GET['op']) {
             echo ("DEL");
         }
         break;
-        case 'delete_all':
-            try {
-                $daousers = new DAOusers();
-                $rlt = $daousers->delete_all();
-            } catch (Exception $e) {
-                echo json_encode("error");
-            }
-            if (!$rlt) {
-                echo ("error_rlt");
-            } else {
-    
-                echo ("DEL");
-            }
-            break;
+    case 'delete_all':
+        try {
+            $daousers = new DAOusers();
+            $rlt = $daousers->delete_all();
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+        if (!$rlt) {
+            echo ("error_rlt");
+        } else {
+
+            echo ("DEL");
+        }
+        break;
 
     default:
         include("view/inc/error404.php");
