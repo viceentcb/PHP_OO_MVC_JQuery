@@ -7,6 +7,7 @@ $(document).ready(function () {
     filter();
     pagination();
     like();
+    cart();
 
 
     // click_map();
@@ -56,6 +57,7 @@ function ajaxForSearch(durl) {
                         "</figure>" +
                         "</div>" +
                         "</button>" +
+                        "<button class='baddcart' id='" + data[row].cod_ref + "'>Add to cart</button></div></div>" +
                         "<button class='btn btn-default btn-lg like " + data[row].cod_ref + "' id='" + data[row].cod_ref + "'>❤</button>" +
                         "</td>" +
                         "</table>");
@@ -77,7 +79,7 @@ function ajaxForSearch(durl) {
                         "</figcaption>" +
                         "</figure>" +
                         "</div>" +
-                        "</button>" +
+                        "<button class='baddcart' id='" + data[row].cod_ref + "'>Add to cart</button></div></div>" +
                         "<button class='btn btn-default btn-lg like " + data[row].cod_ref + "' id='" + data[row].cod_ref + "'>❤</button>" +
 
                         "</td>" +
@@ -100,7 +102,7 @@ function ajaxForSearch(durl) {
                         "</figcaption>" +
                         "</figure>" +
                         "</div>" +
-                        "</button>" +
+                        "<button class='baddcart' id='" + data[row].cod_ref + "'>Add to cart</button></div></div>" +
                         "<button class='btn btn-default btn-lg like  " + data[row].cod_ref + "' id='" + data[row].cod_ref + "'>❤</button>" +
                         "</td>" +
                         "</table>");
@@ -117,6 +119,7 @@ function ajaxForSearch(durl) {
                         "</figcaption>" +
                         "</figure>" +
                         "</div>" +
+                        "<button class='baddcart' id='" + data[row].cod_ref + "'>Add to cart</button></div></div>" +
                         "<button class='btn btn-default btn-lg like " + data[row].cod_ref + "' id='" + data[row].cod_ref + "'>❤</button>" +
                         "</td>" +
                         "</table>")
@@ -276,6 +279,7 @@ function click() {
                 $("#detail_products").append(
 
                     '<table>' +
+                    "<button class='baddcart' id='" + data[i].cod_ref + "'>Add to cart</button></div></div>" +
                     "<button class='btn btn-default btn-lg like " + data[i].cod_ref + "' id='" + data[i].cod_ref + "'>❤</button>" +
 
                     '<tr>' +
@@ -953,6 +957,8 @@ var likes = function (url, data) { //function/promise GENERAL
     // console.log(data)
 
     return new Promise(function (resolve) {
+        // console.log(url)
+        // console.log(data)
         $.ajax({
             type: "POST",
             url: url,
@@ -1034,5 +1040,51 @@ function paint_likes() {
 
 
         })
+
+}
+
+//funcion para saber que productos quieres
+function cart() {
+
+    var prods = [];
+
+    ///entrara cuabdo hagas click en añadir al carrito
+    $(document).on('click', '.baddcart', function () {
+        // console.log("btnaddcart")
+
+        //cogemos la id de ese producto 
+        var id = this.getAttribute('id');
+        // console.log(id)
+
+        //y la guardamos en la tabla que te he comentado en el correo falta lo del id_usuario o ip
+        likes('module/shop/controller/controller_shop.php?op=insert_cart', id)
+            .then(function (info) {
+                console.log(info)
+
+                //añade a una array el id del producto
+                prods.push(id)
+                // console.log(prods)
+
+
+                // Guardo el objeto como un string en localstorage
+                localStorage.setItem('prods', JSON.stringify(prods));
+
+                //lo recogemos
+                var guardado = localStorage.getItem('prods');
+
+                //y si necesitamos la string recogemos los datos parseados
+                // console.log(JSON.parse(guardado));
+
+                var storage = { prods: guardado };
+
+
+                ///le decimos que los guarde tambien en $session
+                likes('module/shop/controller/controller_shop.php?op=cart', storage)
+                    .then(function () {
+                    })
+            })
+
+    })
+
 
 }

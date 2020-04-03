@@ -174,13 +174,13 @@ switch ($_GET['op']) {
             echo json_encode($dinfo);
         }
         break;
-    
+
         ///aqui le pasamos al js el nombre del usuario conectado
     case 'user':
         echo ($user_name);
         break;
 
-    ///insertamos favoritos
+        ///insertamos favoritos
     case 'favorite':
         // print_r($_POST); 
 
@@ -248,6 +248,32 @@ switch ($_GET['op']) {
             echo json_encode($dinfo);
         }
         break;
+
+    case 'cart':
+        ///guarda  los productos en $_SESSION
+        $_SESSION['products'] = $_POST['prods'];
+        break;
+        
+    case 'insert_cart':
+        //vemos en que producto ha clickado
+        foreach ($_POST as $cod_prod => $valor) {
+        }
+
+        //le decimos al dao que lo inserte en la tabla que te he explicado en el correo
+        try {
+            $daoshop = new DAOshop();
+            $rlt = $daoshop->cart($cod_prod);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+
+        if (!$rlt) {
+            echo ("no insertado");
+        } else {
+            echo ("todo correcto");
+        }
+        break;
+
     default:
         include("view/inc/error404.php");
         break;

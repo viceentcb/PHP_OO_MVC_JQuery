@@ -201,7 +201,7 @@ function validate_register_mod() {
 
         //todo correcto
     } else {
-        document.getElementById('e_mail').innerHTML = "";
+        document.getElementById('e_type').innerHTML = "";
         type = 'true'
     }
     ///TYPE
@@ -320,7 +320,6 @@ function create() {
                     if (data == 'correct') {
 
                         // alert("Usuario registrado");
-                        location.reload()
 
 
                         ///como el nombre del usuario es un id en la tabla no se puede repetir

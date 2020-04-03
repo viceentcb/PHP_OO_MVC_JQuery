@@ -20,6 +20,9 @@
                      <li class="nav-item">
                         <a href="index.php?page=controller_login&op=list" class="nav-link">Login</a>
                      </li>
+                     <li class="nav-item">
+                        <a href="index.php?page=controller_cart&op=list" class="nav-link">Cart</a>
+                     </li>
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                            Pages

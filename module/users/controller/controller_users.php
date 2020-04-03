@@ -43,8 +43,6 @@ switch ($_GET['op']) {
         }
         break;
     case 'reed':
-
-
         try {
             $daousers = new DAOusers();
             $rlt = $daousers->reed($_POST['valor1']);
