@@ -22,7 +22,9 @@
 
  
 
-
+<!-- IP-->
+<script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+<!-- IP-->
 
 </body>
 

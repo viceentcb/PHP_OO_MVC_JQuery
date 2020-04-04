@@ -1027,7 +1027,7 @@ function paint_likes() {
     ///observa cuales son los favoritos del usuario conectado ahora mismo
     likes('module/shop/controller/controller_shop.php?op=show_likes')
         .then(function (cod_fav) {
-            // console.log(cod_fav)
+            //  console.log(cod_fav)
 
             //convierte los datos en array
             var data_all = JSON.parse(cod_fav);
@@ -1054,12 +1054,53 @@ function cart() {
 
         //cogemos la id de ese producto 
         var id = this.getAttribute('id');
-        // console.log(id)
+        console.log(id)
 
-        //y la guardamos en la tabla que te he comentado en el correo falta lo del id_usuario o ip
-        likes('module/shop/controller/controller_shop.php?op=insert_cart', id)
-            .then(function (info) {
-                console.log(info)
+        ///vemos el $_SESION del user_name
+        likes('module/shop/controller/controller_shop.php?op=user')
+            .then(function (name) {
+
+                // console.log(name)
+
+                //Si el nombre no esta vacio es decir si esta logueado
+                if (name !== "") {
+            
+                    //guardamos en una variable el codigo del producto y el nombre del usuario
+                    //ya que como el nombre del usuario no se puede repetir
+                    //es mi clave primaria de la tabla usuarios y por lo tanto su id
+                        var info = { cod_ref: id, id: name };
+                        console.log(info)
+
+                        // y guardamos esta informacion en la tabla  cart
+                        likes('module/shop/controller/controller_shop.php?op=insert_cart', info)
+                            .then(function (info) {
+                                
+                                //observamos que nos devuelva que todo esta correcto
+                                console.log(info)
+                            })
+
+                /// si no esta logueado
+                } else {
+
+                    ///cogemos la ip del usuario
+                    $.getJSON('https://api.ipify.org?format=json', function (data) {
+                        console.log(data.ip);
+
+                        ///y guardamos en la tabla la informacion del codigo de referencia del producto
+                        // y la ip del usuario
+                        var info = { cod_ref: id, id: data.ip };
+                        console.log(info)
+
+                        // y guardamos esta informacion en la tabla  cart
+                        likes('module/shop/controller/controller_shop.php?op=insert_cart', info)
+                            .then(function (info) {
+
+                                //observamos que nos devuelva que todo esta correcto
+                                console.log(info)
+                            })
+                    })
+
+                }
 
                 //añade a una array el id del producto
                 prods.push(id)
@@ -1082,8 +1123,8 @@ function cart() {
                 likes('module/shop/controller/controller_shop.php?op=cart', storage)
                     .then(function () {
                     })
-            })
 
+            })
     })
 
 

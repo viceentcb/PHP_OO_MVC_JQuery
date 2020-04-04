@@ -113,9 +113,9 @@ class DAOshop
 		connect::close($connection);
 		return $res;
 	}
-	function cart($cod_ref)
+	function cart($cod_ref, $id)
 	{
-		$sql = "INSERT INTO cart values('$cod_ref')";
+		$sql = "INSERT INTO cart values('$cod_ref', '$id')";
 		$connection = connect::con();
 
 		$res = mysqli_query($connection, $sql);

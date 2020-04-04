@@ -255,14 +255,12 @@ switch ($_GET['op']) {
         break;
         
     case 'insert_cart':
-        //vemos en que producto ha clickado
-        foreach ($_POST as $cod_prod => $valor) {
-        }
-
-        //le decimos al dao que lo inserte en la tabla que te he explicado en el correo
         try {
             $daoshop = new DAOshop();
-            $rlt = $daoshop->cart($cod_prod);
+            ///recogemos e insertamos el codigo de referencia del producto
+            //ademas de el id: la ip en caso de que no este logueado 
+            ///y el nombre de usuario en caso de que si
+            $rlt = $daoshop->cart($_POST['cod_ref'],$_POST['id']);
         } catch (Exception $e) {
             echo json_encode("error");
         }
