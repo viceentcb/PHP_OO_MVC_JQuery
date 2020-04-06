@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    console.log("cart")
     show_cart();
 
 });
@@ -27,10 +28,10 @@ function show_cart() {
 
 
 
-    cart('module/cart/controller/controller_cart.php?op=prods', storage)
+    // cart('module/cart/controller/controller_cart.php?op=prods', storage)
 
-        .then(function (data) {
-            console.log(data)
+    //     .then(function (data) {
+    //         console.log(data)
             $("#prods").append(
                 '<tr>' +
                 '<td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>' +
@@ -44,7 +45,32 @@ function show_cart() {
                 '<td class="text-right">124,90 €</td>' +
                 '<td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>' +
                 '</button> </td>' +
-                '</tr>'
+                '</tr>' +
+                '<tr>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td>Sub-Total</td>' +
+                '<td class="text-right">255,90 €</td>' +
+                '</tr>' +
+                '<tr>' +
+                ' <td></td>' +
+                ' <td></td>' +
+                ' <td></td>' +
+                ' <td></td>' +
+                '<td>Shipping</td>' +
+                '<td class="text-right">6,90 €</td>' +
+                '</tr>' +
+                '<tr>' +
+                ' <td></td>' +
+                ' <td></td>' +
+                ' <td></td>' +
+                ' <td></td>' +
+                ' <td><strong>Total</strong></td>' +
+                ' <td class="text-right"><strong>346,90 €</strong></td>' +
+               
+                ' </tr>'
             );
-        })
+        // })
 }

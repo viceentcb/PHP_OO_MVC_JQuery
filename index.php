@@ -38,11 +38,11 @@ if ((isset($_GET['page'])) && ($_GET['page'] === "controller_joyas")) {
 } else if ((isset($_GET['page'])) && ($_GET['page'] === "controller_users")) {
 	include("view/inc/top_page_joyas.php");
 	include("view/inc/top_page_menu.php");
-} else if ((isset($_GET['page'])) && ($_GET['page'] === "controller_cart")) {
+}  else if ((isset($_GET['page'])) && ($_GET['page'] === "controller_cart")) {
 	include("view/inc/top_page_cart.php");
-
 	include("view/inc/top_page_menu.php");
 	include("view/inc/top_page.php");
+
 }else {
 	include("view/inc/top_page_menu.php");
 	include("view/inc/top_page.php");

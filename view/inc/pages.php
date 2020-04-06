@@ -33,7 +33,7 @@ switch ($_GET['page']) {
 	case "controller_users";
 		include("module/users/controller/" . $_GET['page'] . ".php");
 		break;
-	case "controller_cart";
+		case "controller_cart";
 		include("module/cart/controller/" . $_GET['page'] . ".php");
 		break;
 	case "404";
