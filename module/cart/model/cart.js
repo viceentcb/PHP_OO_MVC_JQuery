@@ -3,6 +3,7 @@ $(document).ready(function () {
     show_cart();
     stock();
     delete_product();
+    delete_all();
 
 });
 
@@ -125,7 +126,8 @@ function show_cart() {
                         '<td class="text-right" id="ship">' + shipp + ' €</td>' +
                         '</tr>' +
                         '<tr>' +
-                        ' <td></td>' +
+                        '<td class="text-right"><button class="btn btn-sm btn-danger delete_all"><i class="fa fa-trash"></i>' +
+                        '</button>Delete all </td>' + 
                         ' <td></td>' +
                         ' <td></td>' +
                         ' <td></td>' +
@@ -266,4 +268,34 @@ function print() {
     //y lo añadimos a la celda de total
     document.getElementById('tot').innerHTML = tot + ' €';
 
+}
+
+function delete_all() {
+    $(document).on('click', '.delete_all', function () {
+        alert("borrar todo")
+
+
+        cart('module/cart/controller/controller_cart.php?op=user')
+            .then(function (name) {
+                // console.log(name);
+
+                if (name !== "") {
+                    var id = name
+
+                    // var info = {id: a713};
+                    //{}
+
+                } else {
+
+                }
+
+                cart('module/cart/controller/controller_cart.php?op=delete_all', id)
+                    .then(function (data) {
+                        console.log(data)
+                        $("#prods").empty()
+
+                        show_cart()
+                    })
+            })
+    })
 }

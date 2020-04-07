@@ -28,4 +28,12 @@ class DAOcart
 		connect::close($connection);
 		return $res;
 	}
+	function del_all($id)
+	{
+		$sql = "DELETE FROM cart where id ='$id'";
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
 }

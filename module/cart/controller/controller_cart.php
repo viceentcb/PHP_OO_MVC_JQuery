@@ -51,20 +51,36 @@ switch ($_GET['op']) {
             echo json_encode($rlt);
         }
         break;
-        case 'delete_prod':
-            try {
-                $daocart = new DAOcart();
-                $rlt = $daocart->del_prod($_POST['cod_ref'], $_POST['id']);
-            } catch (Exception $e) {
-                echo json_encode("error");
-            }
-    
-            if (!$rlt) {
-                echo json_encode("error1");
-            } else {
-                echo json_encode("borrado");
-            }
-            break;
+    case 'delete_prod':
+        try {
+            $daocart = new DAOcart();
+            $rlt = $daocart->del_prod($_POST['cod_ref'], $_POST['id']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+
+        if (!$rlt) {
+            echo json_encode("error1");
+        } else {
+            echo json_encode("borrado");
+        }
+        break;
+    case 'delete_all':
+        foreach ($_POST as $id => $valor) {
+        }
+        try {
+            $daocart = new DAOcart();
+            $rlt = $daocart->del_all($id);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+
+        if (!$rlt) {
+            echo json_encode("error1");
+        } else {
+            echo json_encode("borrado");
+        }
+        break;
     default:
         include("view/inc/error404.php");
         break;
