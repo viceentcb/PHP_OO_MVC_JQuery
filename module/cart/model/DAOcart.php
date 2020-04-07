@@ -20,4 +20,12 @@ class DAOcart
 		connect::close($connection);
 		return $res;
 	}
+	function del_prod($cod_ref, $id)
+	{
+		$sql = "DELETE FROM cart where cod_ref = '$cod_ref' and id ='$id'";
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
 }

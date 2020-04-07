@@ -2,6 +2,7 @@ $(document).ready(function () {
     console.log("cart")
     show_cart();
     stock();
+    delete_product();
 
 });
 
@@ -50,7 +51,7 @@ function show_cart() {
                     for (row in prods) {
                         if ((prods[row].unidades) > 0) {
                             $("#prods").append(
-                                '<tr>' +
+                                '<tr id="' + prods[row].cod_ref + 'd">' +
                                 '<td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>' +
                                 '<td>' + prods[row].nombre + ' </td>' +
                                 '<td>In stock</td>' +
@@ -60,7 +61,7 @@ function show_cart() {
                                 '</td>' +
 
                                 '<td class="text-right" id="' + prods[row].cod_ref + 'p">' + prods[row].precio + ' €</td>' +
-                                '<td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>' +
+                                '<td class="text-right"><button id="' + prods[row].cod_ref + '" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i>' +
                                 '</button> </td>' +
                                 '</tr>'
                             );
@@ -73,7 +74,7 @@ function show_cart() {
                             subtotal = subtotal + precio
                         } else {
                             $("#prods").append(
-                                '<tr style= "filter: blur(1px);";                                ";                                ;";                                ">' +
+                                '<tr id="' + prods[row].cod_ref + 'd" style= "filter: blur(1px);";                                ";                                ;";                                ">' +
                                 '<td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>' +
                                 '<td>' + prods[row].nombre + ' </td>' +
                                 '<td>No stock</td>' +
@@ -83,7 +84,7 @@ function show_cart() {
                                 '</td>' +
 
                                 '<td class="text-right" >' + prods[row].precio + ' €</td>' +
-                                '<td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>' +
+                                '<td class="text-right"><button id="' + prods[row].cod_ref + '"class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i>' +
                                 '</button> </td>' +
                                 '</tr>'
                             );
@@ -136,6 +137,7 @@ function show_cart() {
         })
 
 }
+
 function stock() {
     /// si cambias las unidades que quieres:
     $(document).on('change', '.stock', function () {
@@ -166,65 +168,102 @@ function stock() {
                 document.getElementById(cod_ref + 'p').innerHTML = tot_price + ' €';
 
 
-                var subtotal = 0
-
-                //desde uno ya que la primera fila de la tabla son los titulos
-                //hasta toda la filas menos las 4 en las que no tienes productos
-                for (i = 1; i <= ((document.getElementById("cart").rows.length) - 4); i++) {
-
-                    //para cada celda observas si esta disponible el producto o no
-                    var stock = document.getElementById("cart").rows[i].cells[2].innerHTML
-
-                    //si lo esta:
-                    if (stock == "In stock") {
-                        // console.log("YES")
-
-                        //cogemos el precio total que tiene ahora
-                        var preu = document.getElementById("cart").rows[i].cells[4].innerHTML
-                        // console.log(preu)
-
-                        ///le quitas el '€' y lo conviertes en un int
-                        var preu = parseInt(preu)
-                        // console.log(preu)
-
-                        //calculas que el subtotal sea cada precio de los productos dispobible mas el siguiente
-                        subtotal = subtotal + preu
-                        // console.log(subtotal)
-                    }
-
-                }
-                //lo hacemos para que siempre salgan dos decimales
-                var sub = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
-                // console.log(sub)
-
-                //y lo añadimos a la celda del subtotal
-                document.getElementById('sub').innerHTML = sub + ' €';
-
-
-                //el encarcgado de los envios se lleva un 0.1% del precio de  cada unidad comprada
-                //es decir un 0.1% del total
-                shipping = (subtotal * 0.01)
-                // console.log(shipping)
-
-                //ahora hacemos que salga siempre con dos numeros decimales
-                var ship = parseFloat(Math.round(shipping * 100) / 100).toFixed(2);
-                // console.log(ship)
-
-                //y lo añadimos a la celda de shipping
-                document.getElementById('ship').innerHTML = ship + ' €';
-
-                ///el total sera los gastos de envios menos el subtotal
-                total = subtotal + shipping
-                // console.log(total)
-
-                //ahora hacemos que salga siempre con dos numeros decimales
-                var tot = parseFloat(Math.round(total * 100) / 100).toFixed(2);
-                // console.log(tot)
-
-                //y lo añadimos a la celda de total
-                document.getElementById('tot').innerHTML = tot + ' €';
+                print()
 
             })
     })
+
+}
+
+function delete_product() {
+    $(document).on('click', '.delete', function () {
+        // alert("Cuidado")
+        var cod_prod = $(this).attr('id');
+        // console.log(cod_prod)
+
+        cart('module/cart/controller/controller_cart.php?op=user')
+            .then(function (name) {
+                // console.log(name);
+
+                if (name !== "") {
+                    var id_us = name
+
+                    // var info = {id: a713};
+                    //{}
+
+                } else {
+
+                }
+                info = { cod_ref: cod_prod, id: id_us }
+
+                cart('module/cart/controller/controller_cart.php?op=delete_prod', info)
+                    .then(function (data) {
+                        console.log(data)
+                        $('#' + cod_prod + 'd').remove();
+                        print()
+                    })
+            })
+
+    })
+}
+
+function print() {
+    var subtotal = 0
+
+    //desde uno ya que la primera fila de la tabla son los titulos
+    //hasta toda la filas menos las 4 en las que no tienes productos
+    for (i = 1; i <= ((document.getElementById("cart").rows.length) - 4); i++) {
+
+        //para cada celda observas si esta disponible el producto o no
+        var stock = document.getElementById("cart").rows[i].cells[2].innerHTML
+
+        //si lo esta:
+        if (stock == "In stock") {
+            console.log("YES")
+
+            //cogemos el precio total que tiene ahora
+            var preu = document.getElementById("cart").rows[i].cells[4].innerHTML
+            console.log(preu)
+
+            ///le quitas el '€' y lo conviertes en un int
+            var preu = parseInt(preu)
+            console.log(preu)
+
+            //calculas que el subtotal sea cada precio de los productos dispobible mas el siguiente
+            subtotal = subtotal + preu
+            console.log(subtotal)
+        }
+
+    }
+    //lo hacemos para que siempre salgan dos decimales
+    var sub = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
+    console.log(sub)
+
+    //y lo añadimos a la celda del subtotal
+    document.getElementById('sub').innerHTML = sub + ' €';
+
+
+    //el encarcgado de los envios se lleva un 0.1% del precio de  cada unidad comprada
+    //es decir un 0.1% del total
+    shipping = (subtotal * 0.01)
+    console.log(shipping)
+
+    //ahora hacemos que salga siempre con dos numeros decimales
+    var ship = parseFloat(Math.round(shipping * 100) / 100).toFixed(2);
+    console.log(ship)
+
+    //y lo añadimos a la celda de shipping
+    document.getElementById('ship').innerHTML = ship + ' €';
+
+    ///el total sera los gastos de envios menos el subtotal
+    total = subtotal + shipping
+    console.log(total)
+
+    //ahora hacemos que salga siempre con dos numeros decimales
+    var tot = parseFloat(Math.round(total * 100) / 100).toFixed(2);
+    console.log(tot)
+
+    //y lo añadimos a la celda de total
+    document.getElementById('tot').innerHTML = tot + ' €';
 
 }
