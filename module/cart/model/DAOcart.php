@@ -36,4 +36,12 @@ class DAOcart
 		connect::close($connection);
 		return $res;
 	}
+	function S_cod_ref($name)
+	{
+		$sql = "SELECT cod_ref FROM joya where nombre = '$name'";
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql)->fetch_object();
+		connect::close($connection);
+		return $res;
+	}
 }

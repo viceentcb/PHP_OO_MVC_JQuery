@@ -60,7 +60,7 @@ switch ($_GET['op']) {
             echo json_encode('no existe');
         } else {
             $value = get_object_vars($rlt);
-    
+
 
 
             if (password_verify($_POST['passw_reg'], $value['password'])) {

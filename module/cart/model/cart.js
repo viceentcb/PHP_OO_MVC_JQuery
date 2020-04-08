@@ -4,6 +4,7 @@ $(document).ready(function () {
     stock();
     delete_product();
     delete_all();
+    checkout();
 
 });
 
@@ -49,92 +50,99 @@ function show_cart() {
                     var subtotal = 0
                     var shipping = 0
 
-                    for (row in prods) {
-                        if ((prods[row].unidades) > 0) {
-                            $("#prods").append(
-                                '<tr id="' + prods[row].cod_ref + 'd">' +
-                                '<td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>' +
-                                '<td>' + prods[row].nombre + ' </td>' +
-                                '<td>In stock</td>' +
+                    if (prods.length == 0) {
+                        $("#prods").append(
+                            '<h1>No tienes productos</h1>'
+                        );
 
-                                '<td align="center">' +
-                                '<input class="stock" cod_ref="' + prods[row].cod_ref + '" name="stock" id="' + prods[row].cod_ref + '" type="number" step="1" min="1" max="' + prods[row].unidades + '" placeholder="1" />' +
-                                '</td>' +
+                    } else {
+                        for (row in prods) {
+                            if ((prods[row].unidades) > 0) {
+                                $("#prods").append(
+                                    '<tr id="' + prods[row].cod_ref + 'd">' +
+                                    '<td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>' +
+                                    '<td>' + prods[row].nombre + ' </td>' +
+                                    '<td>In stock</td>' +
 
-                                '<td class="text-right" id="' + prods[row].cod_ref + 'p">' + prods[row].precio + ' €</td>' +
-                                '<td class="text-right"><button id="' + prods[row].cod_ref + '" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i>' +
-                                '</button> </td>' +
-                                '</tr>'
-                            );
+                                    '<td align="center">' +
+                                    '<input class="stock" cod_ref="' + prods[row].cod_ref + '" name="stock" id="' + prods[row].cod_ref + '" type="number" value="1" step="1" min="1" max="' + prods[row].unidades + '" placeholder="1" />' +
+                                    '</td>' +
 
-                            //aunque en la tabla sea int al cogerlo como array lo recoge como string
-                            //asi que lo cambiamos a int
-                            var precio = parseInt(prods[row].precio)
+                                    '<td class="text-right" id="' + prods[row].cod_ref + 'p">' + prods[row].precio + ' €</td>' +
+                                    '<td class="text-right"><button id="' + prods[row].cod_ref + '" class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i>' +
+                                    '</button> </td>' +
+                                    '</tr>'
+                                );
+
+                                //aunque en la tabla sea int al cogerlo como array lo recoge como string
+                                //asi que lo cambiamos a int
+                                var precio = parseInt(prods[row].precio)
 
 
-                            subtotal = subtotal + precio
-                        } else {
-                            $("#prods").append(
-                                '<tr id="' + prods[row].cod_ref + 'd" style= "filter: blur(1px);";                                ";                                ;";                                ">' +
-                                '<td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>' +
-                                '<td>' + prods[row].nombre + ' </td>' +
-                                '<td>No stock</td>' +
+                                subtotal = subtotal + precio
+                            } else {
+                                $("#prods").append(
+                                    '<tr id="' + prods[row].cod_ref + 'd" style= "filter: blur(1px);">' +
+                                    '<td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>' +
+                                    '<td>' + prods[row].nombre + ' </td>' +
+                                    '<td>No stock</td>' +
 
-                                '<td align="center">' +
-                                '<input name="stock" id="stock" type="number" step="1" min="0" max="' + prods[row].unidades + '" placeholder="0" />' +
-                                '</td>' +
+                                    '<td align="center">' +
+                                    '</td>' +
 
-                                '<td class="text-right" >' + prods[row].precio + ' €</td>' +
-                                '<td class="text-right"><button id="' + prods[row].cod_ref + '"class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i>' +
-                                '</button> </td>' +
-                                '</tr>'
-                            );
+                                    '<td class="text-right" >' + prods[row].precio + ' €</td>' +
+                                    '<td class="text-right"><button id="' + prods[row].cod_ref + '"class="btn btn-sm btn-danger delete"><i class="fa fa-trash"></i>' +
+                                    '</button> </td>' +
+                                    '</tr>'
+                                );
+                            }
                         }
+
+
+                        //ahora hacemos que salga siempre con dos numeros decimales
+                        var sub = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
+
+                        //La empresa de envio se llevara un uno por ciento del valor de cada producto
+                        //es decir un uno por ciento del valor total de la compra
+                        shipping = (subtotal * 0.01)
+
+                        //ahora hacemos que salga siempre con dos numeros decimales
+                        var shipp = parseFloat(Math.round(shipping * 100) / 100).toFixed(2);
+
+                        total = subtotal + shipping
+
+                        //ahora hacemos que salga siempre con dos numeros decimales
+                        var total = parseFloat(Math.round(total * 100) / 100).toFixed(2);
+
+                        $("#prods").append(
+                            '<tr>' +
+                            '<td></td>' +
+                            '<td></td>' +
+                            '<td></td>' +
+                            '<td></td>' +
+                            '<td>Sub-Total</td>' +
+                            '<td class="text-right" id="sub">' + sub + ' €</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                            ' <td></td>' +
+                            ' <td></td>' +
+                            ' <td></td>' +
+                            ' <td></td>' +
+                            '<td>Shipping</td>' +
+                            '<td class="text-right" id="ship">' + shipp + ' €</td>' +
+                            '</tr>' +
+                            '<tr>' +
+                            '<td class="text-right"><button class="btn btn-sm btn-danger delete_all"><i class="fa fa-trash"></i>' +
+                            '</button>Delete all </td>' +
+                            ' <td></td>' +
+                            ' <td></td>' +
+                            ' <td></td>' +
+                            ' <td><strong>Total</strong></td>' +
+                            ' <td class="text-right" id="tot"><strong>' + total + ' €</strong></td>' +
+                            ' </tr>'
+                        );
                     }
 
-
-                    //ahora hacemos que salga siempre con dos numeros decimales
-                    var sub = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
-
-                    //La empresa de envio se llevara un uno por ciento del valor de cada producto
-                    //es decir un uno por ciento del valor total de la compra
-                    shipping = (subtotal * 0.01)
-
-                    //ahora hacemos que salga siempre con dos numeros decimales
-                    var shipp = parseFloat(Math.round(shipping * 100) / 100).toFixed(2);
-
-                    total = subtotal + shipping
-
-                    //ahora hacemos que salga siempre con dos numeros decimales
-                    var total = parseFloat(Math.round(total * 100) / 100).toFixed(2);
-
-                    $("#prods").append(
-                        '<tr>' +
-                        '<td></td>' +
-                        '<td></td>' +
-                        '<td></td>' +
-                        '<td></td>' +
-                        '<td>Sub-Total</td>' +
-                        '<td class="text-right" id="sub">' + sub + ' €</td>' +
-                        '</tr>' +
-                        '<tr>' +
-                        ' <td></td>' +
-                        ' <td></td>' +
-                        ' <td></td>' +
-                        ' <td></td>' +
-                        '<td>Shipping</td>' +
-                        '<td class="text-right" id="ship">' + shipp + ' €</td>' +
-                        '</tr>' +
-                        '<tr>' +
-                        '<td class="text-right"><button class="btn btn-sm btn-danger delete_all"><i class="fa fa-trash"></i>' +
-                        '</button>Delete all </td>' + 
-                        ' <td></td>' +
-                        ' <td></td>' +
-                        ' <td></td>' +
-                        ' <td><strong>Total</strong></td>' +
-                        ' <td class="text-right" id="tot"><strong>' + total + ' €</strong></td>' +
-                        ' </tr>'
-                    );
                 })
         })
 
@@ -272,7 +280,7 @@ function print() {
 
 function delete_all() {
     $(document).on('click', '.delete_all', function () {
-        alert("borrar todo")
+        alert("Are you sure?")
 
 
         cart('module/cart/controller/controller_cart.php?op=user')
@@ -282,8 +290,6 @@ function delete_all() {
                 if (name !== "") {
                     var id = name
 
-                    // var info = {id: a713};
-                    //{}
 
                 } else {
 
@@ -296,6 +302,76 @@ function delete_all() {
 
                         show_cart()
                     })
+            })
+    })
+}
+
+function checkout() {
+    $(document).on('click', '#check', function () {
+        // alert("Are you sure?")
+
+
+        cart('module/cart/controller/controller_cart.php?op=user')
+            .then(function (name) {
+                // console.log(name);
+
+
+                if (name !== "") {
+                    // var id = name
+
+
+
+                    var cods = [];
+
+                    //desde uno ya que la primera fila de la tabla son los titulos
+                    //hasta toda la filas menos las 4 en las que no tienes productos
+                    for (i = 1; i <= ((document.getElementById("cart").rows.length) - 4); i++) {
+
+                        //para cada celda observas si esta disponible el producto o no
+                        var stock = document.getElementById("cart").rows[i].cells[2].innerHTML
+
+                        //si lo esta:
+                        if (stock == "In stock") {
+                            var nombre = document.getElementById("cart").rows[i].cells[1].innerHTML
+
+                            //le pasamos el nombre del producto para obtener su id
+                            info = { nom: nombre }
+                            console.log(nombre)
+                            cart('module/cart/controller/controller_cart.php?op=cod_ref', info)
+                                .then(function (cod_prod) {
+                                    // console.log(cod_ref)
+                                    var cod_ref = JSON.parse(cod_prod);
+                                    console.log(cod_ref.cod_ref)
+
+                                    ///una vez recogido el id vemos cauantas unidades quiere el usuario
+                                    var units = document.getElementById(cod_ref.cod_ref).value
+                                    console.log(units)
+
+                                    //y para cada producto creamos una array en la que le añadimos:
+                                    var prods = []
+                                    
+                                    //su codigo de referencia
+                                    prods.push(cod_ref.cod_ref)
+                                    //y sus unidades
+                                    prods.push(units)
+                                    console.log(prods)
+
+                                    //y añade este array a otra array
+                                    cods.push(prods)
+                                    console.log(cods)
+
+                                    // console.log(cods[0][0])
+                                })
+
+                        }
+
+                    }
+
+
+
+                } else {
+
+                }
             })
     })
 }
