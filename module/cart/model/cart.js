@@ -339,8 +339,9 @@ function checkout() {
                             console.log(nombre)
                             cart('module/cart/controller/controller_cart.php?op=cod_ref', info)
                                 .then(function (cod_prod) {
-                                    // console.log(cod_ref)
+                                    // console.log(cod_prod)
                                     var cod_ref = JSON.parse(cod_prod);
+                                    console.log(cod_ref)
                                     console.log(cod_ref.cod_ref)
 
                                     ///una vez recogido el id vemos cauantas unidades quiere el usuario
@@ -349,7 +350,7 @@ function checkout() {
 
                                     //y para cada producto creamos una array en la que le añadimos:
                                     var prods = []
-                                    
+
                                     //su codigo de referencia
                                     prods.push(cod_ref.cod_ref)
                                     //y sus unidades
@@ -359,13 +360,40 @@ function checkout() {
                                     //y añade este array a otra array
                                     cods.push(prods)
                                     console.log(cods)
+                                    console.log(cods)
 
-                                    // console.log(cods[0][0])
+                                    // la guardamos en localStorage
+                                    localStorage.setItem('cart', JSON.stringify(cods));
+
+                                    // console.log("guardar")
+                                    //lo recogemos
+                                    var guardado = localStorage.getItem('cart');
+
+
+                                    //y si necesitamos la string recogemos los datos parseados
+                                    // console.log(JSON.parse(guardado));
+
+                                    var storage = { cart: guardado };
+
+
+                                    ///le decimos que los guarde tambien en $session
+                                    cart('module/cart/controller/controller_cart.php?op=cart', storage)
+                                        .then(function (data) {
+                                            console.log(data)
+                                        })
+
+
                                 })
+
 
                         }
 
+
                     }
+
+
+
+
 
 
 
@@ -373,5 +401,7 @@ function checkout() {
 
                 }
             })
+
+
     })
 }

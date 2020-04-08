@@ -81,19 +81,25 @@ switch ($_GET['op']) {
             echo json_encode("borrado");
         }
         break;
-        case 'cod_ref':
-            try {
-                $daocart = new DAOcart();
-                $rlt = $daocart->S_cod_ref($_POST['nom']);
-            } catch (Exception $e) {
-                echo json_encode("error");
-            }
-    
-            if (!$rlt) {
-                echo json_encode("error1");
-            } else {
-                echo json_encode($rlt);
-            }
+    case 'cod_ref':
+        try {
+            $daocart = new DAOcart();
+            $rlt = $daocart->S_cod_ref($_POST['nom']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+
+        if (!$rlt) {
+            echo json_encode("error1");
+        } else {
+            echo json_encode($rlt);
+        }
+        break;
+
+        case 'cart':
+            ///guarda  los productos en $_SESSION
+            $_SESSION['cart'] = $_POST['cart'];
+            echo json_encode($_SESSION['cart']);
             break;
     default:
         include("view/inc/error404.php");
