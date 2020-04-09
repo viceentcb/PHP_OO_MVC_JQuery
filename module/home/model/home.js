@@ -7,6 +7,7 @@ $(document).ready(function () {
     click_cat();
     click_prod();
     // click_more();
+    check();
 
 });
 
@@ -51,45 +52,45 @@ function photo() {
             console.log("fail")
         })
     $(document).on('click', '.view_more', function () {
-        limit=limit+2
+        limit = limit + 2
         $("#val").empty();
-    $.ajax({
-        type: "GET",
-        dataType: 'json',
-        url: "module/home/controller/controller_home.php?op=val&limit=" + limit
-    })
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            url: "module/home/controller/controller_home.php?op=val&limit=" + limit
+        })
 
-        .done(function (data) {
-            // console.log(data);
+            .done(function (data) {
+                // console.log(data);
 
-            for (row in data) {
-                // console.log("for");
-                // console.log(row);
+                for (row in data) {
+                    // console.log("for");
+                    // console.log(row);
+                    $("#val").append(
+                        // "<div class='row mt-lg-5 mt-md-3 mt-3'>" +
+                        // "<div class='col-lg-4 col-md-4 col-sm-4 latest-jewel-grid'>" +
+                        "<figure id='" + data[row].cod_ref + "' class='snip1321'>" +
+                        "<img src= '" + data[row].route + "' class='img-thumbnail' alt=''>" +
+                        "<figcaption>" +
+                        "<i class='ion-upload'>" +
+                        "</i>" +
+                        "<h2> " + data[row].nombre + " </h2>" +
+                        "<h4> " + data[row].marca + " </h4>" +
+                        "</figcaption>" +
+                        "</figure>"
+
+                        // "</div>"+
+                        // "</div>"
+                    );
+
+                }
                 $("#val").append(
-                    // "<div class='row mt-lg-5 mt-md-3 mt-3'>" +
-                    // "<div class='col-lg-4 col-md-4 col-sm-4 latest-jewel-grid'>" +
-                    "<figure id='" + data[row].cod_ref + "' class='snip1321'>" +
-                    "<img src= '" + data[row].route + "' class='img-thumbnail' alt=''>" +
-                    "<figcaption>" +
-                    "<i class='ion-upload'>" +
-                    "</i>" +
-                    "<h2> " + data[row].nombre + " </h2>" +
-                    "<h4> " + data[row].marca + " </h4>" +
-                    "</figcaption>" +
-                    "</figure>"
-
-                    // "</div>"+
-                    // "</div>"
+                    "<img src= 'view/images/view_more.png' class='view_more'>"
                 );
 
-            }
-            $("#val").append(
-                "<img src= 'view/images/view_more.png' class='view_more'>"
-            );
-
-        }).fail(function () {
-            console.log("fail")
-        })
+            }).fail(function () {
+                console.log("fail")
+            })
     })
 
 };
@@ -214,6 +215,47 @@ function click_cat() {
         localStorage.setItem('tipo', type);
         $(window).attr('location', 'index.php?page=controller_shop&op=list')
     })
+}
+
+var cartt = function (url, data) { //function/promise GENERAL 
+
+    // console.log(data)
+
+    return new Promise(function (resolve) {
+        // console.log(url)
+        // console.log(data)
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data
+        })
+            .done(function (data) {
+                resolve(data);
+            })
+    })
+};
+
+function check() {
+    var cart = localStorage.getItem('cart');
+    console.log("cart= " + cart);
+
+    var array = JSON.parse(cart);
+
+
+    info = { array: array }
+    //solamente cuando le des a checkout en el cart entrara:
+    if (cart) {
+
+        //le pasamos el array ya parseado para que en el controllador se recoja como array y no como string
+        cartt("module/home/controller/controller_home.php?op=cart", info)
+            .then(function (data) {
+                console.log(data)
+            })
+    }
+
+    //y al finalizar borramos los datos de localstorage tambien
+    var cart = localStorage.removeItem('cart');
+
 }
 
 

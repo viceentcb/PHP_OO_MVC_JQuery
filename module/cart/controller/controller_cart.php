@@ -99,7 +99,7 @@ switch ($_GET['op']) {
         case 'cart':
             ///guarda  los productos en $_SESSION
             $_SESSION['cart'] = $_POST['cart'];
-            echo json_encode($_SESSION['cart']);
+            // echo json_encode($_SESSION['cart']);
             break;
     default:
         include("view/inc/error404.php");

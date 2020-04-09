@@ -61,25 +61,24 @@ switch ($_GET['op']) {
 			echo json_encode($dinfo);
 		}
 		break;
-		case 'autocomplete':
-			try {
-				$daomenu = new DAOmenu();
-				$rlt = $daomenu->autocomplete($_GET['auto']);
-			} catch (Exception $e) {
-				echo json_encode("error");
-			}
-	
-			if (!$rlt) {
-				echo json_encode("error");
-			} else {
-				$dinfo = array();
-				foreach ($rlt as $row) {
-					array_push($dinfo, $row);
-				}
-				echo json_encode($dinfo);
-			}
-			break;
+	case 'autocomplete':
+		try {
+			$daomenu = new DAOmenu();
+			$rlt = $daomenu->autocomplete($_GET['auto']);
+		} catch (Exception $e) {
+			echo json_encode("error");
+		}
 
+		if (!$rlt) {
+			echo json_encode("error");
+		} else {
+			$dinfo = array();
+			foreach ($rlt as $row) {
+				array_push($dinfo, $row);
+			}
+			echo json_encode($dinfo);
+		}
+		break;
 	default:
 		include("view/inc/error404.php");
 		break;

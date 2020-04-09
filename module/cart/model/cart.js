@@ -138,7 +138,7 @@ function show_cart() {
                             ' <td></td>' +
                             ' <td></td>' +
                             ' <td><strong>Total</strong></td>' +
-                            ' <td class="text-right" id="tot"><strong>' + total + ' €</strong></td>' +
+                            ' <td class="text-right" id="tot">' + total + ' €</td>' +
                             ' </tr>'
                         );
                     }
@@ -170,6 +170,13 @@ function stock() {
                 var price_u = parseInt(price.precio)
                 // console.log(price_u)
 
+                var unidades=parseInt(price.unidades)
+
+                //si lo que ha puesto el cliente es mayor que el stock disponible cambiamos las unidades al maximo stock posible
+                if (units>unidades){
+                    document.getElementById(cod_ref).value=unidades     
+                    units = unidades     
+                }
                 ///calculas las unidades que tienes por el precio unitario 
                 var tot_price = units * price_u
                 // console.log(tot_price)
@@ -332,13 +339,17 @@ function checkout() {
 
                         //si lo esta:
                         if (stock == "In stock") {
+
                             var nombre = document.getElementById("cart").rows[i].cells[1].innerHTML
 
                             //le pasamos el nombre del producto para obtener su id
                             info = { nom: nombre }
                             console.log(nombre)
+
+
                             cart('module/cart/controller/controller_cart.php?op=cod_ref', info)
                                 .then(function (cod_prod) {
+
                                     // console.log(cod_prod)
                                     var cod_ref = JSON.parse(cod_prod);
                                     console.log(cod_ref)
@@ -348,6 +359,16 @@ function checkout() {
                                     var units = document.getElementById(cod_ref.cod_ref).value
                                     console.log(units)
 
+                                    var precio_u=(cod_ref.precio)
+
+                                    var fil_total = document.getElementById("cart").rows.length
+                                    console.log(fil_total)
+                                    var total = document.getElementById("cart").rows[fil_total - 1].cells[5].innerHTML
+                                    console.log(total)
+
+                                    total = total.replace(" €", "");
+                                    console.log(total)
+
                                     //y para cada producto creamos una array en la que le añadimos:
                                     var prods = []
 
@@ -355,11 +376,14 @@ function checkout() {
                                     prods.push(cod_ref.cod_ref)
                                     //y sus unidades
                                     prods.push(units)
+                                    prods.push(precio_u)
+                                    prods.push(name)
+                                    prods.push(total)
+
                                     console.log(prods)
 
                                     //y añade este array a otra array
                                     cods.push(prods)
-                                    console.log(cods)
                                     console.log(cods)
 
                                     // la guardamos en localStorage
@@ -371,7 +395,7 @@ function checkout() {
 
 
                                     //y si necesitamos la string recogemos los datos parseados
-                                    // console.log(JSON.parse(guardado));
+                                    console.log(JSON.parse(guardado));
 
                                     var storage = { cart: guardado };
 
@@ -380,8 +404,10 @@ function checkout() {
                                     cart('module/cart/controller/controller_cart.php?op=cart', storage)
                                         .then(function (data) {
                                             console.log(data)
-                                        })
 
+                                            redirect_home()
+
+                                        })
 
                                 })
 
@@ -391,12 +417,6 @@ function checkout() {
 
                     }
 
-
-
-
-
-
-
                 } else {
 
                 }
@@ -404,4 +424,10 @@ function checkout() {
 
 
     })
+}
+
+function redirect_home() {
+    var url = "index.php?page=controller_home&op=list"
+    $(window).attr('location', url);
+
 }

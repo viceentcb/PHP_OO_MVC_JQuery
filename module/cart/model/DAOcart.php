@@ -14,7 +14,7 @@ class DAOcart
 	}
 	function precio($cod_ref)
 	{
-		$sql = "SELECT precio FROM joya where cod_ref = '$cod_ref'";
+		$sql = "SELECT precio, unidades FROM joya where cod_ref = '$cod_ref'";
 		$connection = connect::con();
 		$res = mysqli_query($connection, $sql)->fetch_object();
 		connect::close($connection);
@@ -38,7 +38,7 @@ class DAOcart
 	}
 	function S_cod_ref($name)
 	{
-		$sql = "SELECT cod_ref FROM joya where nombre = '$name'";
+		$sql = "SELECT cod_ref,precio FROM joya where nombre = '$name'";
 		$connection = connect::con();
 		$res = mysqli_query($connection, $sql)->fetch_object();
 		connect::close($connection);
