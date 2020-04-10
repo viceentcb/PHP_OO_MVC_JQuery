@@ -445,6 +445,7 @@ function checkout() {
                                         .then(function (data) {
                                             console.log(data)
 
+                                            
                                             redirect_home()
 
                                         })

@@ -70,4 +70,37 @@ class DAOhome
 		connect::close($connection);
 		return $res;
 	}
+
+	function U_points($points, $user_name)
+	{
+		$sql = "UPDATE users set points=(points+'$points') WHERE user_name= '$user_name'";
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
+	function S_points($user_name)
+	{
+		$sql = "SELECT points FROM users WHERE user_name= '$user_name'";
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql)->fetch_object();
+		connect::close($connection);
+		return $res;
+	}
+	function I_coupon($user_name,$coupon)
+	{
+		$sql = "INSERT into coupon values('$user_name','$coupon')";
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
+	function rest_points($points, $user_name)
+	{
+		$sql = "UPDATE users set points=(points-'$points') WHERE user_name= '$user_name'";
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
 }

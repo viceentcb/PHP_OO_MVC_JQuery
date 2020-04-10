@@ -250,7 +250,17 @@ function check() {
         cartt("module/home/controller/controller_home.php?op=cart", info)
             .then(function (data) {
                 console.log(data)
+
+
+                //cuando se genera la compra obtenemos quien la ha hecho y su valor total en puntos 
+                info = { points: parseInt(array[0][4]) * 10, user_name: array[0][3] }
+
+                cartt('module/home/controller/controller_home.php?op=points', info)
+                    .then(function (data) {
+                        alert(data)
+                    })
             })
+
     }
 
     //y al finalizar borramos los datos de localstorage tambien

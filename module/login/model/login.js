@@ -354,7 +354,7 @@ function all_register(userinfo, prov) {
 							//y que cambie la ip en la tabla cart
 							// por el nombre con el que te acabas de registrar
 							change_ip(user_name)
-							
+
 							////y si todo va correcto lo redireccionara al home logueado
 							alert("Sesion iniciada correctamente");
 							if (prov == "register") {
