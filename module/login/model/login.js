@@ -178,7 +178,7 @@ function redirect_cart() {
 	$(window).attr('location', url);
 }
 
-
+//no aprovecho la funcion del cart porque solo la lee cuando viene del cart no si te logeas en el login
 var ip_log = new Promise(function (resolve) { //obten el usuario logeado
 
 	$.getJSON('https://api.ipify.org?format=json', function (data) {

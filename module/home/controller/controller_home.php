@@ -68,6 +68,8 @@ switch ($_GET['op']) {
         //recogemos la array
         $array = $_POST['array'];
 
+        ////HEMOS CREADO 2 TRIGGERS QUE TE GUARDA UN HISTORIAL DE FACTURAS Y UN HISTORIAL DE LAS LINEAS DE FACTURA 
+        
         try {
             $daohome = new DAOhome();
 

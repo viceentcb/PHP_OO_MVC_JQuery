@@ -9,6 +9,7 @@ switch ($_GET['op']) {
         include("module/login/view/login.html");
         break;
 
+        ///HEMOS CREADO UN TRIGGER QUE TE GUARDA LOS DATOS DE LOS USUARIOS REGISTRADOS EN UNA TABLA DE HISTORIAL DE USUARIOS
     case 'register':
         try {
             $daologin = new DAOlogin();

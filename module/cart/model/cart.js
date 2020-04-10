@@ -50,16 +50,14 @@ function show_cart() {
                 .then(function (ip) {
 
 
-                    if (name !== "") {
+                        if (name !== "") {
 
-                        var info = { id: name }
-                        // var info = {id: a713};
-                        //{}
+                            var info = { id: name }
+                      
+                        } else {
 
-                    } else {
-
-                        var info = { id: ip }
-                    }
+                            var info = { id: ip }
+                        }
 
 
                     cart('module/cart/controller/controller_cart.php?op=prods', info)
