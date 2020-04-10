@@ -172,21 +172,36 @@ function redirect_home() {
 
 }
 
-function redirect_cart(user_name) {
+
+function redirect_cart() {
+	var url = "index.php?page=controller_cart&op=list"
+	$(window).attr('location', url);
+}
+
+
+var ip_log = new Promise(function (resolve) { //obten el usuario logeado
+
+	$.getJSON('https://api.ipify.org?format=json', function (data) {
+		console.log(data.ip);
+		resolve(data.ip);
+	})
+
+});
+
+function change_ip(user_name) {
 
 	//recogeremos la ip del usuario y su nombre
-	ip
+	ip_log
 		.then(function (ip) {
 			console.log(ip)
 
-			var info = { ip: ip, id:user_name}
+			var info = { ip: ip, id: user_name }
 
 			//le diremos a la promesa general que cambie la ip del usuario por su nombre con el que se acaba de loguear/registrar
 			login_in("module/login/controller/controller_login.php?op=up_ip", info)
 				.then(function (data) {
 					console.log(data)
-					var url = "index.php?page=controller_cart&op=list"
-					$(window).attr('location', url);
+
 				})
 		})
 }
@@ -254,14 +269,14 @@ function all_login(userinfo, prov) {
 	console.log(userinfo)
 
 	//dividira la informacion del modal en una array
-	var ray= userinfo.split("&");
+	var ray = userinfo.split("&");
 	console.log(ray)
 
 	//y dividimos ese array en mas array para obtener el nombre
-	var ray3=ray[0].split("=");
+	var ray3 = ray[0].split("=");
 	console.log(ray3)
 
-	var user_name=ray3[1]
+	var user_name = ray3[1]
 
 
 	//le indicamos a la promesa/funcion general que loguee al usuario
@@ -273,15 +288,18 @@ function all_login(userinfo, prov) {
 			if (data == '"existe"') {
 				alert("Sesion iniciada correctamente");
 
+				//y que cambie la ip en la tabla cart
+				// por el nombre con el que te acabas de loguear
+
+				change_ip(user_name)
 				///observara si viene del login o del cart 
 				if (prov == "login") {
 					redirect_home();
 				} else {
 
-					//y si viene del cart le diremos que redireccione y que cambie la ip en la tabla cart
-					// por el nombre con el que te acabas de loguear
+					//y si viene del cart le diremos que actualice la pagina de cart 
 
-					redirect_cart(user_name);
+					redirect_cart();
 				}
 
 				////si tiene el usuario o la contraseña mal
@@ -309,16 +327,16 @@ function all_login(userinfo, prov) {
 
 function all_register(userinfo, prov) {
 	console.log(userinfo)
-	var ray= userinfo.split("&");
+	var ray = userinfo.split("&");
 	console.log(ray)
 
 	// var ray2 = 
 	// console.log(ray2)
 
-	var ray3=ray[0].split("=");
+	var ray3 = ray[0].split("=");
 	console.log(ray3)
 
-	var user_name=ray3[1]
+	var user_name = ray3[1]
 	//le indicamos a la promesa/funcion general que registre al usuario
 	login_in("module/login/controller/controller_login.php?op=register", userinfo)
 		.then(function (data) {
@@ -332,12 +350,17 @@ function all_register(userinfo, prov) {
 					.then(function (data) {
 						console.log(data);
 						if (data == '"existe"') {
+
+							//y que cambie la ip en la tabla cart
+							// por el nombre con el que te acabas de registrar
+							change_ip(user_name)
+							
 							////y si todo va correcto lo redireccionara al home logueado
 							alert("Sesion iniciada correctamente");
-							if (prov == "login") {
+							if (prov == "register") {
 								redirect_home();
 							} else {
-								redirect_cart(user_name);
+								redirect_cart();
 
 							}
 						}
