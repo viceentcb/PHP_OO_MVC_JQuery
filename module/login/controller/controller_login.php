@@ -113,6 +113,22 @@ switch ($_GET['op']) {
         }
         break;
 
+        case 'up_ip':
+            try {
+                $daologin = new DAOLogin();
+                $rdo = $daologin->U_update($_POST['ip'], $_POST['id']);
+            } catch (Exception $e) {
+                echo json_encode("error");
+            }
+            if (!$rdo) {
+                echo json_encode('noexiste');
+            } else {
+                $value = get_object_vars($rdo);
+    
+                echo json_encode($value);
+            }
+            break;
+
     default:
         include("view/inc/error404.php");
         break;

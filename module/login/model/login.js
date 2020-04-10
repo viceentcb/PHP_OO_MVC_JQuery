@@ -5,6 +5,12 @@ $(document).ready(function () {
 	in_register();
 });
 
+////////////////////////////////////IMPORTANTE/////////////////////
+//UTILIZAMOS LA MISMA ESTRUCTURA PARA REGISTRAR AL USUARIO Y PARA LOGUEARLO DESDE EL CART/////
+///POR ESO SOLO EXPLICAMOS EL LOGIN//////
+
+
+
 function validate_register() {
 
 	var user
@@ -159,10 +165,30 @@ function validate_login() {
 	return check
 }
 
+
 function redirect_home() {
 	var url = "index.php?page=controller_home&op=list"
 	$(window).attr('location', url);
 
+}
+
+function redirect_cart(user_name) {
+
+	//recogeremos la ip del usuario y su nombre
+	ip
+		.then(function (ip) {
+			console.log(ip)
+
+			var info = { ip: ip, id:user_name}
+
+			//le diremos a la promesa general que cambie la ip del usuario por su nombre con el que se acaba de loguear/registrar
+			login_in("module/login/controller/controller_login.php?op=up_ip", info)
+				.then(function (data) {
+					console.log(data)
+					var url = "index.php?page=controller_cart&op=list"
+					$(window).attr('location', url);
+				})
+		})
 }
 
 ///promesa general para el login
@@ -195,39 +221,12 @@ function register() {
 		var userinfo = $('#form_register').serialize();
 		console.log('userinfo=' + userinfo)
 
-		//le indicamos a la promesa/funcion general que registre al usuario
-		login_in("module/login/controller/controller_login.php?op=register", userinfo)
-			.then(function (data) {
-				console.log(data);
+		var prov = "register"
 
-				///si se registra correctamente
-				if (data == '"correct"') {
-
-					//le indicamos a la promesa/funcion general que loguee al usuario
-					login_in("module/login/controller/controller_login.php?op=reg_login", userinfo)
-						.then(function (data) {
-							console.log(data);
-							if (data == '"existe"') {
-								////y si todo va correcto lo redireccionara al home logueado
-								alert("Sesion iniciada correctamente");
-								redirect_home();
-							}
-						})
-
-					///como el nombre del usuario es un id en la tabla no se puede repetir
-					//por lo tanto entrara aqui
-				} else if (data == '"not correct"') {
-					document.getElementById('e_user_name_reg').innerHTML = "This name is already in use";
-				} else {
-					alert('ERROR')
-				}
-
-			})
-
+		all_register(userinfo, prov)
 	}
 
 }
-
 
 
 function login() {
@@ -240,25 +239,125 @@ function login() {
 		var userinfo = $('#form_login').serialize();
 		console.log('userinfo=' + userinfo)
 
-		//le indicamos a la promesa/funcion general que loguee al usuario
-		login_in("module/login/controller/controller_login.php?op=login", userinfo)
-			.then(function (data) {
-				console.log(data);
+		var prov = "login"
 
-				////y si todo va correcto lo redireccionara al home logueado
-				if (data == '"existe"') {
-					alert("Sesion iniciada correctamente");
-					redirect_home();
-
-					////si tiene el usuario o la contraseña mal
-				} else {
-					document.getElementById('e_user_name_log').innerHTML = "There is a problem in the login, invalid email or password";
-					document.getElementById('e_passw_log').innerHTML = "There is a problem in the login, invalid email or password";
-				}
-
-			})
+		all_login(userinfo, prov)
 
 	}
+
+
+}
+
+//hemos separado el login en 2 porque si lo ponemos directamente en la funcion antigua de login general
+//chocaban las validaciones js
+function all_login(userinfo, prov) {
+	console.log(userinfo)
+
+	//dividira la informacion del modal en una array
+	var ray= userinfo.split("&");
+	console.log(ray)
+
+	//y dividimos ese array en mas array para obtener el nombre
+	var ray3=ray[0].split("=");
+	console.log(ray3)
+
+	var user_name=ray3[1]
+
+
+	//le indicamos a la promesa/funcion general que loguee al usuario
+	login_in("module/login/controller/controller_login.php?op=login", userinfo)
+		.then(function (data) {
+			console.log(data);
+
+			////y si todo va correcto lo redireccionara al home logueado
+			if (data == '"existe"') {
+				alert("Sesion iniciada correctamente");
+
+				///observara si viene del login o del cart 
+				if (prov == "login") {
+					redirect_home();
+				} else {
+
+					//y si viene del cart le diremos que redireccione y que cambie la ip en la tabla cart
+					// por el nombre con el que te acabas de loguear
+
+					redirect_cart(user_name);
+				}
+
+				////si tiene el usuario o la contraseña mal
+			} else {
+
+				if (prov == "login") {
+
+					document.getElementById('e_user_name_log').innerHTML = "There is a problem in the login, invalid email or password";
+					document.getElementById('e_passw_log').innerHTML = "There is a problem in the login, invalid email or password";
+
+				} else {
+
+					//si no ha puesto la contraseña bien le enviará el error de la base de datos al cart.js
+					//y posteriromente activará esa funcion en js que lo que hará es avisar al usuario en el modal de que los datos estan mal puestos
+					localStorage.setItem('e_login', "There is a problem in the login, invalid email or password");
+					error_login();
+
+				}
+
+			}
+
+		})
+
+}
+
+function all_register(userinfo, prov) {
+	console.log(userinfo)
+	var ray= userinfo.split("&");
+	console.log(ray)
+
+	// var ray2 = 
+	// console.log(ray2)
+
+	var ray3=ray[0].split("=");
+	console.log(ray3)
+
+	var user_name=ray3[1]
+	//le indicamos a la promesa/funcion general que registre al usuario
+	login_in("module/login/controller/controller_login.php?op=register", userinfo)
+		.then(function (data) {
+			console.log(data);
+
+			///si se registra correctamente
+			if (data == '"correct"') {
+
+				//le indicamos a la promesa/funcion general que loguee al usuario
+				login_in("module/login/controller/controller_login.php?op=reg_login", userinfo)
+					.then(function (data) {
+						console.log(data);
+						if (data == '"existe"') {
+							////y si todo va correcto lo redireccionara al home logueado
+							alert("Sesion iniciada correctamente");
+							if (prov == "login") {
+								redirect_home();
+							} else {
+								redirect_cart(user_name);
+
+							}
+						}
+					})
+
+				///como el nombre del usuario es un id en la tabla no se puede repetir
+				//por lo tanto entrara aqui
+			} else if (data == '"not correct"') {
+
+				if (prov == "login") {
+					document.getElementById('e_user_name_reg').innerHTML = "This name is already in use";
+				} else {
+					localStorage.setItem('e_reg', "This name is already in use");
+					error_reg();
+				}
+			} else {
+				alert('ERROR')
+			}
+
+		})
 
 }
 
@@ -313,4 +412,43 @@ function in_register() {
 			register();
 		}
 	});
+}
+
+///esta funcion se activará desde el cart.js
+function login_cart() {
+
+	//recogera los datos de localstorage
+	var login_cart = localStorage.getItem('login');
+	console.log("login= " + login_cart);
+
+
+
+
+	var prov = "cart"
+
+	//le decimos que si existe
+	if (login_cart) {
+		//active la funcion de loguearse
+		all_login(login_cart, prov)
+	}
+
+
+
+
+	// // //y al finalizar borramos los datos de localstorage tambien
+	localStorage.removeItem('login');
+}
+
+function register_cart() {
+	var register_cart = localStorage.getItem('register');
+	console.log("register= " + register_cart);
+	localStorage.removeItem('register');
+
+	var prov = "cart"
+
+	if (register_cart) {
+		all_register(register_cart, prov)
+	}
+
+	// // //y al finalizar borramos los datos de localstorage tambien
 }

@@ -15,11 +15,9 @@ switch ($_GET['op']) {
         break;
 
     case 'prods':
-        foreach ($_POST as $id => $valor) {
-        }
         try {
             $daocart = new DAOcart();
-            $rlt = $daocart->products($id);
+            $rlt = $daocart->products($_POST['id']);
         } catch (Exception $e) {
             echo json_encode("error");
         }
@@ -66,11 +64,9 @@ switch ($_GET['op']) {
         }
         break;
     case 'delete_all':
-        foreach ($_POST as $id => $valor) {
-        }
         try {
             $daocart = new DAOcart();
-            $rlt = $daocart->del_all($id);
+            $rlt = $daocart->del_all($_POST['id']);
         } catch (Exception $e) {
             echo json_encode("error");
         }

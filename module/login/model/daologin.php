@@ -40,5 +40,14 @@
 
 			return $res;
 		}
+		function U_update($ip, $name){
+			$sql= "UPDATE cart set id='$name' WHERE id= '$ip'";
+	
+			$connection = connect::con();
+			$res = mysqli_query($connection, $sql);
+			connect::close($connection);
+
+			return $res;
+		}
 	
 	}

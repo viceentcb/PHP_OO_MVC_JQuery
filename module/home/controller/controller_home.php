@@ -89,13 +89,14 @@ switch ($_GET['op']) {
             ///y tambien el codigo de la factura
             //ademas de la fecha en el dao
             // y ademas de restarle el stock al producto
-            // y tambien borramos los productos de la tabla de carrito
+            // y tambien borramos los productos del usuario de la tabla de carrito
 
             foreach ($array as $row) {
                 $rst = $daohome->invoice_line($array[0][3], $row[0], $row[1], $row[2], $valor);
                 $rdo = $daohome->stock($row[0], $row[1]);
                 $rslt=$daohome->D_cart($array[0][3]);
             }
+            
         } catch (Exception $e) {
             echo json_encode("error");
         }

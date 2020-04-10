@@ -254,7 +254,7 @@ function check() {
     }
 
     //y al finalizar borramos los datos de localstorage tambien
-    var cart = localStorage.removeItem('cart');
+    localStorage.removeItem('cart');
 
 }
 
