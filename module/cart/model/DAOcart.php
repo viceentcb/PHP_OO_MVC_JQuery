@@ -44,4 +44,12 @@ class DAOcart
 		connect::close($connection);
 		return $res;
 	}
+	function S_coupon($name)
+	{
+		$sql = "SELECT coupon FROM coupon where user_name = '$name' limit 3";
+		$connection = connect::con();
+		$res = mysqli_query($connection, $sql);
+		connect::close($connection);
+		return $res;
+	}
 }

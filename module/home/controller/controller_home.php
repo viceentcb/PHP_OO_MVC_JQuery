@@ -117,7 +117,7 @@ switch ($_GET['op']) {
     case 'points':
         try {
             $daohome = new DAOhome();
-            ///le sumamos los puntos a los que el usuario ya teni<
+            ///le sumamos los puntos a los que el usuario ya tenia
             $rlt = $daohome->U_points($_POST['points'], $_POST['user_name']);
 
             ///seleccionamos los puntos del usuario
@@ -128,33 +128,39 @@ switch ($_GET['op']) {
             ///y obtenemos cuantos cheques puede generar ya que cada cheque se genera cada 20mil puntos
             $cheques = intval($valor / 20000);
             $caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-            $string="";
+            $string = "";
             //generamos un string automatica y la insertamos en la tabla de cupones por cada cheque que se pueda generar
             for ($i = 0; $i < $cheques; $i++) {
                 $aleatoria = substr(str_shuffle($caracteres), 0, 5);
                 $rdo = $daohome->I_coupon($_POST['user_name'], $aleatoria);
-                $string=$string +  $aleatoria. "\n" ;
+                $string .=  $aleatoria . "\n";
             }
 
             ///le restamos los puntos en cheques que ha generado al usuario
-            $neg_points=$cheques*20000;
-            $rest_points=$daohome->rest_points($neg_points,$_POST['user_name']);
+            $neg_points = $cheques * 20000;
+            $rest_points = $daohome->rest_points($neg_points, $_POST['user_name']);
         } catch (Exception $e) {
             echo json_encode("error");
         }
 
         if (!$rlt || !$points || !$rdo || !$rest_points) {
 
-            // $menos=20000-$cheques;
-        } else {
+            //si no consigue ningun cheque le avisamos cuantos puntos le quedan para el proximo cheque
 
-            // if($cheques>1){
-            //     echo json_encode("Se le han generado $cheques cheques:" + $string);
-            // }else{
-            //     echo json_encode("Se le ha generado $cheques cheque:" + $string);
- 
-            // }
+            echo ('Le quedan ' . (20000 - $valor) . ' puntos para el proximo cheque');
+        } else {
+            
+            //Le decimos cuantos chques ha generado y cuales son
+            if($cheques>1){ 
+                echo ('Se le han generado ' . $cheques . " cheques: \n" . $string);
+            }else{
+                echo ('Se le ha generado ' . $cheques . " cheque: \n" . $string);
+
+            }
+
         }
+
+
         break;
 
     default:

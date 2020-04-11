@@ -251,7 +251,7 @@ function check() {
             .then(function (data) {
                 console.log(data)
 
-
+                alert('compra realizada');
                 //cuando se genera la compra obtenemos quien la ha hecho y su valor total en puntos 
                 info = { points: parseInt(array[0][4]) * 10, user_name: array[0][3] }
 

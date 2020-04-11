@@ -97,6 +97,26 @@ switch ($_GET['op']) {
         $_SESSION['cart'] = $_POST['cart'];
         // echo json_encode($_SESSION['cart']);
         break;
+
+    case 'coupons':
+        try {
+            $daocart = new DAOcart();
+            $rlt = $daocart->S_coupon($_POST['name']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+
+        if (!$rlt) {
+            echo json_encode("error1");
+        } else {
+            $dinfo = array();
+            foreach ($rlt as $row) {
+                array_push($dinfo, $row['coupon']);
+            }
+        }
+        echo json_encode($dinfo);
+
+        break;
     default:
         include("view/inc/error404.php");
         break;
