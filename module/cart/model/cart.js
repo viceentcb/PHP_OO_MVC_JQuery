@@ -173,23 +173,31 @@ function show_cart() {
                                             $("#prods").append(
                                                 '<tr>' +
                                                 ' <td></td>' +
-                                                ' <td>Cupon:</td>' +
                                                 ' <td>' +
+                                                'Cupones:' +
+                                                '<input type="radio" id="X" name="coupon" value="X">' +
+                                                '<button><label for="X">X</label></button>' +
+                                                '<br> Le recordamos </br> que solo puede  </br> utilizar uno' +
+                                                '</td>' +
                                                 '<input type="radio" id="' + coupon[0] + '" name="coupon" value="' + coupon[0] + '">' +
                                                 '<button><label for="' + coupon[0] + '">' + coupon[0] + '</label></button>' +
                                                 '</td>' +
                                                 ' <td>' +
                                                 '</td>' +
                                                 '<td>Descuento</td>' +
-                                                '<td id="desc" class="text-right">-0.00 €</td>' +
+                                                '<td id="desc" class="text-right">- 0.00 €</td>' +
                                                 ' </tr>'
                                             );
                                         } else if (coupon.length == 2) {
                                             $('#total').remove();
                                             $("#prods").append(
                                                 '<tr>' +
-                                                ' <td>Cupones: <br> Le recordamos </br> que solo puede  </br> utilizar uno</td>' +
                                                 ' <td>' +
+                                                'Cupones:' +
+                                                '<input type="radio" id="X" name="coupon" value="X">' +
+                                                '<button><label for="X">X</label></button>' +
+                                                '<br> Le recordamos </br> que solo puede  </br> utilizar uno' +
+                                                '</td>' +
                                                 '<input type="radio" id="' + coupon[0] + '" name="coupon" value="' + coupon[0] + '">' +
                                                 '<button><label for="' + coupon[0] + '">' + coupon[0] + '</label></button>' +
                                                 '</td>' +
@@ -200,14 +208,19 @@ function show_cart() {
                                                 '<button><label for="' + coupon[1] + '">' + coupon[1] + '</label></button>' +
                                                 '</td>' +
                                                 '<td>Descuento</td>' +
-                                                '<td id="desc" class="text-right">-0.00 €</td>' +
+                                                '<td id="desc" class="text-right">- 0.00 €</td>' +
                                                 ' </tr>'
                                             );
                                         } else if (coupon.length == 3) {
                                             $('#total').remove();
                                             $("#prods").append(
                                                 '<tr>' +
-                                                ' <td>Cupones: <br> Le recordamos </br> que solo puede  </br> utilizar uno</td>' +
+                                                ' <td>' +
+                                                'Cupones:' +
+                                                '<input type="radio" id="X" name="coupon" value="X">' +
+                                                '<button><label for="X">X</label></button>' +
+                                                '<br> Le recordamos </br> que solo puede  </br> utilizar uno' +
+                                                '</td>' +
                                                 ' <td>' +
                                                 '<input type="radio" id="' + coupon[0] + '" name="coupon" value="' + coupon[0] + '">' +
                                                 '<button><label for="' + coupon[0] + '">' + coupon[0] + '</label></button>' +
@@ -221,7 +234,7 @@ function show_cart() {
                                                 '<button><label for="' + coupon[2] + '">' + coupon[2] + '</label></button>' +
                                                 '</td>' +
                                                 '<td>Descuento</td>' +
-                                                '<td id="desc" class="text-right">-0.00 €</td>' +
+                                                '<td id="desc" class="text-right">- 0.00 €</td>' +
                                                 ' </tr>'
                                             );
                                         }
@@ -237,7 +250,7 @@ function show_cart() {
                                             ' </tr>'
                                         );
 
-                                        click_coupon(total)
+                                        click_coupon()
                                     })
                             }
 
@@ -247,7 +260,7 @@ function show_cart() {
 
 }
 
-function click_coupon(total) {
+function click_coupon() {
 
     // si cambias o eliges cupon
     $(document).on('click', 'input[name=coupon]', function () {
@@ -255,22 +268,38 @@ function click_coupon(total) {
         var coupon = $(this).val();
         console.log(coupon)
 
-        // se te añadira un descuento del 20 por ciento
+        var fil_total = document.getElementById("cart").rows.length
 
-        // ya que de momento todos son generados por la generacion de puntos y todos estos seran de un 20%
-        //cuando existan mas cupones añadiremos una columna de porcentaje y lo cogeremos de ahi
-        var descuento = total * 0.2
-        console.log(descuento)
-        var descuento = parseFloat(Math.round(descuento * 100) / 100).toFixed(2);
-        console.log(descuento)
+        var total = document.getElementById("cart").rows[fil_total - 1].cells[5].innerHTML
+        console.log(total)
 
-        document.getElementById('desc').innerHTML = '- ' + descuento + ' €';
+        var total = parseInt(total)
 
-        var tot = total * 0.8
+        ///le añadimos una posibilidad de deseleccionar los cupones
+        if (coupon == 'X') {
+            document.getElementById('desc').innerHTML = '- 0.00 €';
+
+            var tot = total
+        } else {
+
+
+            // se te añadira un descuento del 20 por ciento
+
+            // ya que de momento todos son generados por la generacion de puntos y todos estos seran de un 20%
+            //cuando existan mas cupones añadiremos una columna de porcentaje y lo cogeremos de ahi
+            var descuento = total * 0.2
+            console.log(descuento)
+            var descuento = parseFloat(Math.round(descuento * 100) / 100).toFixed(2);
+            console.log(descuento)
+
+            document.getElementById('desc').innerHTML = '- ' + descuento + ' €';
+
+            var tot = total * 0.8
+
+        }
 
         var tot = parseFloat(Math.round(tot * 100) / 100).toFixed(2);
         document.getElementById('tot').innerHTML = tot + ' €';
-
     });
 
 }
@@ -405,16 +434,50 @@ function print() {
     //y lo añadimos a la celda de shipping
     document.getElementById('ship').innerHTML = ship + ' €';
 
-    ///el total sera los gastos de envios menos el subtotal
+
+    var coupon = ($('input:radio[name=coupon]:checked').val());
+    console.log(coupon)
+
     total = subtotal + shipping
     console.log(total)
 
+
+    if (coupon == 'X' || coupon === undefined) {
+        document.getElementById('desc').innerHTML = '- 0.00 €';
+
+        var tot = total
+    } else {
+
+
+        var descuento = total * 0.2
+        console.log(descuento)
+        var descuento = parseFloat(Math.round(descuento * 100) / 100).toFixed(2);
+        console.log(descuento)
+        document.getElementById('desc').innerHTML = '- ' + descuento + ' €';
+
+        var tot = total * 0.8
+
+
+    }
+
+
+    // se te añadira un descuento del 20 por ciento
+
+    // ya que de momento todos son generados por la generacion de puntos y todos estos seran de un 20%
+    //cuando existan mas cupones añadiremos una columna de porcentaje y lo cogeremos de ahi
+
+
+
+
+    ///el total sera los gastos de envios menos el subtotal
+
+
     //ahora hacemos que salga siempre con dos numeros decimales
-    var tot = parseFloat(Math.round(total * 100) / 100).toFixed(2);
-    console.log(tot)
+    var tota = parseFloat(Math.round(tot * 100) / 100).toFixed(2);
+    console.log(tota)
 
     //y lo añadimos a la celda de total
-    document.getElementById('tot').innerHTML = tot + ' €';
+    document.getElementById('tot').innerHTML = tota + ' €';
 
 }
 
@@ -516,6 +579,10 @@ function checkout() {
                                     total = total.replace(" €", "");
                                     console.log(total)
 
+                                    var coupon = ($('input:radio[name=coupon]:checked').val());
+                                    console.log(coupon)
+
+
                                     //y para cada producto creamos una array en la que le añadimos:
                                     var prods = []
 
@@ -526,6 +593,7 @@ function checkout() {
                                     prods.push(precio_u)
                                     prods.push(name)
                                     prods.push(total)
+                                    prods.push(coupon)
 
                                     console.log(prods)
 

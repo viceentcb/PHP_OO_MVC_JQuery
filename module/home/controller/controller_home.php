@@ -116,6 +116,7 @@ switch ($_GET['op']) {
 
     case 'points':
         try {
+
             $daohome = new DAOhome();
             ///le sumamos los puntos a los que el usuario ya tenia
             $rlt = $daohome->U_points($_POST['points'], $_POST['user_name']);
@@ -139,27 +140,33 @@ switch ($_GET['op']) {
             ///le restamos los puntos en cheques que ha generado al usuario
             $neg_points = $cheques * 20000;
             $rest_points = $daohome->rest_points($neg_points, $_POST['user_name']);
+
+            //solamente cuando haya utilizado un cupon entrará aqui y lo borrara
+            if ((($_POST['coupon'])!='')&(($_POST['coupon'])!='X')){
+                $rst = $daohome->D_coupon($_POST['user_name'],$_POST['coupon']);
+            }
+
         } catch (Exception $e) {
             echo json_encode("error");
         }
 
-        if (!$rlt || !$points || !$rdo || !$rest_points) {
+        ///diferenciamos entre un error
+        if (!$rlt || !$points || !$rest_points) {
+            echo ('error1');
+        ///y entre que no exista este porque el for es 0
+        } else if (!$rdo) {
 
             //si no consigue ningun cheque le avisamos cuantos puntos le quedan para el proximo cheque
-
             echo ('Le quedan ' . (20000 - $valor) . ' puntos para el proximo cheque');
         } else {
-            
+
             //Le decimos cuantos chques ha generado y cuales son
-            if($cheques>1){ 
+            if ($cheques > 1) {
                 echo ('Se le han generado ' . $cheques . " cheques: \n" . $string);
-            }else{
+            } else {
                 echo ('Se le ha generado ' . $cheques . " cheque: \n" . $string);
-
             }
-
         }
-
 
         break;
 
