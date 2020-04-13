@@ -155,7 +155,6 @@ switch ($_GET['op']) {
             echo ('error1');
         ///y entre que no exista este porque el for es 0
         } else if (!$rdo) {
-
             //si no consigue ningun cheque le avisamos cuantos puntos le quedan para el proximo cheque
             echo ('Le quedan ' . (20000 - $valor) . ' puntos para el proximo cheque');
         } else {

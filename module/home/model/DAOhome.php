@@ -89,7 +89,7 @@ class DAOhome
 	}
 	function I_coupon($user_name,$coupon)
 	{
-		$sql = "INSERT into coupon values('$user_name','$coupon')";
+		$sql = "INSERT into coupon (user_name, coupon) values('$user_name','$coupon')";
 		$connection = connect::con();
 		$res = mysqli_query($connection, $sql);
 		connect::close($connection);

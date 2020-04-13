@@ -255,6 +255,9 @@ function check() {
                 //cuando se genera la compra obtenemos quien la ha hecho y su valor total en puntos y el cupon usado
                 info = { points: parseInt(array[0][4]) * 10, user_name: array[0][3], coupon: array[0][5] }
 
+                console.log(info);
+                alert('ciu')
+
                 cartt('module/home/controller/controller_home.php?op=points', info)
                     .then(function (data) {
                         alert('compra realizada');
