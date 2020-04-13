@@ -142,7 +142,7 @@ switch ($_GET['op']) {
             $rest_points = $daohome->rest_points($neg_points, $_POST['user_name']);
 
             //solamente cuando haya utilizado un cupon entrará aqui y lo borrara
-            if ((($_POST['coupon'])!='')&(($_POST['coupon'])!='X')){
+            if (($_POST['coupon'])!=''){
                 $rst = $daohome->D_coupon($_POST['user_name'],$_POST['coupon']);
             }
 

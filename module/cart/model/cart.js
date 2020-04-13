@@ -159,99 +159,51 @@ function show_cart() {
                                     ' </tr>'
                                 );
 
-                                user = { name: name }
-                                ///observamos los cupones del usuario pero como mucho le enseñamos 3
-                                cart('module/cart/controller/controller_cart.php?op=coupons', user)
-                                    .then(function (data) {
-                                        // console.log(data)
-                                        var coupon = JSON.parse(data);
-                                        // console.log(coupon)
 
-                                        //observamos las diferentes opciones una a una para que salga bonito
-                                        if (coupon.length == 1) {
-                                            $('#total').remove();
-                                            $("#prods").append(
-                                                '<tr>' +
-                                                ' <td></td>' +
-                                                ' <td>' +
-                                                'Cupones:' +
-                                                '<input type="radio" id="X" name="coupon" value="X">' +
-                                                '<button><label for="X">X</label></button>' +
-                                                '<br> Le recordamos </br> que solo puede  </br> utilizar uno' +
-                                                '</td>' +
-                                                '<input type="radio" id="' + coupon[0] + '" name="coupon" value="' + coupon[0] + '">' +
-                                                '<button><label for="' + coupon[0] + '">' + coupon[0] + '</label></button>' +
-                                                '</td>' +
-                                                ' <td>' +
-                                                '</td>' +
-                                                '<td>Descuento</td>' +
-                                                '<td id="desc" class="text-right">- 0.00 €</td>' +
-                                                ' </tr>'
-                                            );
-                                        } else if (coupon.length == 2) {
-                                            $('#total').remove();
-                                            $("#prods").append(
-                                                '<tr>' +
-                                                ' <td>' +
-                                                'Cupones:' +
-                                                '<input type="radio" id="X" name="coupon" value="X">' +
-                                                '<button><label for="X">X</label></button>' +
-                                                '<br> Le recordamos </br> que solo puede  </br> utilizar uno' +
-                                                '</td>' +
-                                                '<input type="radio" id="' + coupon[0] + '" name="coupon" value="' + coupon[0] + '">' +
-                                                '<button><label for="' + coupon[0] + '">' + coupon[0] + '</label></button>' +
-                                                '</td>' +
-                                                ' <td>' +
-                                                '</td>' +
-                                                ' <td>' +
-                                                '<input type="radio" id="' + coupon[1] + '" name="coupon" value="' + coupon[1] + '">' +
-                                                '<button><label for="' + coupon[1] + '">' + coupon[1] + '</label></button>' +
-                                                '</td>' +
-                                                '<td>Descuento</td>' +
-                                                '<td id="desc" class="text-right">- 0.00 €</td>' +
-                                                ' </tr>'
-                                            );
-                                        } else if (coupon.length == 3) {
-                                            $('#total').remove();
-                                            $("#prods").append(
-                                                '<tr>' +
-                                                ' <td>' +
-                                                'Cupones:' +
-                                                '<input type="radio" id="X" name="coupon" value="X">' +
-                                                '<button><label for="X">X</label></button>' +
-                                                '<br> Le recordamos </br> que solo puede  </br> utilizar uno' +
-                                                '</td>' +
-                                                ' <td>' +
-                                                '<input type="radio" id="' + coupon[0] + '" name="coupon" value="' + coupon[0] + '">' +
-                                                '<button><label for="' + coupon[0] + '">' + coupon[0] + '</label></button>' +
-                                                '</td>' +
-                                                ' <td>' +
-                                                '<input type="radio" id="' + coupon[1] + '" name="coupon" value="' + coupon[1] + '">' +
-                                                '<button><label for="' + coupon[1] + '">' + coupon[1] + '</label></button>' +
-                                                '</td>' +
-                                                ' <td>' +
-                                                '<input type="radio" id="' + coupon[2] + '" name="coupon" value="' + coupon[2] + '">' +
-                                                '<button><label for="' + coupon[2] + '">' + coupon[2] + '</label></button>' +
-                                                '</td>' +
-                                                '<td>Descuento</td>' +
-                                                '<td id="desc" class="text-right">- 0.00 €</td>' +
-                                                ' </tr>'
-                                            );
-                                        }
-                                        $("#prods").append(
-                                            '<tr id="total">' +
-                                            '<td class="text-right"><button class="btn btn-sm btn-danger delete_all"><i class="fa fa-trash"></i>' +
-                                            '</button>Delete all </td>' +
-                                            ' <td></td>' +
-                                            ' <td></td>' +
-                                            ' <td></td>' +
-                                            ' <td><strong>Total</strong></td>' +
-                                            ' <td class="text-right" id="tot">' + total + ' €</td>' +
-                                            ' </tr>'
-                                        );
+                                if (name !== "") {
 
-                                        click_coupon()
-                                    })
+                                    user = { name: name }
+                                    ///observamos los cupones del usuario pero como mucho le enseñamos 3
+                                    cart('module/cart/controller/controller_cart.php?op=coupons', user)
+                                        .then(function (data) {
+                                            console.log(data)
+                                            var coupon = JSON.parse(data);
+                                            console.log(coupon)
+
+                                            //observamos las diferentes opciones una a una para que salga bonito
+                                            if (coupon.length == 1) {
+
+                                                console.log(coupon[0])
+                                                $('#total').remove();
+                                                $("#prods").append(
+                                                    '<tr>' +
+                                                    '<td>' +
+                                                    '<button value="del_coup" id="coupon" type="button" class="close" aria-label="Close">' +
+                                                    '<span aria-hidden="true">&times;</span>' +
+                                                    '</button>' +
+                                                    '</td>' +
+                                                    ' <td>Cupon:</td>' +
+                                                    ' <td><button value="'+coupon[0]+'"  id="coupon">' + coupon[0] + '</button></td>' +
+                                                    ' <td></td>' +
+                                                    '<td>Descuento</td>' +
+                                                    '<td id="desc" class="text-right">- 0.00 €</td>' +
+                                                    ' </tr>' +
+                                                    '<tr id="total">' +
+                                                    '<td class="text-right"><button class="btn btn-sm btn-danger delete_all"><i class="fa fa-trash"></i>' +
+                                                    '</button>Delete all </td>' +
+                                                    ' <td></td>' +
+                                                    ' <td></td>' +
+                                                    ' <td></td>' +
+                                                    ' <td><strong>Total</strong></td>' +
+                                                    ' <td class="text-right" id="tot">' + total + ' €</td>' +
+                                                    ' </tr>'
+                                                );
+                                            }
+
+                                            click_coupon()
+                                        })
+                                }
+
                             }
 
                         })
@@ -261,11 +213,15 @@ function show_cart() {
 }
 
 function click_coupon() {
+    var click = 0
 
     // si cambias o eliges cupon
-    $(document).on('click', 'input[name=coupon]', function () {
+    $(document).on('click', '#coupon', function () {
 
+        // click =click +1
         var coupon = $(this).val();
+
+
         console.log(coupon)
 
         var fil_total = document.getElementById("cart").rows.length
@@ -273,36 +229,46 @@ function click_coupon() {
         var total = document.getElementById("cart").rows[fil_total - 1].cells[5].innerHTML
         console.log(total)
 
-        var total = parseInt(total)
 
-        ///le añadimos una posibilidad de deseleccionar los cupones
-        if (coupon == 'X') {
+        if (coupon!='del_coup') {
+            if (click == 0) {
+
+                localStorage.setItem('coupon', coupon);
+
+                var total = parseInt(total)
+
+
+                // se te añadira un descuento del 20 por ciento
+
+                // ya que de momento todos son generados por la generacion de puntos y todos estos seran de un 20%
+                //cuando existan mas cupones añadiremos una columna de porcentaje y lo cogeremos de ahi
+                var descuento = total * 0.2
+                console.log(descuento)
+                var descuento = parseFloat(Math.round(descuento * 100) / 100).toFixed(2);
+                console.log(descuento)
+
+                document.getElementById('desc').innerHTML = '- ' + descuento + ' €';
+
+                var tot = total * 0.8
+
+                // }
+
+                var tot = parseFloat(Math.round(tot * 100) / 100).toFixed(2);
+                document.getElementById('tot').innerHTML = tot + ' €';
+            }
+            click = click + 1
+        } else {
+            localStorage.removeItem('coupon', coupon);
+
             document.getElementById('desc').innerHTML = '- 0.00 €';
 
-            var tot = total
-        } else {
-
-
-            // se te añadira un descuento del 20 por ciento
-
-            // ya que de momento todos son generados por la generacion de puntos y todos estos seran de un 20%
-            //cuando existan mas cupones añadiremos una columna de porcentaje y lo cogeremos de ahi
-            var descuento = total * 0.2
-            console.log(descuento)
-            var descuento = parseFloat(Math.round(descuento * 100) / 100).toFixed(2);
-            console.log(descuento)
-
-            document.getElementById('desc').innerHTML = '- ' + descuento + ' €';
-
-            var tot = total * 0.8
-
+            print()
+            click = 0
         }
-
-        var tot = parseFloat(Math.round(tot * 100) / 100).toFixed(2);
-        document.getElementById('tot').innerHTML = tot + ' €';
     });
 
 }
+
 function stock() {
     /// si cambias las unidades que quieres:
     $(document).on('change', '.stock', function () {
@@ -387,98 +353,100 @@ function delete_product() {
 }
 
 function print() {
-    var subtotal = 0
-
-    //desde uno ya que la primera fila de la tabla son los titulos
-    //hasta toda la filas menos las 4 en las que no tienes productos
-    for (i = 1; i <= ((document.getElementById("cart").rows.length) - 4); i++) {
-
-        //para cada celda observas si esta disponible el producto o no
-        var stock = document.getElementById("cart").rows[i].cells[2].innerHTML
-
-        //si lo esta:
-        if (stock == "In stock") {
-            console.log("YES")
-
-            //cogemos el precio total que tiene ahora
-            var preu = document.getElementById("cart").rows[i].cells[4].innerHTML
-            console.log(preu)
-
-            ///le quitas el '€' y lo conviertes en un int
-            var preu = parseInt(preu)
-            console.log(preu)
-
-            //calculas que el subtotal sea cada precio de los productos dispobible mas el siguiente
-            subtotal = subtotal + preu
-            console.log(subtotal)
-        }
-
-    }
-    //lo hacemos para que siempre salgan dos decimales
-    var sub = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
-    console.log(sub)
-
-    //y lo añadimos a la celda del subtotal
-    document.getElementById('sub').innerHTML = sub + ' €';
 
 
-    //el encarcgado de los envios se lleva un 0.1% del precio de  cada unidad comprada
-    //es decir un 0.1% del total
-    shipping = (subtotal * 0.01)
-    console.log(shipping)
+    cart('module/cart/controller/controller_cart.php?op=user')
+        .then(function (name) {
+            // console.log(name);
+            var subtotal = 0
 
-    //ahora hacemos que salga siempre con dos numeros decimales
-    var ship = parseFloat(Math.round(shipping * 100) / 100).toFixed(2);
-    console.log(ship)
+            //desde uno ya que la primera fila de la tabla son los titulos
+            //hasta toda la filas menos las 4 en las que no tienes productos
+            for (i = 1; i <= ((document.getElementById("cart").rows.length) - 4); i++) {
 
-    //y lo añadimos a la celda de shipping
-    document.getElementById('ship').innerHTML = ship + ' €';
+                //para cada celda observas si esta disponible el producto o no
+                var stock = document.getElementById("cart").rows[i].cells[2].innerHTML
 
+                //si lo esta:
+                if (stock == "In stock") {
+                    console.log("YES")
 
-    var coupon = ($('input:radio[name=coupon]:checked').val());
-    console.log(coupon)
+                    //cogemos el precio total que tiene ahora
+                    var preu = document.getElementById("cart").rows[i].cells[4].innerHTML
+                    console.log(preu)
 
-    total = subtotal + shipping
-    console.log(total)
+                    ///le quitas el '€' y lo conviertes en un int
+                    var preu = parseInt(preu)
+                    console.log(preu)
 
+                    //calculas que el subtotal sea cada precio de los productos dispobible mas el siguiente
+                    subtotal = subtotal + preu
+                    console.log(subtotal)
+                }
 
-    if (coupon == 'X' || coupon === undefined) {
-        document.getElementById('desc').innerHTML = '- 0.00 €';
+            }
+            //lo hacemos para que siempre salgan dos decimales
+            var sub = parseFloat(Math.round(subtotal * 100) / 100).toFixed(2);
+            console.log(sub)
 
-        var tot = total
-    } else {
-
-
-        var descuento = total * 0.2
-        console.log(descuento)
-        var descuento = parseFloat(Math.round(descuento * 100) / 100).toFixed(2);
-        console.log(descuento)
-        document.getElementById('desc').innerHTML = '- ' + descuento + ' €';
-
-        var tot = total * 0.8
-
-
-    }
-
-
-    // se te añadira un descuento del 20 por ciento
-
-    // ya que de momento todos son generados por la generacion de puntos y todos estos seran de un 20%
-    //cuando existan mas cupones añadiremos una columna de porcentaje y lo cogeremos de ahi
+            //y lo añadimos a la celda del subtotal
+            document.getElementById('sub').innerHTML = sub + ' €';
 
 
+            //el encarcgado de los envios se lleva un 0.1% del precio de  cada unidad comprada
+            //es decir un 0.1% del total
+            shipping = (subtotal * 0.01)
+            console.log(shipping)
+
+            //ahora hacemos que salga siempre con dos numeros decimales
+            var ship = parseFloat(Math.round(shipping * 100) / 100).toFixed(2);
+            console.log(ship)
+
+            //y lo añadimos a la celda de shipping
+            document.getElementById('ship').innerHTML = ship + ' €';
+
+            total = subtotal + shipping
+            console.log(total)
+
+            if ($("#coupon").length) {
+
+                // console.log(descuento)
+                // var descuento = parseFloat(Math.round(descuento * 100) / 100).toFixed(2);
+                // console.log(descuento)
+
+                var descuento = document.getElementById('desc').innerHTML
+                console.log(descuento)
+                descuento = descuento.replace("-", "");
+                console.log(descuento);
+                var descuento = parseInt(descuento)
+                console.log(descuento)
+
+                if (descuento == 0) {
+                    var tot = total
+
+                } else {
+                    var desc = total * 0.2
+                    var descuent = parseFloat(Math.round(desc * 100) / 100).toFixed(2);
+                    console.log(descuent)
+                    document.getElementById('desc').innerHTML = '- ' + descuent + ' €'
+
+                    var tot = total - desc
+                }
 
 
-    ///el total sera los gastos de envios menos el subtotal
 
+            } else {
+                var tot = total
 
-    //ahora hacemos que salga siempre con dos numeros decimales
-    var tota = parseFloat(Math.round(tot * 100) / 100).toFixed(2);
-    console.log(tota)
+            }
 
-    //y lo añadimos a la celda de total
-    document.getElementById('tot').innerHTML = tota + ' €';
+            //ahora hacemos que salga siempre con dos numeros decimales
+            var tota = parseFloat(Math.round(tot * 100) / 100).toFixed(2);
+            console.log(tota)
 
+            //y lo añadimos a la celda de total
+            document.getElementById('tot').innerHTML = tota + ' €';
+        })
 }
 
 function delete_all() {
@@ -579,8 +547,10 @@ function checkout() {
                                     total = total.replace(" €", "");
                                     console.log(total)
 
-                                    var coupon = ($('input:radio[name=coupon]:checked').val());
+                                    
+                                    var coupon = localStorage.getItem('coupon');
                                     console.log(coupon)
+
 
 
                                     //y para cada producto creamos una array en la que le añadimos:
@@ -607,6 +577,8 @@ function checkout() {
                                     // console.log("guardar")
                                     //lo recogemos
                                     var guardado = localStorage.getItem('cart');
+                                    localStorage.removeItem('coupon', coupon);
+
 
 
                                     //y si necesitamos la string recogemos los datos parseados

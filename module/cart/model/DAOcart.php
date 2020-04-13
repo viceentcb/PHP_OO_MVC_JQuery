@@ -46,7 +46,7 @@ class DAOcart
 	}
 	function S_coupon($name)
 	{
-		$sql = "SELECT coupon FROM coupon where user_name = '$name' limit 3";
+		$sql = "SELECT coupon FROM coupon where user_name = '$name' limit 1";
 		$connection = connect::con();
 		$res = mysqli_query($connection, $sql);
 		connect::close($connection);
