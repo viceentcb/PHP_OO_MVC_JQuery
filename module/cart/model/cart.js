@@ -220,8 +220,6 @@ function click_coupon() {
 
         // click =click +1
         var coupon = $(this).val();
-
-
         console.log(coupon)
 
         var fil_total = document.getElementById("cart").rows.length
@@ -354,10 +352,6 @@ function delete_product() {
 
 function print() {
 
-
-    cart('module/cart/controller/controller_cart.php?op=user')
-        .then(function (name) {
-            // console.log(name);
             var subtotal = 0
 
             //desde uno ya que la primera fila de la tabla son los titulos
@@ -446,7 +440,6 @@ function print() {
 
             //y lo añadimos a la celda de total
             document.getElementById('tot').innerHTML = tota + ' €';
-        })
 }
 
 function delete_all() {

@@ -143,7 +143,7 @@ switch ($_GET['op']) {
 
             //solamente cuando haya utilizado un cupon entrará aqui y lo borrara
             if (($_POST['coupon'])!=''){
-                $rst = $daohome->D_coupon($_POST['user_name'],$_POST['coupon']);
+                $rst = $daohome->U_coupon($_POST['user_name'],$_POST['coupon']);
             }
 
         } catch (Exception $e) {

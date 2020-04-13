@@ -103,9 +103,9 @@ class DAOhome
 		connect::close($connection);
 		return $res;
 	}
-	function D_coupon($user_name,$coupon)
+	function U_coupon($user_name,$coupon)
 	{
-		$sql = "DELETE from coupon where user_name='$user_name' and coupon='$coupon'";
+		$sql = "UPDATE coupon set used=true where user_name='$user_name' and coupon='$coupon'";
 		$connection = connect::con();
 		$res = mysqli_query($connection, $sql);
 		connect::close($connection);

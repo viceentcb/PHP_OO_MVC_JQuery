@@ -11,7 +11,8 @@
 
 -- CREATE TABLE `coupon` (
 --   `user_name` varchar(50) DEFAULT NULL,
---   `coupon` varchar(50) DEFAULT NULL
+--   `coupon` varchar(50) DEFAULT NULL,
+--   `used` tinyint(1) DEFAULT NULL
 -- ) ENGINE=InnoDB DEFAULT CHARSET=latin1
 
 -----------------------------------------------------
